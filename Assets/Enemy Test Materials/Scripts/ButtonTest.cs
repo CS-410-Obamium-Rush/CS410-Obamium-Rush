@@ -5,7 +5,7 @@ using UnityEngine;
 public class ButtonTest : MonoBehaviour
 {
     public LeftArmBehavior lh;
-    public RightArmBehavior rh;
+    public LeftArmBehavior rh;
 
     void Update()
     {
@@ -26,12 +26,23 @@ public class ButtonTest : MonoBehaviour
             Debug.Log("4 was pressed");
         }
         if (Input.GetKey(KeyCode.Alpha5)) {
-            lh.setRotatorF();
-            lh.callAtk();
+            lh.callPunch();
             Debug.Log("5 was pressed");
         }
         if (Input.GetKey(KeyCode.Alpha6)) {
+            lh.callSwipe();
             Debug.Log("6 was pressed");
         }
+        if (Input.GetKey(KeyCode.Alpha7)) {
+            rh.callPunch();
+            Debug.Log("7 was pressed");
+        }
+        if (Input.GetKey(KeyCode.Alpha8)) {
+            rh.callSwipe();
+            Debug.Log("8 was pressed");
+        }
+
+
+
     }
 }
