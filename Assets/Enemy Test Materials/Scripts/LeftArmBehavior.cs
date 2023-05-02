@@ -6,37 +6,38 @@ public class LeftArmBehavior : MonoBehaviour
 {
     private float deltaTimeCount = 0;
     private Vector3 initPos;
+    private Vector3 currPos;
+
+    // Speed Values
     public float rotSpeed = 0;
     public float punchLaunchSpeed = 0;
     public float punchRetractSpeed = 0;
-
     public float swipePosSpeed = 0;
     public float swipeUseSpeed = 0;
     public float swipeRetSpeed = 0;
 
-
-
+    // Rotation Paramters
     public float width = 0;
     public float height = 0;
-
-    private bool rotator;
+    
+    // Need GameObjects to direct attack positions
     public Transform targetPunch;
     public Transform targetSwipeStart;
     public Transform targetSwipeEnd;
 
-
-    private bool startPunch;
-    private bool retractPunch;
-
-    private bool posSwipe;
-    private bool useSwipe;
-    private bool retSwipe;
-
-
-    private Vector3 currPos;
+    // States of rotation and attacks
+    private bool rotator;   // Turn on and off rotation
+    private bool startPunch;    // Initate the punch
+    private bool retractPunch;  // Return the hand
+    private bool posSwipe;      // Initate the swipe/get hand into position
+    private bool useSwipe;      // Sweep across the hand
+    private bool retSwipe;      // Return the hand
 
 
+    
 
+
+    // Use Start() to initiate the states)
     void Start()
     {
         initPos = transform.position;
@@ -48,8 +49,10 @@ public class LeftArmBehavior : MonoBehaviour
         retSwipe = false;
     }
 
+    // Use Update() to manage the states
     void Update()
     {
+        // Idle/rotate hands
         if (rotator) {
             deltaTimeCount += Time.deltaTime * rotSpeed;
             float x = Mathf.Cos(deltaTimeCount) * width;
@@ -57,6 +60,7 @@ public class LeftArmBehavior : MonoBehaviour
             transform.position = new Vector3(initPos.x + x, initPos.y + y, initPos.z);
             currPos = initPos;
         }
+        // Punching State
         else if (startPunch) {
             transform.position = Vector3.MoveTowards(transform.position, targetPunch.position, punchLaunchSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, targetPunch.position) < 0.001f) {
@@ -64,6 +68,7 @@ public class LeftArmBehavior : MonoBehaviour
                 retractPunch = true;
             }
         }
+        // Returning Hand State (Punch)
         else if (retractPunch) {
             transform.position = Vector3.MoveTowards(transform.position, currPos, punchRetractSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, currPos) < 0.001f) {
@@ -71,6 +76,7 @@ public class LeftArmBehavior : MonoBehaviour
                 rotator = true;
             }
         }
+        // Position Hand State
         else if (posSwipe) {
             transform.position = Vector3.MoveTowards(transform.position, targetSwipeStart.position, swipePosSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, targetSwipeStart.position) < 0.001f) {
@@ -78,6 +84,7 @@ public class LeftArmBehavior : MonoBehaviour
                 useSwipe = true;
             }
         }
+        // Sweep State
         else if (useSwipe) {
             transform.position = Vector3.MoveTowards(transform.position, targetSwipeEnd.position, swipeUseSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, targetSwipeEnd.position) < 0.001f) {
@@ -85,6 +92,7 @@ public class LeftArmBehavior : MonoBehaviour
                 retSwipe = true;
             }
         }
+        // Returning the Hand State (Sweep)
         else if (retSwipe) {
             transform.position = Vector3.MoveTowards(transform.position, currPos, swipeRetSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, currPos) < 0.001f) {
@@ -93,9 +101,16 @@ public class LeftArmBehavior : MonoBehaviour
             }
         }
 
-
     }
 
+    // OnTriggerEnter() Checks for detection with player (using Wall for now for testing purposes)
+    void OnTriggerEnter(Collider other) {
+        if(other.gameObject.CompareTag("Wall")) {
+            Debug.Log("Wall has been hit");
+        }
+    }
+
+    /* setRotators used to turn on and off rotation state*/
     public void setRotatorT() {
         rotator = true;
     }
@@ -104,12 +119,14 @@ public class LeftArmBehavior : MonoBehaviour
         rotator = false;
     }
 
+    // Use callPunch() by other script to do punch attack
     public void callPunch() {
         currPos = transform.position;
         rotator = false;
         startPunch = true;
     }
 
+    // Use callSwipe() by other script to do swipe attack
     public void callSwipe() {
         currPos = transform.position;
         rotator = false;

@@ -2,11 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ButtonTest: Used to debug and test attack behavior: punch and swipe
+
+*/
+
 public class ButtonTest : MonoBehaviour
 {
+    // Get the script for each hand
     public LeftArmBehavior lh;
     public LeftArmBehavior rh;
 
+    /*
+    Press number keys to activate something
+    1: turn on left hand's rotation
+    2: turn off left hand's rotation
+    3: turn on right hand's rotation
+    4: turn off hand hand's rotation
+    5: use left hand's punch attack
+    6: use left hand's swipe attack
+    7: use right hand's punch attack
+    8: use right hand's swipe attack
+
+
+
+
+    */
     void Update()
     {
         if (Input.GetKey(KeyCode.Alpha1)) {
