@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 144945262}
   - component: {fileID: 144945263}
   m_Layer: 0
-  m_Name: SwipeLHigh
+  m_Name: SwipeRHigh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 145710424}
   - component: {fileID: 145710425}
   m_Layer: 0
-  m_Name: SwipeRLow
+  m_Name: SwipeLLow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -224,7 +224,7 @@ GameObject:
   - component: {fileID: 166389951}
   - component: {fileID: 166389952}
   m_Layer: 0
-  m_Name: SwipeLMid
+  m_Name: SwipeRMid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -269,7 +269,7 @@ GameObject:
   - component: {fileID: 209329372}
   - component: {fileID: 209329373}
   m_Layer: 0
-  m_Name: SwipeRMid
+  m_Name: SwipeLMid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -314,7 +314,7 @@ GameObject:
   - component: {fileID: 311472112}
   - component: {fileID: 311472113}
   m_Layer: 0
-  m_Name: SwipeLLow
+  m_Name: SwipeRLow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -379,6 +379,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lh: {fileID: 2027849164}
   rh: {fileID: 1878975454}
+  punchL: {fileID: 1333389232}
+  punchR: {fileID: 1305237570}
+  swipeL1: {fileID: 144945262}
+  swipeL2: {fileID: 1938276832}
+  swipeR1: {fileID: 145710424}
+  swipeR2: {fileID: 311472112}
 --- !u!4 &331056296
 Transform:
   m_ObjectHideFlags: 0
@@ -1477,6 +1483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b813ab33dae0804e92651f9309c17ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lockSys: {fileID: 331056295}
   rotSpeed: 3
   punchLaunchSpeed: 55
   punchRetractSpeed: 70
@@ -1486,9 +1493,6 @@ MonoBehaviour:
   width: 4
   height: 2
   isRight: 1
-  targetPunch: {fileID: 1305237570}
-  targetSwipeStart: {fileID: 145710424}
-  targetSwipeEnd: {fileID: 311472112}
 --- !u!4 &1878975455
 Transform:
   m_ObjectHideFlags: 0
@@ -1517,7 +1521,7 @@ GameObject:
   - component: {fileID: 1938276832}
   - component: {fileID: 1938276833}
   m_Layer: 0
-  m_Name: SwipeRHigh
+  m_Name: SwipeLHigh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1580,6 +1584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b813ab33dae0804e92651f9309c17ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lockSys: {fileID: 331056295}
   rotSpeed: 3
   punchLaunchSpeed: 55
   punchRetractSpeed: 70
@@ -1589,9 +1594,6 @@ MonoBehaviour:
   width: 4
   height: 2
   isRight: 0
-  targetPunch: {fileID: 1333389232}
-  targetSwipeStart: {fileID: 144945262}
-  targetSwipeEnd: {fileID: 1938276832}
 --- !u!4 &2027849165
 Transform:
   m_ObjectHideFlags: 0

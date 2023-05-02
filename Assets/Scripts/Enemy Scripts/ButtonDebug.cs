@@ -8,6 +8,24 @@ public class ButtonDebug : MonoBehaviour
     public HandBehavior lh;
     public HandBehavior rh;
 
+    // Get the GameObject to target
+    public Transform punchL;
+    public Transform punchR;
+    public Transform swipeL1;
+    public Transform swipeL2;
+    public Transform swipeR1;
+    public Transform swipeR2;
+
+    private bool key = true;
+
+    public void locker() {
+        key = false;
+    }
+
+    public void unlocker() {
+        key = true;
+    }
+
     /*
     Press number keys to activate something
     1: turn on left hand's rotation
@@ -20,8 +38,7 @@ public class ButtonDebug : MonoBehaviour
     8: use right hand's swipe attack
     */
 
-    void Update()
-    {
+    void Update() {
         if (Input.GetKey(KeyCode.Alpha1)) {
             lh.setRotatorT();
             Debug.Log("1 was pressed");
@@ -38,20 +55,20 @@ public class ButtonDebug : MonoBehaviour
             rh.setRotatorF();
             Debug.Log("4 was pressed");
         }
-        if (Input.GetKey(KeyCode.Alpha5)) {
-            lh.callPunch();
+        if (Input.GetKey(KeyCode.Alpha5) && key) {
+            lh.callPunch(punchL);
             Debug.Log("5 was pressed");
         }
-        if (Input.GetKey(KeyCode.Alpha6)) {
-            lh.callSwipe();
+        if (Input.GetKey(KeyCode.Alpha6) && key) {
+            lh.callSwipe(swipeL1, swipeL2);
             Debug.Log("6 was pressed");
         }
-        if (Input.GetKey(KeyCode.Alpha7)) {
-            rh.callPunch();
+        if (Input.GetKey(KeyCode.Alpha7) && key) {
+            rh.callPunch(punchR);
             Debug.Log("7 was pressed");
         }
-        if (Input.GetKey(KeyCode.Alpha8)) {
-            rh.callSwipe();
+        if (Input.GetKey(KeyCode.Alpha8) && key) {
+            rh.callSwipe(swipeR1, swipeR2);
             Debug.Log("8 was pressed");
         }
     }

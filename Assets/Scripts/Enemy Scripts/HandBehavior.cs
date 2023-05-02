@@ -6,7 +6,7 @@ public class HandBehavior : MonoBehaviour
 {
     private float deltaTimeCount = 0;
     private Vector3 initPos;
-    private Vector3 currPos;
+    public ButtonDebug lockSys;
 
     // Speed Values
     public float rotSpeed = 0;
@@ -24,9 +24,9 @@ public class HandBehavior : MonoBehaviour
 
     
     // Need GameObjects to direct attack positions
-    public Transform targetPunch;
-    public Transform targetSwipeStart;
-    public Transform targetSwipeEnd;
+    private Transform targetPunch;
+    private Transform targetSwipeStart;
+    private Transform targetSwipeEnd;
     
     // States of rotation and attacks
     private bool rotator;   // Turn on and off rotation
@@ -36,7 +36,7 @@ public class HandBehavior : MonoBehaviour
     private bool useSwipe;      // Sweep across the hand
     private bool retSwipe;      // Return the hand
 
-    // Use Start() to initiate the states)
+    // Use Start() to initiate the states
     void Start()
     {
         initPos = transform.position;
@@ -60,7 +60,6 @@ public class HandBehavior : MonoBehaviour
             float x = Mathf.Cos(deltaTimeCount) * width * dir;
             float y = Mathf.Sin(deltaTimeCount) * height * dir;
             transform.position = new Vector3(initPos.x + x, initPos.y + y, initPos.z);
-            currPos = initPos;
         }
         // Punching State
         else if (startPunch) {
@@ -72,10 +71,11 @@ public class HandBehavior : MonoBehaviour
         }
         // Returning Hand State (Punch)
         else if (retractPunch) {
-            transform.position = Vector3.MoveTowards(transform.position, currPos, punchRetractSpeed * Time.deltaTime);
-            if (Vector3.Distance(transform.position, currPos) < 0.001f) {
+            transform.position = Vector3.MoveTowards(transform.position, initPos, punchRetractSpeed * Time.deltaTime);
+            if (Vector3.Distance(transform.position, initPos) < 0.001f) {
                 retractPunch = false;
                 rotator = true;
+                lockSys.unlocker();
             }
         }
         // Position Hand State
@@ -96,11 +96,13 @@ public class HandBehavior : MonoBehaviour
         }
         // Returning the Hand State (Sweep)
         else if (retSwipe) {
-            transform.position = Vector3.MoveTowards(transform.position, currPos, swipeRetSpeed * Time.deltaTime);
-            if (Vector3.Distance(transform.position, currPos) < 0.001f) {
+            transform.position = Vector3.MoveTowards(transform.position, initPos, swipeRetSpeed * Time.deltaTime);
+            if (Vector3.Distance(transform.position, initPos) < 0.001f) {
                 retSwipe = false;
                 rotator = true;
+                lockSys.unlocker();
             }
+            
         }
 
     }
@@ -122,15 +124,18 @@ public class HandBehavior : MonoBehaviour
     }
 
     // Use callPunch() by other script to do punch attack
-    public void callPunch() {
-        currPos = transform.position;
+    public void callPunch(Transform target) {
+        lockSys.locker();
+        targetPunch = target;
         rotator = false;
         startPunch = true;
     }
 
     // Use callSwipe() by other script to do swipe attack
-    public void callSwipe() {
-        currPos = transform.position;
+    public void callSwipe(Transform targetStart, Transform targetEnd) {
+        lockSys.locker();
+        targetSwipeStart = targetStart;
+        targetSwipeEnd = targetEnd;
         rotator = false;
         posSwipe = true;
     }
