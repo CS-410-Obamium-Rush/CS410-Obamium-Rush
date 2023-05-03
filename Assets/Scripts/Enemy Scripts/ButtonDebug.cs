@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ButtonDebug : MonoBehaviour
 {
-     // Get the script for each hand
+    // Get the script for each hand
     public HandBehavior lh;
     public HandBehavior rh;
 
@@ -16,8 +16,12 @@ public class ButtonDebug : MonoBehaviour
     public Transform swipeR1;
     public Transform swipeR2;
 
+    /* Used to limit attacks to be one at a time
+    The idea is to implement a lock-like system where an inititated attack will hold onto the lock
+    and release the lock after the attack is done. These are public functions for the actual attacks 
+    found in HandBehavior to decide the lock and unlock.
+    */
     private bool key = true;
-
     public void locker() {
         key = false;
     }
@@ -25,7 +29,7 @@ public class ButtonDebug : MonoBehaviour
     public void unlocker() {
         key = true;
     }
-
+    
     /*
     Press number keys to activate something
     1: turn on left hand's rotation

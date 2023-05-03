@@ -6,7 +6,8 @@ public class HandBehavior : MonoBehaviour
 {
     private float deltaTimeCount = 0;
     private Vector3 initPos;
-    public ButtonDebug lockSys;
+    public AttackPatterns lockSys;
+
 
     // Speed Values
     public float rotSpeed = 0;
@@ -76,6 +77,7 @@ public class HandBehavior : MonoBehaviour
                 retractPunch = false;
                 rotator = true;
                 lockSys.unlocker();
+                lockSys.unlocker2();
             }
         }
         // Position Hand State
@@ -101,6 +103,7 @@ public class HandBehavior : MonoBehaviour
                 retSwipe = false;
                 rotator = true;
                 lockSys.unlocker();
+                lockSys.unlocker2();
             }
             
         }
