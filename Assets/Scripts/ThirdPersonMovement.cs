@@ -1,51 +1,73 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ThirdPersonMovement : MonoBehaviour
 {
-    public CharacterController controller;
+    public GameObject laser;
     public float speed = 6f;
     
     public float jumpAmount = 10;
-    public float jumpForce=20;
-    public float gravity = -9.81f;
-    float velocity;
+    private Rigidbody rb;
+    private float movementX;
+    private float movementY;
+    private int jumpCount = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();
+    }
+
+    void OnMove(InputValue movementValue)
+    {
+        Vector2 movementVector = movementValue.Get<Vector2>();
+        movementX = movementVector.x;
+        movementY = movementVector.y;
+    }
+
+    void OnJump(InputValue movementValue)
+    {
+        if(jumpCount < 1) 
+        {
+            rb.AddForce(Vector3.up * jumpAmount, ForceMode.Impulse);
+            jumpCount++;  
+        }
+    }
+
+    private bool isGrounded()
+    {
+        if(transform.position.y < 0.6)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    void FixedUpdate() 
+    {
+        Vector3 movement = new Vector3(movementX, 0.0f, movementY);
+        rb.AddForce(movement * speed);
+
+        if(isGrounded())
+        {
+            jumpCount = 0;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        //float vertical = Input.GetAxisRaw("Vertical");
-        //Vector3 direction = new Vector3(horizontal, 0.0f, vertical).normalized;
-
-        velocity += gravity * Time.deltaTime;
-        if(transform.position.y < 0.1 && velocity < 0) 
+        if(Input.GetKey(KeyCode.LeftShift))
         {
-            velocity = 0;
+            var emissionModule = laser.GetComponent<ParticleSystem>().emission;
+            emissionModule.enabled = true;
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+        else
         {
-            velocity = jumpForce;
-        }  
-
-        Vector3 direction = new Vector3(horizontal, velocity, 0.0f).normalized;
-
-        if(direction.magnitude >= 0.1f)
-        {
-            controller.Move(direction * speed * Time.deltaTime);
-        }     
-
-
-        if(Input.GetKey(KeyCode.E))
-        {
-            Debug.Log("Firing");
+            var emissionModule = laser.GetComponent<ParticleSystem>().emission;
+            emissionModule.enabled = false;
         }
 
     }
