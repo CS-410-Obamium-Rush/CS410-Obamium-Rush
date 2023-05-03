@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -965,7 +965,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 445492956}
-  m_LocalRotation: {x: -0.06934311, y: -0.000000017164966, z: -0.0000000011931443, w: 0.99759287}
+  m_LocalRotation: {x: -0.06934311, y: 0.00000001716496, z: 0.0000000011931438, w: 0.99759287}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2128,7 +2128,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1365170996}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 0c6e9ba8542217f43aed9c8120b18209, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
@@ -2800,6 +2800,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1088646353}
     m_Modifications:
+    - target: {fileID: 8879080919350134148, guid: 138b1fb074c8faf45878273bbef504af, type: 3}
+      propertyPath: m_Drag
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8879080919350134148, guid: 138b1fb074c8faf45878273bbef504af, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8879080919350134148, guid: 138b1fb074c8faf45878273bbef504af, type: 3}
+      propertyPath: m_AngularDrag
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8879080919350134149, guid: 138b1fb074c8faf45878273bbef504af, type: 3}
       propertyPath: m_Name
       value: MovingPlayer
@@ -2808,6 +2820,14 @@ PrefabInstance:
       propertyPath: laser
       value: 
       objectReference: {fileID: 1660890105}
+    - target: {fileID: 8879080919350134151, guid: 138b1fb074c8faf45878273bbef504af, type: 3}
+      propertyPath: speed
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8879080919350134151, guid: 138b1fb074c8faf45878273bbef504af, type: 3}
+      propertyPath: jumpAmount
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 8879080919350134170, guid: 138b1fb074c8faf45878273bbef504af, type: 3}
       propertyPath: m_RootOrder
       value: 1
