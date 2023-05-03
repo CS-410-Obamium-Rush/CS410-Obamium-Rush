@@ -7,8 +7,10 @@ public class ThirdPersonMovement : MonoBehaviour
 {
     public GameObject laser;
     public float speed = 6f;
-    
     public float jumpAmount = 10;
+
+    AudioSource m_AudioSource;  // EA contribution
+
     private Rigidbody rb;
     private float movementX;
     private float movementY;
@@ -18,6 +20,9 @@ public class ThirdPersonMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        // get audioSource -- EA
+        m_AudioSource = GetComponent<AudioSource>();
     }
 
     void OnMove(InputValue movementValue)
@@ -32,6 +37,8 @@ public class ThirdPersonMovement : MonoBehaviour
         if(jumpCount < 1) 
         {
             rb.AddForce(Vector3.up * jumpAmount, ForceMode.Impulse);
+
+            m_AudioSource.Play();
             jumpCount++;  
         }
     }
@@ -59,7 +66,7 @@ public class ThirdPersonMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKey(KeyCode.LeftShift))
+        if(Input.GetKey(KeyCode.Z))
         {
             var emissionModule = laser.GetComponent<ParticleSystem>().emission;
             emissionModule.enabled = true;
