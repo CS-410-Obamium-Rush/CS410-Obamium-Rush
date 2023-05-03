@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/* This script allows a GameObject to float up and down; this is used for the enemy head*/
+
 public class FloatBehavior : MonoBehaviour
 {
-    public float height;
-    public float freq;
+    public float height; // Determine how far the GameObject will go
+    public float freq;  // Determine how quickly the GameObject will go
     private Vector3 initPos;
     
     void Start()
@@ -15,9 +17,7 @@ public class FloatBehavior : MonoBehaviour
 
     void Update()
     {
-        Vector3 moveUp = new Vector3(0, 50, 0);
-        Vector3 moveDown = new Vector3(0, -100, 0);
+        //Source for line: https://www.youtube.com/watch?v=kvQ-QWDWWZI
         transform.position = new Vector3(initPos.x, Mathf.Sin(Time.time * freq) * height + initPos.y, initPos.z);
-        //https://www.youtube.com/watch?v=kvQ-QWDWWZI
     }
 }

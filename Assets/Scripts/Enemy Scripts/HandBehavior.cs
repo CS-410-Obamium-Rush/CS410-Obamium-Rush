@@ -1,11 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/*
+This script is used for the different states that each enemy hand can be in and is responsible 
+for performing the attacks it can do
+*/
 public class HandBehavior : MonoBehaviour
 {
+    
     private float deltaTimeCount = 0;
     private Vector3 initPos;
+
+    // Files that call the attacks and use their lock systems
     public AttackPatterns lockSys;
     public ButtonDebug debugSys;
 
@@ -58,6 +64,7 @@ public class HandBehavior : MonoBehaviour
         // Idle/rotate hands
         if (rotator) {
             deltaTimeCount += Time.deltaTime * rotSpeed;
+            // Spin the hand in a circular motion; direction is dictated by hand so one goes clockwise while the other goes counterclockwise
             float x = Mathf.Cos(deltaTimeCount) * width * dir;
             float y = Mathf.Sin(deltaTimeCount) * height * dir;
             transform.position = new Vector3(initPos.x + x, initPos.y + y, initPos.z);
@@ -115,7 +122,7 @@ public class HandBehavior : MonoBehaviour
         }
     }
 
-    /* setRotators used to turn on and off rotation state*/
+    /* setRotators used to turn on and off rotation state; mainly for ButtonDebug*/
     public void setRotatorT() {
         rotator = true;
     }
