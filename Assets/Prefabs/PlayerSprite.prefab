@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 257933729099220225}
   - component: {fileID: 263516800432717903}
   - component: {fileID: 7168617807081090953}
+  - component: {fileID: 2002748135}
   m_Layer: 0
   m_Name: PlayerSprite
   m_TagString: Untagged
@@ -106,3 +107,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1818360608 &2002748135
+PositionConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1996879474490290465}
+  m_Enabled: 1
+  m_Weight: 1
+  m_TranslationAtRest: {x: 0, y: 0.37, z: 0}
+  m_TranslationOffset: {x: 0, y: 0.37, z: 0}
+  m_AffectTranslationX: 1
+  m_AffectTranslationY: 1
+  m_AffectTranslationZ: 1
+  m_IsContraintActive: 1
+  m_IsLocked: 1
+  m_Sources:
+  - sourceTransform: {fileID: 0}
+    weight: 1
