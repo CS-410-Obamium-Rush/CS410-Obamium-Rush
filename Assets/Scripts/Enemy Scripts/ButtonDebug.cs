@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/*
+This script is used to test out the attack movement of the Enemy GameObject. This allows a button press of 1-8 on the keyboard
+to perform a certain action.
+*/
 public class ButtonDebug : MonoBehaviour
 {
     // Get the script for each hand
@@ -20,6 +23,9 @@ public class ButtonDebug : MonoBehaviour
     The idea is to implement a lock-like system where an inititated attack will hold onto the lock
     and release the lock after the attack is done. These are public functions for the actual attacks 
     found in HandBehavior to decide the lock and unlock.
+
+    This operates slightly different to AttackPatterns's lock system as their locker() function is used at different times.
+    
     */
     private bool key = true;
     public void locker() {
