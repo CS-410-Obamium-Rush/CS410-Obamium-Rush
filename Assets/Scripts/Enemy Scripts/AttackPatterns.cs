@@ -9,13 +9,12 @@ public class AttackPatterns : MonoBehaviour
     private float rechargeTime;
     public GameObject punchZones;
     public GameObject swipeZones;
-
-
     public HandBehavior lh;
     public HandBehavior rh;
 
     private bool key = true;
-    private bool key2 = true;
+
+
 
     public void locker() {
         key = false;
@@ -23,14 +22,6 @@ public class AttackPatterns : MonoBehaviour
 
     public void unlocker() {
         key = true;
-    }
-
-    public void locker2() {
-        key2 = false;
-    }
-
-    public void unlocker2() {
-        key2 = true;
     }
 
 
@@ -42,16 +33,13 @@ public class AttackPatterns : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (rechargeTime > 0 && key2) {
+        if (rechargeTime > 0 && key) {
             rechargeTime = rechargeTime - Time.deltaTime;
         }
-        else if (key2) {
-            locker2();
-            Debug.Log("Initiate attack");
+        else if (key) {
+            locker();
             int atkUse = Random.Range(0,2);
-            print("Attack Use = " + atkUse);
             int handUse = Random.Range(0,2);
-            print("Hand Use = " + handUse);
             if (handUse == 0) {
                 if (atkUse == 0) {
                     punch(0);
@@ -95,7 +83,6 @@ public class AttackPatterns : MonoBehaviour
 
     Transform getPunchTarget(int hand) {
         int scenarioNum = Random.Range(0,4);
-        print("Punch Use = " + scenarioNum);
         if (hand == 0 && scenarioNum == 0) {
             return punchZones.transform.GetChild(0).gameObject.transform;
         }
@@ -119,7 +106,6 @@ public class AttackPatterns : MonoBehaviour
     Transform[] getSweepTarget() {
         Transform[] retArray = new Transform[2];
         int scenarioNum = Random.Range(0,3);
-        print("Swipe Use = " + scenarioNum);
         if (scenarioNum == 0) {
             retArray[0] = swipeZones.transform.GetChild(0).gameObject.transform;
             retArray[1] = swipeZones.transform.GetChild(1).gameObject.transform;

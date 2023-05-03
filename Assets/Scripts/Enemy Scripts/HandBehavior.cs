@@ -7,7 +7,7 @@ public class HandBehavior : MonoBehaviour
     private float deltaTimeCount = 0;
     private Vector3 initPos;
     public AttackPatterns lockSys;
-
+    public ButtonDebug debugSys;
 
     // Speed Values
     public float rotSpeed = 0;
@@ -77,7 +77,7 @@ public class HandBehavior : MonoBehaviour
                 retractPunch = false;
                 rotator = true;
                 lockSys.unlocker();
-                lockSys.unlocker2();
+                debugSys.unlocker();
             }
         }
         // Position Hand State
@@ -103,11 +103,9 @@ public class HandBehavior : MonoBehaviour
                 retSwipe = false;
                 rotator = true;
                 lockSys.unlocker();
-                lockSys.unlocker2();
+                debugSys.unlocker();
             }
-            
         }
-
     }
 
     // OnTriggerEnter() Checks for detection with player (using Wall for now for testing purposes)
@@ -128,7 +126,7 @@ public class HandBehavior : MonoBehaviour
 
     // Use callPunch() by other script to do punch attack
     public void callPunch(Transform target) {
-        lockSys.locker();
+        debugSys.locker();
         targetPunch = target;
         rotator = false;
         startPunch = true;
@@ -136,7 +134,7 @@ public class HandBehavior : MonoBehaviour
 
     // Use callSwipe() by other script to do swipe attack
     public void callSwipe(Transform targetStart, Transform targetEnd) {
-        lockSys.locker();
+        debugSys.locker();
         targetSwipeStart = targetStart;
         targetSwipeEnd = targetEnd;
         rotator = false;
