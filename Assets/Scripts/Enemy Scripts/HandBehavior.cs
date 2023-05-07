@@ -13,7 +13,7 @@ public class HandBehavior : MonoBehaviour
 
     private float deltaTimeCount = 0;
     private Vector3 initPos;
-
+    private Vector3 initRot;
     // Files that call the attacks and use their lock systems
     public AttackPatterns lockSys;
     public ButtonDebug debugSys;
@@ -50,6 +50,7 @@ public class HandBehavior : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
+        initRot = transform.localEulerAngles;
         isAttacking = false;
         initPos = transform.position;
         rotator = true;
@@ -80,11 +81,13 @@ public class HandBehavior : MonoBehaviour
         }
         // Punching State
         else if (startPunch) {
+            doRot(0f, initRot.y, initRot.z);
             transform.position = Vector3.MoveTowards(transform.position, targetPunch.position, punchLaunchSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, targetPunch.position) < 0.001f) {
                 startPunch = false;
                 retractPunch = true;
             }
+
         }
         // Returning Hand State (Punch)
         else if (retractPunch) {
@@ -95,9 +98,14 @@ public class HandBehavior : MonoBehaviour
                 lockSys.unlocker();
                 debugSys.unlocker();
             }
+            doRot(initRot.x, initRot.y, initRot.z);
         }
         // Position Hand State
         else if (posSwipe) {
+            if (isRight) 
+                doRot(initRot.x, initRot.y, -90);
+            else
+                doRot(0, initRot.y, 90);
             transform.position = Vector3.MoveTowards(transform.position, targetSwipeStart.position, swipePosSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, targetSwipeStart.position) < 0.001f) {
                 posSwipe = false;
@@ -114,6 +122,7 @@ public class HandBehavior : MonoBehaviour
         }
         // Returning the Hand State (Sweep)
         else if (retSwipe) {
+            doRot(initRot.x, initRot.y, initRot.z);
             transform.position = Vector3.MoveTowards(transform.position, initPos, swipeRetSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, initPos) < 0.001f) {
                 retSwipe = false;
@@ -124,9 +133,22 @@ public class HandBehavior : MonoBehaviour
         }
     }
 
+    // Use doRot() to set the rototation of objects hands during attacks based on the inspector Euler angles
+    private void doRot(float x, float y, float z) {
+        /*
+        Scrap code for smooth transition rotation
+        Vector3 currRot = transform.localEulerAngles;
+        Vector3 newRot = new Vector3(x, y, z);
+        Vector3 transRot = Vector3.Lerp(currRot, newRot, Time.deltaTime * atkRotSpeed);
+        transform.eulerAngles = transRot; 
+        */
+        transform.localEulerAngles = new Vector3(x, y, z);
+    }
+
+
     // OnTriggerEnter() Checks for detection with player (using Wall for now for testing purposes)
     void OnTriggerEnter(Collider other) {
-        if(other.gameObject.CompareTag("Wall")) {
+        if(other.gameObject.CompareTag("Projectile")) {
             Debug.Log("Wall has been hit");
         }
     }
@@ -163,6 +185,9 @@ public class HandBehavior : MonoBehaviour
         targetSwipeEnd = targetEnd;
         rotator = false;
         posSwipe = true;
+    }
+    static public void callClap(Transform target) {
+        
     }
 
 }
