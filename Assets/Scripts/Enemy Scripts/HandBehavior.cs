@@ -8,6 +8,9 @@ for performing the attacks it can do
 public class HandBehavior : MonoBehaviour
 {
     
+    Animator animator;
+    private bool isAttacking;
+
     private float deltaTimeCount = 0;
     private Vector3 initPos;
 
@@ -46,6 +49,8 @@ public class HandBehavior : MonoBehaviour
     // Use Start() to initiate the states
     void Start()
     {
+        animator = GetComponent<Animator>();
+        isAttacking = false;
         initPos = transform.position;
         rotator = true;
         startPunch = false;
@@ -63,6 +68,10 @@ public class HandBehavior : MonoBehaviour
     {
         // Idle/rotate hands
         if (rotator) {
+            if (isAttacking == true) {
+                isAttacking = false;
+                animator.SetBool("isAttacking", isAttacking);
+            }
             deltaTimeCount += Time.deltaTime * rotSpeed;
             // Spin the hand in a circular motion; direction is dictated by hand so one goes clockwise while the other goes counterclockwise
             float x = Mathf.Cos(deltaTimeCount) * width * dir;
@@ -133,6 +142,10 @@ public class HandBehavior : MonoBehaviour
 
     // Use callPunch() by other script to do punch attack
     public void callPunch(Transform target) {
+        if (isAttacking == false) {
+            isAttacking = true;
+            animator.SetBool("isAttacking", isAttacking);
+        }
         debugSys.locker();
         targetPunch = target;
         rotator = false;
@@ -141,6 +154,10 @@ public class HandBehavior : MonoBehaviour
 
     // Use callSwipe() by other script to do swipe attack
     public void callSwipe(Transform targetStart, Transform targetEnd) {
+        if (isAttacking == false) {
+            isAttacking = true;
+            animator.SetBool("isAttacking", isAttacking);
+        }
         debugSys.locker();
         targetSwipeStart = targetStart;
         targetSwipeEnd = targetEnd;
