@@ -17,6 +17,10 @@ public class AttackPatterns : MonoBehaviour
     public HandBehavior lh;
     public HandBehavior rh;
 
+    // Decide if hands are allowed to use
+    private bool leftUse;
+    private bool rightUse;
+
     /* 
     Using a lock system to prevent multiple attacks occuring at once; only one attack at a time
     The idea is to implement a lock-like system where an inititated attack will hold onto the lock
@@ -35,6 +39,8 @@ public class AttackPatterns : MonoBehaviour
     // Use Start() to gather how long the enemy should wait before attacking
     void Start()
     {
+        rightUse = true;
+        leftUse = true;
         rechargeTime = timeInterval;
     }
 
@@ -61,25 +67,28 @@ public class AttackPatterns : MonoBehaviour
             int atkUse = Random.Range(0,2);
             int handUse = Random.Range(0,2);
             // Right Hand then attack call
-            if (handUse == 0) {
+            if (handUse == 0 && rightUse) {
                 if (atkUse == 0) {
                     punch(0);
                 }
                 else if (atkUse == 1) {
                     sweep(0);
                 }
+                // Reset the charge time after attack has been initated
+                rechargeTime = timeInterval;
             }
             // Hand Left Hand then attack call
-            if (handUse == 1) {
+            else if (handUse == 1 && leftUse) {
                 if (atkUse == 0) {
                     punch(1);
                 }
                 else if (atkUse == 1) {
                     sweep(1);
                 }
+                // Reset the charge time after attack has been initated
+                rechargeTime = timeInterval;
             }
-            // Reset the charge time after attack has been initated
-            rechargeTime = timeInterval;
+            
         }
     }
 
@@ -162,6 +171,15 @@ public class AttackPatterns : MonoBehaviour
             retArray[1] = swipeZones.transform.GetChild(5).gameObject.transform;
         }
         return retArray;
+    }
+
+    // Functions used by the Game Monitor to disable hand use
+    public void disableLeft() {
+        leftUse = false;
+    }
+
+    public void disableRight() {
+        rightUse = false;
     }
 
 
