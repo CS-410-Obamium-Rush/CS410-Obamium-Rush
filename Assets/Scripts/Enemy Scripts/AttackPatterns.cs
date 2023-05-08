@@ -13,9 +13,10 @@ public class AttackPatterns : MonoBehaviour
     // Use the targets, or zones, stored in a grouped GameObject
     public GameObject punchZones;
     public GameObject swipeZones;
-    // Get the left and right hand's behavior to call attacks
+    // Get the left and right hand and head's behavior to call attacks
     public HandBehavior lh;
     public HandBehavior rh;
+    public HeadBehavior head;
 
     // Decide if hands are allowed to use
     private bool leftUse;
@@ -60,14 +61,18 @@ public class AttackPatterns : MonoBehaviour
             Hand
                 0 = Right
                 1 = Left
-            Attack
+                2 = Head
+            Attack (Hand)
                 0 = Punch
                 1 = Swipe/Sweep
+
+            Attack (Head)
+                0 = Bash
             */
             int atkUse = Random.Range(0,2);
-            int handUse = Random.Range(0,2);
+            int bodyUse = Random.Range(0,3);
             // Right Hand then attack call
-            if (handUse == 0 && rightUse) {
+            if (bodyUse == 0 && rightUse) {
                 if (atkUse == 0) {
                     punch(0);
                 }
@@ -78,7 +83,7 @@ public class AttackPatterns : MonoBehaviour
                 rechargeTime = timeInterval;
             }
             // Hand Left Hand then attack call
-            else if (handUse == 1 && leftUse) {
+            else if (bodyUse == 1 && leftUse) {
                 if (atkUse == 0) {
                     punch(1);
                 }
@@ -88,20 +93,27 @@ public class AttackPatterns : MonoBehaviour
                 // Reset the charge time after attack has been initated
                 rechargeTime = timeInterval;
             }
+            else if (bodyUse == 2) {
+                punch(2);
+            }
             
         }
     }
 
     // punch() calls the punch attack based on which hand it is using
-    void punch(int hand) {
-        Transform target = getPunchTarget(hand);
+    void punch(int body) {
+        Transform target = getPunchTarget(body);
         // Handiness determines which hand to use
-        if (hand == 0) {
+        if (body == 0) {
             rh.callPunch(target);
         }
-        else {
+        else if (body == 1) {
             lh.callPunch(target);
         }
+        else {
+            head.callPunch(target);
+        }
+
     }
 
     // swipe() calls the swipe attack based on which hand it is using
@@ -117,34 +129,39 @@ public class AttackPatterns : MonoBehaviour
     }
 
     // getPunchTarget() is a helper function to generate a random area to launch the punch towards
-    Transform getPunchTarget(int hand) {
+    Transform getPunchTarget(int body) {
         // Generate the location to use;
-        int scenarioNum = Random.Range(0,4);
+        int scenarioNum = Random.Range(0, 4);
         // Each hand can only punch on their respective side (Scenarios 0 and 1) 
         // (Ex. the left hand will not go diagonal to attack the right side of the screen)
         // So two checks are made in an expression, but both hands are allowed to attack the center of the path (Scenarios 2 and 3)
 
-        if (hand == 0 && scenarioNum == 0) {
-            // Top Side of Screen
+        if (body == 0 && scenarioNum == 0) {
+            // Top Left Side of Screen
             return punchZones.transform.GetChild(0).gameObject.transform;
         }
-        else if (hand == 1 && scenarioNum == 0) {
-            // Top Side of Screen
+        else if (body == 1 && scenarioNum == 0) {
+            // Top Right Side of Screen
             return punchZones.transform.GetChild(1).gameObject.transform;;
         }
-        else if (hand == 0 && scenarioNum == 1) {
-            // Bottom Side of Screen
+        else if (body == 0  && scenarioNum == 1) {
+            // Bottom Left Side of Screen
             return punchZones.transform.GetChild(2).gameObject.transform;
         }
-        else if (hand == 1 && scenarioNum == 1) {
-            // Bottom Side of Screen
+        else if (body == 0 && scenarioNum == 1) {
+            // Bottom Right Side of Screen
             return punchZones.transform.GetChild(3).gameObject.transform;
+        }
+        else if (body == 2 && (scenarioNum == 0 || scenarioNum == 1)) {
+            // Head to either left or right (Punch Zones 0-3)
+            int headNum = Random.Range(0, 4);
+            return punchZones.transform.GetChild(headNum).gameObject.transform;
         }
         else if (scenarioNum == 2) {
             // Top Center
             return punchZones.transform.GetChild(4).gameObject.transform;
         }
-        else {//(scenarioNum == 3) 
+        else {
             // Bottom Center
             return punchZones.transform.GetChild(5).gameObject.transform;
         }

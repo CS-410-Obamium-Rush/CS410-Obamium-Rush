@@ -10,8 +10,10 @@ public class ButtonDebug : MonoBehaviour
     // Get the script for each hand
     public HandBehavior lh;
     public HandBehavior rh;
+    public HeadBehavior head;
 
     // Get the GameObject to target
+    public Transform punchH;
     public Transform punchL;
     public Transform punchR;
     public Transform swipeL1;
@@ -41,7 +43,7 @@ public class ButtonDebug : MonoBehaviour
     1: turn on left hand's rotation
     2: turn off left hand's rotation
     3: turn on right hand's rotation
-    4: turn off hand hand's rotation
+    4: use head's punch attack
     5: use left hand's punch attack
     6: use left hand's swipe attack
     7: use right hand's punch attack
@@ -61,8 +63,8 @@ public class ButtonDebug : MonoBehaviour
             rh.setRotatorT();
             Debug.Log("3 was pressed");
         }
-        if (Input.GetKey(KeyCode.Alpha4)) {
-            rh.setRotatorF();
+        if (Input.GetKey(KeyCode.Alpha4) && key) {
+            head.callPunch(punchH);
             Debug.Log("4 was pressed");
         }
         if (Input.GetKey(KeyCode.Alpha5) && key) {
