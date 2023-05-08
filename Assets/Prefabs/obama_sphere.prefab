@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7114124040844084627}
+  - component: {fileID: 2948471069935550027}
   m_Layer: 0
   m_Name: obama_sphere
   m_TagString: Untagged
@@ -32,6 +33,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &2948471069935550027
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7903561696791646630}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.02
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &5339655175750324794
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -82,6 +96,10 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: acd1ad46189bb8742b69a7f44675ac5a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: acd1ad46189bb8742b69a7f44675ac5a, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: acd1ad46189bb8742b69a7f44675ac5a, type: 3}
       propertyPath: m_Materials.Array.data[0]
