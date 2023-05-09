@@ -24,6 +24,13 @@ public class HandBehavior : MonoBehaviour
     public float swipeUseSpeed = 0;
     public float swipeRetSpeed = 0;
 
+    public float clapPosSpeed = 0;
+    public float clapUseSpeed = 0;
+    public float clapBackSpeed = 0;
+    public float clapRetSpeed = 0;
+
+
+
     // Rotation Paramters
     public float width = 0;
     public float height = 0;
@@ -35,6 +42,11 @@ public class HandBehavior : MonoBehaviour
     private Transform targetPunch;
     private Transform targetSwipeStart;
     private Transform targetSwipeEnd;
+
+    private Transform targetClapStart;
+    private Transform targetClapEnd;
+    private Transform targetClapBack;
+
     
     // States of rotation and attacks
     private bool rotator;   // Turn on and off rotation
@@ -43,6 +55,13 @@ public class HandBehavior : MonoBehaviour
     private bool posSwipe;      // Initate the swipe/get hand into position
     private bool useSwipe;      // Sweep across the hand
     private bool retSwipe;      // Return the hand
+
+    private bool posClap;      
+    private bool useClap;
+    private bool backClap;
+    private bool retClap;      
+
+
 
     // Use Start() to initiate the states
     void Start()
@@ -56,6 +75,12 @@ public class HandBehavior : MonoBehaviour
         posSwipe = false;
         useSwipe = false;
         retSwipe = false;
+
+        posClap = false;
+        useClap = false;
+        retClap = false;
+
+
         if (isRight) {
             dir = 1;
         }
@@ -126,6 +151,44 @@ public class HandBehavior : MonoBehaviour
                 debugSys.unlocker();
             }
         }
+
+        else if (posClap) {
+            if (isRight) 
+                doRot(initRot.x, initRot.y, -90);
+            else
+                doRot(0, initRot.y, 90);
+            transform.position = Vector3.MoveTowards(transform.position, targetClapStart.position, clapPosSpeed * Time.deltaTime);
+            if (Vector3.Distance(transform.position, targetClapStart.position) < 0.001f) {
+                posClap= false;
+                useClap = true;
+            }
+        }
+
+        else if (useClap) {
+            transform.position = Vector3.MoveTowards(transform.position, targetClapEnd.position, clapUseSpeed * Time.deltaTime);
+            if (Vector3.Distance(transform.position, targetClapEnd.position) < 0.001f) {
+                useClap = false;
+                backClap = true;
+            }
+        }
+        else if (backClap) {
+            transform.position = Vector3.MoveTowards(transform.position, targetClapBack.position, clapBackSpeed * Time.deltaTime);
+            if (Vector3.Distance(transform.position, targetClapBack.position) < 0.001f) {
+                backClap = false;
+                retClap = true;
+            }
+        }
+        else if (retClap) {
+            doRot(initRot.x, initRot.y, initRot.z);
+            animator.SetBool("isAttacking", false);
+            transform.position = Vector3.MoveTowards(transform.position, initPos, clapRetSpeed * Time.deltaTime);
+            if (Vector3.Distance(transform.position, initPos) < 0.001f) {
+                retClap = false;
+                rotator = true;
+                lockSys.unlocker();
+                debugSys.unlocker();
+            }
+        }
     }
 
     // Use doRot() to set the rototation of objects hands during attacks based on the inspector Euler angles
@@ -175,8 +238,15 @@ public class HandBehavior : MonoBehaviour
         rotator = false;
         posSwipe = true;
     }
-    static public void callClap(Transform target) {
-        
+
+    public void callClap(Transform targetStart, Transform targetEnd, Transform targetBack) {
+        animator.SetBool("isAttacking", true);
+        debugSys.locker();
+        targetClapStart = targetStart;
+        targetClapEnd = targetEnd;
+        targetClapBack = targetBack;
+        rotator = false;
+        posClap = true;
     }
 
 }

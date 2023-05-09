@@ -13,6 +13,8 @@ public class AttackPatterns : MonoBehaviour
     // Use the targets, or zones, stored in a grouped GameObject
     public GameObject punchZones;
     public GameObject swipeZones;
+    public GameObject clapZones;
+
     // Get the left and right hand and head's behavior to call attacks
     public HandBehavior lh;
     public HandBehavior rh;
@@ -65,11 +67,12 @@ public class AttackPatterns : MonoBehaviour
             Attack (Hand)
                 0 = Punch
                 1 = Swipe/Sweep
+                2 = Clap
 
             Attack (Head)
                 0 = Bash
             */
-            int atkUse = Random.Range(0,2);
+            int atkUse = Random.Range(0,3);
             int bodyUse = Random.Range(0,3);
             // Right Hand then attack call
             if (bodyUse == 0 && rightUse) {
@@ -79,6 +82,10 @@ public class AttackPatterns : MonoBehaviour
                 else if (atkUse == 1) {
                     sweep(0);
                 }
+                else if (atkUse == 2) {
+                    clap();
+                }
+
                 // Reset the charge time after attack has been initated
                 rechargeTime = timeInterval;
             }
@@ -89,6 +96,9 @@ public class AttackPatterns : MonoBehaviour
                 }
                 else if (atkUse == 1) {
                     sweep(1);
+                }
+                else if (atkUse == 2) {
+                    clap();
                 }
                 // Reset the charge time after attack has been initated
                 rechargeTime = timeInterval;
@@ -127,6 +137,14 @@ public class AttackPatterns : MonoBehaviour
             lh.callSwipe(sweepTargets[1], sweepTargets[0]);
         }
     }
+
+    void clap() {
+        int scenarioNum = Random.Range(0,2);
+        Transform clapLevel = clapZones.transform.GetChild(scenarioNum).gameObject.transform;
+        lh.callClap(clapLevel.transform.GetChild(3).gameObject.transform, clapLevel.transform.GetChild(4).gameObject.transform, clapLevel.transform.GetChild(5).gameObject.transform);
+        rh.callClap(clapLevel.transform.GetChild(0).gameObject.transform, clapLevel.transform.GetChild(1).gameObject.transform, clapLevel.transform.GetChild(2).gameObject.transform);
+    }
+
 
     // getPunchTarget() is a helper function to generate a random area to launch the punch towards
     Transform getPunchTarget(int body) {

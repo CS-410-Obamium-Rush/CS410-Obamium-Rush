@@ -21,6 +21,14 @@ public class ButtonDebug : MonoBehaviour
     public Transform swipeR1;
     public Transform swipeR2;
 
+    public Transform clapLevel;
+    
+    
+
+
+
+
+
     /* Used to limit attacks to be one at a time
     The idea is to implement a lock-like system where an inititated attack will hold onto the lock
     and release the lock after the attack is done. These are public functions for the actual attacks 
@@ -42,8 +50,8 @@ public class ButtonDebug : MonoBehaviour
     Press number keys to activate something
     1: turn on left hand's rotation
     2: turn off left hand's rotation
-    3: turn on right hand's rotation
-    4: use head's punch attack
+    3: use head's punch attack
+    4: use both hand's clap attack
     5: use left hand's punch attack
     6: use left hand's swipe attack
     7: use right hand's punch attack
@@ -59,12 +67,13 @@ public class ButtonDebug : MonoBehaviour
             lh.setRotatorF();
             Debug.Log("2 was pressed");
         }
-        if (Input.GetKey(KeyCode.Alpha3)) {
-            rh.setRotatorT();
+        if (Input.GetKey(KeyCode.Alpha3) && key) {
+            head.callPunch(punchH);
             Debug.Log("3 was pressed");
         }
         if (Input.GetKey(KeyCode.Alpha4) && key) {
-            head.callPunch(punchH);
+            lh.callClap(clapLevel.transform.GetChild(3).gameObject.transform, clapLevel.transform.GetChild(4).gameObject.transform, clapLevel.transform.GetChild(5).gameObject.transform);
+            rh.callClap(clapLevel.transform.GetChild(0).gameObject.transform, clapLevel.transform.GetChild(1).gameObject.transform, clapLevel.transform.GetChild(2).gameObject.transform);
             Debug.Log("4 was pressed");
         }
         if (Input.GetKey(KeyCode.Alpha5) && key) {
