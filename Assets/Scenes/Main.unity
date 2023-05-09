@@ -148,12 +148,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 17457382}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 638adab21e205df4aaac0a7765443244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeInterval: 3
+  timeInterval: 1
   punchZones: {fileID: 323099316}
   swipeZones: {fileID: 183727212}
   clapZones: {fileID: 262949222}
@@ -167,7 +167,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 17457382}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee86ad65db2ca8f41b65befbdb46a75b, type: 3}
   m_Name: 
@@ -198,7 +198,6 @@ Transform:
   - {fileID: 370153915}
   - {fileID: 1976517823}
   - {fileID: 1830027175}
-  - {fileID: 1362286957}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1085,6 +1084,8 @@ MonoBehaviour:
   punchLaunchSpeed: 25
   punchRetractSpeed: 25
   spinSpeed: 1000
+  missleSpawner: {fileID: 1362286957}
+  misslePrefab: {fileID: 8075107345226129200, guid: f5a22469640f5504eb5a86e0cf325f1f, type: 3}
   lockSys: {fileID: 17457383}
   debugSys: {fileID: 17457384}
 --- !u!1 &395381592
@@ -2119,7 +2120,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 697083761}
-  m_LocalRotation: {x: -0.04560729, y: 0.000000034577795, z: 0.0000000015786422, w: 0.9989595}
+  m_LocalRotation: {x: -0.04560729, y: -0.000000034577795, z: -0.0000000015786422, w: 0.9989595}
   m_LocalPosition: {x: 0, y: 4.4, z: -17.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2834,12 +2835,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93894dd4549b397469666d9be4fca3da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rightHandHealth: 100
   atkPat: {fileID: 17457383}
-  leftHandHealth: 100
-  headHealth: 100
-  playerHealth: 100
-  enemyThreshold: 150
 --- !u!1 &1144665031
 GameObject:
   m_ObjectHideFlags: 0
@@ -3158,7 +3154,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1236700145}
-  m_LocalRotation: {x: -0.045607287, y: 0.000000017188476, z: 7.847364e-10, w: 0.9989595}
+  m_LocalRotation: {x: -0.045607287, y: -0.000000017188476, z: -7.847364e-10, w: 0.9989595}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3191,12 +3187,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1362286956}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: -10}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: -0.4285714, z: -1.4285713}
+  m_LocalScale: {x: 0.14285713, y: 0.14285713, z: 0.14285713}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 17457385}
-  m_RootOrder: 3
+  m_Father: {fileID: 370153915}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1365170996
 GameObject:
@@ -3813,6 +3809,10 @@ PrefabInstance:
     - target: {fileID: 1996879474490290465, guid: dedc431932b578747ae71fcc169c7b4b, type: 3}
       propertyPath: m_Name
       value: PlayerSprite
+      objectReference: {fileID: 0}
+    - target: {fileID: 1996879474490290465, guid: dedc431932b578747ae71fcc169c7b4b, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dedc431932b578747ae71fcc169c7b4b, type: 3}

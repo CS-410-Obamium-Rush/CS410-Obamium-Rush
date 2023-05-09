@@ -31,12 +31,20 @@ public class AttackPatterns : MonoBehaviour
     found in HandBehavior to decide the lock and unlock when appropiate.
     */
     
-    private bool key = true;
+    private static bool key = true;
+
     public void locker() {
-        key = false;
+        AttackPatterns.key = false;
     }
+
     public void unlocker() {
-        key = true;
+        //Debug.Log("Change Time");
+        rechargeTime = timeInterval;
+        AttackPatterns.key = true;
+    }
+
+    public bool getKey() {
+        return key;
     }
 
     // Use Start() to gather how long the enemy should wait before attacking
@@ -53,10 +61,12 @@ public class AttackPatterns : MonoBehaviour
         // Decrement the time if it has not ran out yet
         if (rechargeTime > 0 && key) {
             rechargeTime = rechargeTime - Time.deltaTime;
+            //Debug.Log("Countdown:" + rechargeTime);
         }
         // If time is ran out, the enemy is able to perform an attack;
         // A key check is used here to prevent multiple usages of this elseif case simotainously
         else if (key) {
+            
             // Lock this section; the actual attack's conclusion will unlock the key
             locker();
             /* Generate which hand to use and which attack to use
@@ -87,7 +97,6 @@ public class AttackPatterns : MonoBehaviour
                 }
 
                 // Reset the charge time after attack has been initated
-                rechargeTime = timeInterval;
             }
             // Hand Left Hand then attack call
             else if (bodyUse == 1 && leftUse) {
@@ -101,12 +110,10 @@ public class AttackPatterns : MonoBehaviour
                     clap();
                 }
                 // Reset the charge time after attack has been initated
-                rechargeTime = timeInterval;
             }
             else if (bodyUse == 2) {
                 punch(2);
             }
-            
         }
     }
 

@@ -70,8 +70,10 @@ public class HandBehavior : MonoBehaviour
         initRot = transform.localEulerAngles;
         initPos = transform.position;
         rotator = true;
+
         startPunch = false;
         retractPunch = false;
+
         posSwipe = false;
         useSwipe = false;
         retSwipe = false;

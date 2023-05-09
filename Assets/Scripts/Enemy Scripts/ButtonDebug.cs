@@ -37,7 +37,7 @@ public class ButtonDebug : MonoBehaviour
     This operates slightly different to AttackPatterns's lock system as their locker() function is used at different times.
     
     */
-    private bool key = true;
+    private static bool key = true;
     public void locker() {
         key = false;
     }
@@ -63,8 +63,8 @@ public class ButtonDebug : MonoBehaviour
             lh.setRotatorT();
             Debug.Log("1 was pressed");
         }
-        if (Input.GetKey(KeyCode.Alpha2)) {
-            lh.setRotatorF();
+        if (Input.GetKey(KeyCode.Alpha2) && key) {
+            head.callMissle(2);
             Debug.Log("2 was pressed");
         }
         if (Input.GetKey(KeyCode.Alpha3) && key) {

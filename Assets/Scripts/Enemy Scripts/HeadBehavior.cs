@@ -15,12 +15,20 @@ public class HeadBehavior : MonoBehaviour
     private bool idle;
     private bool startPunch;
     private bool retractPunch;
+    private bool startMissle;
+    
 
     public int punchLaunchSpeed;
     public int punchRetractSpeed;
     public int spinSpeed;
 
     private Transform targetPunch;
+    private Transform targetMissle;
+    private int missleAmt;
+    public Transform missleSpawner;
+    public GameObject misslePrefab;
+    private int missleGone;
+
 
     private Vector3 initPos;
     private Vector3 initRot;
@@ -37,6 +45,8 @@ public class HeadBehavior : MonoBehaviour
         initPos = transform.position;
         startPunch = false;
         retractPunch = false;
+        missleGone = 0;
+        missleAmt = 3;
     }
 
     // Update is called once per frame
@@ -44,6 +54,10 @@ public class HeadBehavior : MonoBehaviour
         if (idle) {
             transform.position = new Vector3(initPos.x, Mathf.Sin(Time.time * freq) * height + initPos.y, initPos.z);
             transform.localEulerAngles = new Vector3(initRot.x, Mathf.PingPong(Time.time * speed, range) - offset, initRot.z);
+            if (missleGone >= missleAmt) {
+                lockSys.unlocker();
+                missleGone = 0;
+            }
         }
         else if (startPunch) {
             transform.Rotate(new Vector3(0, spinSpeed, 0) * Time.deltaTime);
@@ -64,6 +78,15 @@ public class HeadBehavior : MonoBehaviour
                 debugSys.unlocker();
             }
         }
+        else if (startMissle) {
+            for (int i = 0; i < missleAmt; i++) {
+                Instantiate(misslePrefab, new Vector3(missleSpawner.position.x, missleSpawner.position.y, missleSpawner.position.z), Quaternion.identity);
+                //yield return new WaitForSeconds(0.5f);
+            }
+            startMissle = false;
+            idle = true;
+            
+        }
     }
 
     public void callPunch(Transform target) {
@@ -71,5 +94,18 @@ public class HeadBehavior : MonoBehaviour
         targetPunch = target;
         idle = false;
         startPunch = true;
+    }
+
+    public void callMissle(int amt) {
+        debugSys.locker();
+        //targetMissle = target;
+        missleAmt = amt;
+        idle = false;
+        startMissle = true;
+
+    }
+
+    public void countMissle(){
+        missleGone += 1;
     }
 }

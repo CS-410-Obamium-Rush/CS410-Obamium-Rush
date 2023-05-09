@@ -5,18 +5,18 @@ using UnityEngine;
 public class GameMonitor : MonoBehaviour
 {
     // For Enemy
-    public int rightHandHealth;
+    public static int rightHandHealth = 300;
     public AttackPatterns atkPat;
-    public int leftHandHealth;
-    public int headHealth;
-    private int enemyTotalHealth;
+    public static int leftHandHealth = 300;
+    public static int headHealth = 300;
+    private static int enemyTotalHealth;
 
     // For Player
-    public int playerHealth;
+    public static int playerHealth = 100;
     
     // For Powerups
-    public int enemyThreshold;
-    private bool powerUp1 = false;
+    public static int enemyThreshold;
+    private static bool powerUp1 = false;
 
     // Update() manages the progress of game in terms of player and enemy health
     void Update()
