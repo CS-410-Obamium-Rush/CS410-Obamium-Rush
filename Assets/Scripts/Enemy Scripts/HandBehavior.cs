@@ -9,8 +9,6 @@ public class HandBehavior : MonoBehaviour
 {
     
     Animator animator;
-    private bool isAttacking;
-
     private float deltaTimeCount = 0;
     private Vector3 initPos;
     private Vector3 initRot;
@@ -51,7 +49,6 @@ public class HandBehavior : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         initRot = transform.localEulerAngles;
-        isAttacking = false;
         initPos = transform.position;
         rotator = true;
         startPunch = false;
@@ -69,10 +66,7 @@ public class HandBehavior : MonoBehaviour
     {
         // Idle/rotate hands
         if (rotator) {
-            if (isAttacking == true) {
-                isAttacking = false;
-                animator.SetBool("isAttacking", isAttacking);
-            }
+            animator.SetBool("isAttacking", false);
             deltaTimeCount += Time.deltaTime * rotSpeed;
             // Spin the hand in a circular motion; direction is dictated by hand so one goes clockwise while the other goes counterclockwise
             float x = Mathf.Cos(deltaTimeCount) * width * dir;
@@ -91,6 +85,7 @@ public class HandBehavior : MonoBehaviour
         }
         // Returning Hand State (Punch)
         else if (retractPunch) {
+            animator.SetBool("isAttacking", false);
             transform.position = Vector3.MoveTowards(transform.position, initPos, punchRetractSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, initPos) < 0.001f) {
                 retractPunch = false;
@@ -164,10 +159,7 @@ public class HandBehavior : MonoBehaviour
 
     // Use callPunch() by other script to do punch attack
     public void callPunch(Transform target) {
-        if (isAttacking == false) {
-            isAttacking = true;
-            animator.SetBool("isAttacking", isAttacking);
-        }
+        animator.SetBool("isAttacking", true);
         debugSys.locker();
         targetPunch = target;
         rotator = false;
@@ -176,10 +168,7 @@ public class HandBehavior : MonoBehaviour
 
     // Use callSwipe() by other script to do swipe attack
     public void callSwipe(Transform targetStart, Transform targetEnd) {
-        if (isAttacking == false) {
-            isAttacking = true;
-            animator.SetBool("isAttacking", isAttacking);
-        }
+        animator.SetBool("isAttacking", true);
         debugSys.locker();
         targetSwipeStart = targetStart;
         targetSwipeEnd = targetEnd;
