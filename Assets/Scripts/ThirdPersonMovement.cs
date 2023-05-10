@@ -54,8 +54,16 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void FixedUpdate() 
     {
-        Vector3 movement = new Vector3(movementX, 0.0f, movementY);
-        rb.AddForce(movement * speed);
+        if (transform.position.x < 13) {
+            Vector3 movement = new Vector3(movementX, 0.0f, movementY);
+            rb.AddForce(movement * speed);
+        }
+
+        if (rb.velocity.magnitude < .01) 
+        {
+         rb.velocity = Vector3.zero;
+         rb.angularVelocity = Vector3.zero;
+        } 
 
         if(isGrounded())
         {
