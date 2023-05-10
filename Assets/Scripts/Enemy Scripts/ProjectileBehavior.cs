@@ -23,17 +23,23 @@ public class ProjectileBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, movPlayer.position, speed * Time.deltaTime);
+        Vector3 playerPos = new Vector3(movPlayer.position.x, 0, movPlayer.position.z);
+        transform.position = Vector3.MoveTowards(transform.position, playerPos, speed * Time.deltaTime);
     }
 
     void OnTriggerEnter(Collider other) {
         if (other.gameObject.CompareTag("Player")) {
             gm.playerTakeDamage(10);
-            Debug.Log("Player has been hit");
+            //Debug.Log("Player has been hit");
         }
+        /*
         else if (other.gameObject.CompareTag("Damage")) {
-            Debug.Log("Projectile has been hit");
+            //Debug.Log("Projectile has been hit");
         }
+        else if (other.gameObject.CompareTag("Ground")) {
+            Debug.Log("Ground has been hit");
+        }
+        */
         head.countMissle();
         Destroy(gameObject);
     }

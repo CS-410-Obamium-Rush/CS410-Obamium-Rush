@@ -28,7 +28,7 @@ public class HeadBehavior : MonoBehaviour
     public Transform missleSpawner;
     public GameObject misslePrefab;
     private int missleGone;
-
+    private bool doOnce = false;
 
     private Vector3 initPos;
     private Vector3 initRot;
@@ -46,7 +46,7 @@ public class HeadBehavior : MonoBehaviour
         startPunch = false;
         retractPunch = false;
         missleGone = 0;
-        missleAmt = 3;
+        missleAmt = 2;
     }
 
     // Update is called once per frame
@@ -54,10 +54,6 @@ public class HeadBehavior : MonoBehaviour
         if (idle) {
             transform.position = new Vector3(initPos.x, Mathf.Sin(Time.time * freq) * height + initPos.y, initPos.z);
             transform.localEulerAngles = new Vector3(initRot.x, Mathf.PingPong(Time.time * speed, range) - offset, initRot.z);
-            if (missleGone >= missleAmt) {
-                lockSys.unlocker();
-                missleGone = 0;
-            }
         }
         else if (startPunch) {
             transform.Rotate(new Vector3(0, spinSpeed, 0) * Time.deltaTime);
@@ -79,13 +75,26 @@ public class HeadBehavior : MonoBehaviour
             }
         }
         else if (startMissle) {
-            for (int i = 0; i < missleAmt; i++) {
-                Instantiate(misslePrefab, new Vector3(missleSpawner.position.x, missleSpawner.position.y, missleSpawner.position.z), Quaternion.identity);
-                //yield return new WaitForSeconds(0.5f);
+            if (doOnce) {
+                StartCoroutine(spawn(missleAmt));
+                doOnce = false;
             }
-            startMissle = false;
-            idle = true;
+            transform.position = new Vector3(initPos.x, Mathf.Sin(Time.time * freq) * height + initPos.y, initPos.z);
+            transform.localEulerAngles = new Vector3(initRot.x, Mathf.PingPong(Time.time * speed, range) - offset, initRot.z);
+            if (missleGone >= missleAmt) {
+                startMissle = false;
+                idle = true;
+                missleGone = 0;
+                lockSys.unlocker();
+                debugSys.unlocker();
+            }
             
+        }
+    }
+    IEnumerator spawn(int missleAmt) {
+        for (int i = 0; i < missleAmt; i++) {
+            Instantiate(misslePrefab, new Vector3(missleSpawner.position.x, missleSpawner.position.y, missleSpawner.position.z), Quaternion.identity);
+            yield return new WaitForSeconds(2f);
         }
     }
 
@@ -98,6 +107,7 @@ public class HeadBehavior : MonoBehaviour
 
     public void callMissle(int amt) {
         debugSys.locker();
+        doOnce = true;
         //targetMissle = target;
         missleAmt = amt;
         idle = false;
