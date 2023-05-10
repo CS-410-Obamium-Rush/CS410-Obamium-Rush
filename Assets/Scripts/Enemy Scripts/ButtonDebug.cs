@@ -48,7 +48,7 @@ public class ButtonDebug : MonoBehaviour
     
     /*
     Press number keys to activate something
-    1: turn on left hand's rotation
+    1: Quit Application
     2: turn off left hand's rotation
     3: use head's punch attack
     4: use both hand's clap attack
@@ -59,8 +59,8 @@ public class ButtonDebug : MonoBehaviour
     */
 
     void Update() {
-        if (Input.GetKey(KeyCode.Alpha1)) {
-            lh.setRotatorT();
+        if (Input.GetKey("escape")) {
+            Application.Quit();
             Debug.Log("1 was pressed");
         }
         if (Input.GetKey(KeyCode.Alpha2) && key) {
