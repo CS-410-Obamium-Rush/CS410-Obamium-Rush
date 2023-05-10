@@ -112,7 +112,6 @@ public class HeadBehavior : MonoBehaviour
         missleAmt = amt;
         idle = false;
         startMissle = true;
-
     }
 
     public void countMissle(){

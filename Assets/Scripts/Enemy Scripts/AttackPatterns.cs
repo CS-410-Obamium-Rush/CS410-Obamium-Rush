@@ -70,17 +70,19 @@ public class AttackPatterns : MonoBehaviour
             // Lock this section; the actual attack's conclusion will unlock the key
             locker();
             /* Generate which hand to use and which attack to use
-            Hand
+            Body
                 0 = Right
                 1 = Left
                 2 = Head
+
             Attack (Hand)
                 0 = Punch
                 1 = Swipe/Sweep
                 2 = Clap
 
             Attack (Head)
-                0 = Bash
+                0 = Punch
+                1/2 = Missle
             */
             int atkUse = Random.Range(0,3);
             int bodyUse = Random.Range(0,3);
@@ -112,7 +114,12 @@ public class AttackPatterns : MonoBehaviour
                 // Reset the charge time after attack has been initated
             }
             else if (bodyUse == 2) {
-                punch(2);
+                if (atkUse == 0) {
+                    punch(2);
+                }
+                else {
+                    missle();
+                }
             }
         }
     }
@@ -130,8 +137,8 @@ public class AttackPatterns : MonoBehaviour
         else {
             head.callPunch(target);
         }
-
     }
+
 
     // swipe() calls the swipe attack based on which hand it is using
     void sweep(int hand) {
@@ -150,6 +157,11 @@ public class AttackPatterns : MonoBehaviour
         Transform clapLevel = clapZones.transform.GetChild(scenarioNum).gameObject.transform;
         lh.callClap(clapLevel.transform.GetChild(3).gameObject.transform, clapLevel.transform.GetChild(4).gameObject.transform, clapLevel.transform.GetChild(5).gameObject.transform);
         rh.callClap(clapLevel.transform.GetChild(0).gameObject.transform, clapLevel.transform.GetChild(1).gameObject.transform, clapLevel.transform.GetChild(2).gameObject.transform);
+    }
+
+    void missle() {
+        int scenarioNum = Random.Range(1,5);
+        head.callMissle(scenarioNum);
     }
 
 
