@@ -60,7 +60,11 @@ public class HandBehavior : MonoBehaviour
     private bool useClap;
     private bool backClap;
     private bool retClap;      
+    private bool defeated;
 
+    public void setDefeat(){
+        defeated = true;
+    }
 
 
     // Use Start() to initiate the states
@@ -70,7 +74,7 @@ public class HandBehavior : MonoBehaviour
         initRot = transform.localEulerAngles;
         initPos = transform.position;
         rotator = true;
-
+        defeated = false;
         startPunch = false;
         retractPunch = false;
 
@@ -94,12 +98,18 @@ public class HandBehavior : MonoBehaviour
         // Idle/rotate hands
         if (rotator) {
             animator.SetBool("isAttacking", false);
-            deltaTimeCount += Time.deltaTime * rotSpeed;
-            // Spin the hand in a circular motion; direction is dictated by hand so one goes clockwise while the other goes counterclockwise
-            float x = Mathf.Cos(deltaTimeCount) * width * dir;
-            float y = Mathf.Sin(deltaTimeCount) * height * dir;
-            transform.position = new Vector3(initPos.x + x, initPos.y + y, initPos.z);
+            if (defeated) 
+                doRot(90, initRot.y, initRot.z);
+            else {
+                deltaTimeCount += Time.deltaTime * rotSpeed;
+                // Spin the hand in a circular motion; direction is dictated by hand so one goes clockwise while the other goes counterclockwise
+                float x = Mathf.Cos(deltaTimeCount) * width * dir;
+                float y = Mathf.Sin(deltaTimeCount) * height * dir;
+                transform.position = new Vector3(initPos.x + x, initPos.y + y, initPos.z);
+            }
+            
         }
+        
         // Punching State
         else if (startPunch) {
             doRot(0f, initRot.y, initRot.z);

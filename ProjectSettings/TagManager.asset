@@ -4,10 +4,13 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Wall
   - Damage
   - Projectile
   - Ground
+  - Enemy
+  - Left Hand
+  - Right Hand
+  - Head
   layers:
   - Default
   - TransparentFX

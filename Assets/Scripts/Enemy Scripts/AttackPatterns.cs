@@ -38,14 +38,11 @@ public class AttackPatterns : MonoBehaviour
     }
 
     public void unlocker() {
-        //Debug.Log("Change Time");
+        Debug.Log("Change Time");
         rechargeTime = timeInterval;
         AttackPatterns.key = true;
     }
 
-    public bool getKey() {
-        return key;
-    }
 
     // Use Start() to gather how long the enemy should wait before attacking
     void Start()
@@ -58,10 +55,11 @@ public class AttackPatterns : MonoBehaviour
     // Use Update() to decrement time and initate an attack from HandBehavior
     void Update()
     {
+        bool atkDone = false;
         // Decrement the time if it has not ran out yet
         if (rechargeTime > 0 && key) {
             rechargeTime = rechargeTime - Time.deltaTime;
-            //Debug.Log("Countdown:" + rechargeTime);
+            Debug.Log("Countdown:" + rechargeTime);
         }
         // If time is ran out, the enemy is able to perform an attack;
         // A key check is used here to prevent multiple usages of this elseif case simotainously
@@ -90,37 +88,46 @@ public class AttackPatterns : MonoBehaviour
             if (bodyUse == 0 && rightUse) {
                 if (atkUse == 0) {
                     punch(0);
+                    atkDone = true;
                 }
                 else if (atkUse == 1) {
                     sweep(0);
+                    atkDone = true;
                 }
-                else if (atkUse == 2) {
+                else if (atkUse == 2 && leftUse) {
                     clap();
+                    atkDone = true;
                 }
-
                 // Reset the charge time after attack has been initated
             }
             // Hand Left Hand then attack call
             else if (bodyUse == 1 && leftUse) {
                 if (atkUse == 0) {
                     punch(1);
+                    atkDone = true;
                 }
                 else if (atkUse == 1) {
                     sweep(1);
+                    atkDone = true;
                 }
-                else if (atkUse == 2) {
+                else if (atkUse == 2 && rightUse) {
                     clap();
+                    atkDone = true;
                 }
                 // Reset the charge time after attack has been initated
             }
             else if (bodyUse == 2) {
                 if (atkUse == 0) {
                     punch(2);
+                    atkDone = true;
                 }
-                else {
+                else if (atkUse == 1){
                     missle();
+                    atkDone = true;
                 }
             }
+            if (!atkDone)
+                key = true;
         }
     }
 
@@ -128,15 +135,12 @@ public class AttackPatterns : MonoBehaviour
     void punch(int body) {
         Transform target = getPunchTarget(body);
         // Handiness determines which hand to use
-        if (body == 0) {
+        if (body == 0) 
             rh.callPunch(target);
-        }
-        else if (body == 1) {
+        else if (body == 1) 
             lh.callPunch(target);
-        }
-        else {
+        else 
             head.callPunch(target);
-        }
     }
 
 
@@ -144,12 +148,10 @@ public class AttackPatterns : MonoBehaviour
     void sweep(int hand) {
         Transform[] sweepTargets = getSweepTarget();
         // Handiness determines which hand to use and the zones that dictate the motion
-        if (hand == 0) {
+        if (hand == 0) 
             rh.callSwipe(sweepTargets[0], sweepTargets[1]);
-        }
-        else {
+        else 
             lh.callSwipe(sweepTargets[1], sweepTargets[0]);
-        }
     }
 
     void clap() {
@@ -160,7 +162,7 @@ public class AttackPatterns : MonoBehaviour
     }
 
     void missle() {
-        int scenarioNum = Random.Range(1,5);
+        int scenarioNum = Random.Range(1,4);
         head.callMissle(scenarioNum);
     }
 
@@ -230,11 +232,14 @@ public class AttackPatterns : MonoBehaviour
     // Functions used by the Game Monitor to disable hand use
     public void disableLeft() {
         leftUse = false;
+        lh.setDefeat();
     }
 
     public void disableRight() {
         rightUse = false;
+        rh.setDefeat();
     }
+
 
 
 }

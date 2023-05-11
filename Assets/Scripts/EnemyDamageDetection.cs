@@ -5,7 +5,9 @@ using UnityEngine;
 public class EnemyDamageDetection : MonoBehaviour
 {
     private Renderer enemyRenderer;
+    public GameMonitor gm;
     private bool isFlashing = false;
+    
     Color initColor;
 
     // Start is called before the first frame update
@@ -23,7 +25,25 @@ public class EnemyDamageDetection : MonoBehaviour
 
     void OnParticleCollision(GameObject other) 
     {
-        if(isFlashing == false) {
+        bool doFlash = false;
+        if (this.gameObject.name == "RightCore") {
+            doFlash = true;
+            gm.enemyTakeDamage(5,0);
+        }
+            
+        else if (this.gameObject.name == "LeftCore") {
+            doFlash = true;
+            gm.enemyTakeDamage(5,1);
+        }
+            
+        else if (this.gameObject.name == "obama_sphere") {
+            if (gm.handsDefeated()) {
+                doFlash = true;
+                gm.enemyTakeDamage(5,2);
+            }
+        }
+
+        if(isFlashing == false && doFlash == true) {
             StartCoroutine(flashDamageColor());
         }
     }
