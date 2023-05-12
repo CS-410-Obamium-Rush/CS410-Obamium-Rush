@@ -7,6 +7,7 @@ using UnityEngine;
 public class floorSpawner : MonoBehaviour {
 
     public GameObject floorTile;
+    public GameObject spawnPoint;
     Vector3 nextSpawnPoint;
 
     public void spawnFloor () {
@@ -21,6 +22,10 @@ public class floorSpawner : MonoBehaviour {
         // get the next spawnpoint
         nextSpawnPoint = temp.transform.GetChild(1).transform.position;
     }
+
+    /*public void spawnTile(){
+        Instantiate(floorTile, new Vector3(0, 0, 85.0f), Quaternion.identity);
+    } */
 
     // Start is called before the first frame update
     void Start(){

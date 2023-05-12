@@ -11,6 +11,8 @@ TagManager:
   - Left Hand
   - Right Hand
   - Head
+  - gDestroy
+  - gSpawn
   layers:
   - Default
   - TransparentFX
