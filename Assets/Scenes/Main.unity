@@ -960,7 +960,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3633498857830733699, guid: 5431318fa617ca14493e59e3f1626a5b, type: 3}
       propertyPath: CollisionModule.collidesWith.m_Bits
-      value: 375
+      value: 512
       objectReference: {fileID: 0}
     - target: {fileID: 3633498857830733699, guid: 5431318fa617ca14493e59e3f1626a5b, type: 3}
       propertyPath: CollisionModule.m_Planes.Array.size
@@ -1360,6 +1360,10 @@ PrefabInstance:
       propertyPath: gm
       value: 
       objectReference: {fileID: 1088646354}
+    - target: {fileID: 5105724933424656235, guid: 02fbd5d9ae2245c418dc69b36907b654, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 5105724933424656235, guid: 02fbd5d9ae2245c418dc69b36907b654, type: 3}
       propertyPath: m_TagString
       value: Head
@@ -2810,7 +2814,7 @@ GameObject:
   - component: {fileID: 1086231935}
   - component: {fileID: 1086231934}
   - component: {fileID: 1086231937}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: LeftCore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3340,7 +3344,7 @@ GameObject:
   - component: {fileID: 1397686218}
   - component: {fileID: 1397686217}
   - component: {fileID: 1397686220}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: RightCore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4654,6 +4658,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1088646353}
     m_Modifications:
+    - target: {fileID: 8879080919350134148, guid: 138b1fb074c8faf45878273bbef504af, type: 3}
+      propertyPath: m_Drag
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8879080919350134148, guid: 138b1fb074c8faf45878273bbef504af, type: 3}
+      propertyPath: m_Mass
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8879080919350134148, guid: 138b1fb074c8faf45878273bbef504af, type: 3}
+      propertyPath: m_AngularDrag
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8879080919350134149, guid: 138b1fb074c8faf45878273bbef504af, type: 3}
       propertyPath: m_Name
       value: MovingPlayer
@@ -4666,6 +4682,14 @@ PrefabInstance:
       propertyPath: laser
       value: 
       objectReference: {fileID: 1183108644}
+    - target: {fileID: 8879080919350134151, guid: 138b1fb074c8faf45878273bbef504af, type: 3}
+      propertyPath: speed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8879080919350134151, guid: 138b1fb074c8faf45878273bbef504af, type: 3}
+      propertyPath: jumpAmount
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 8879080919350134170, guid: 138b1fb074c8faf45878273bbef504af, type: 3}
       propertyPath: m_RootOrder
       value: 1
