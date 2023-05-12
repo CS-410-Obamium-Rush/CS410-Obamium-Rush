@@ -54,13 +54,20 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void FixedUpdate() 
     {
-        Vector3 movement = new Vector3(movementX, 0.0f, movementY);
-        rb.AddForce(movement * speed);
-
         if(isGrounded())
         {
+            Vector3 movement = new Vector3(movementX, 0.0f, movementY);
+            // rb.AddForce(movement * speed);
+            rb.velocity = movement * speed;
             jumpCount = 0;
         }
+
+        if(!(isGrounded()))
+        {
+            Vector3 movement = new Vector3(movementX, 0.0f, movementY);
+            rb.AddForce(movement * speed*15);
+        }
+      
     }
 
     // Update is called once per frame
