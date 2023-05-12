@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+// Author: EAVI
+// Co-author: Joey Le
 
 public class basicFloorBehavior : MonoBehaviour
 {
@@ -10,7 +12,7 @@ public class basicFloorBehavior : MonoBehaviour
     private GameObject fs;
     private floorSpawner floorCounter;
 
-    /*
+    /* joey--
     ! I did create a new prefab that combines both gameObject elements of the original ground prefab.
     This new one is named NewGround. The code should still work with the original prefab in theory.
 

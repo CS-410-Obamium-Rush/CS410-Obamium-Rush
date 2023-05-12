@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //author: EAVI
+// Co-author: Joey Le
 
 public class floorSpawner : MonoBehaviour {
     private int tileCount;
@@ -48,13 +49,16 @@ public class floorSpawner : MonoBehaviour {
 
         //! These variables names are terrible, feel free to change
         //! These create the spawn locations of the first tiles at the start of the game
+
+        // use a for loop to set tiles
+        // keep legacy names?
         Vector3 spawnFrontist = new Vector3(0,0,-13);
         Vector3 spawnFront = new Vector3(0,0,-3);
         Vector3 spawnBack = new Vector3(0,0,7);
         Vector3 spawnBacker = new Vector3(0,0,17);
         Vector3 spawnBackerer = new Vector3(0,0,27);
         Vector3 spawnBackererer = new Vector3(0,0,37);
-        Vector3 spawnBackerererer = new Vector3(0,0,47);
+        Vector3 spawnBackerererer = new Vector3(0,0,47); // causes generation here? Joey thinks so
         //! These created the floor tiles for the start of the game; the very far back one,
         //! Vector3 spawnBackerererer = new Vector3(0,0,47), will start the generation of new tiles when leaving the box collider
         //! Associated for the floorSpawner game object
