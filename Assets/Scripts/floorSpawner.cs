@@ -23,8 +23,10 @@ public class floorSpawner : MonoBehaviour {
         nextSpawnPoint = temp.transform.GetChild(1).transform.position;
     }
 
-    /*public void spawnTile(){
-        Instantiate(floorTile, new Vector3(0, 0, 85.0f), Quaternion.identity);
+    /* public void spawnTile(){
+        // other.transform.position = lastSpawnPos.position + Vector3(0, 0, 85.0f);
+        // lastSpawnPos = other.transform;
+        // GameObject temp = Instantiate(floorTile, Vector3(0,0,85.0f), Quaternion.identity);
     } */
 
     // Start is called before the first frame update
@@ -33,7 +35,7 @@ public class floorSpawner : MonoBehaviour {
         // spawn 5 pieces of floor
         // NOTE: the floor actually starts behind the player
         uint i;
-        for(i = 0; i < 5; i++) {
+        for(i = 0; i < 10; i++) {
             spawnFloor();
         }
             

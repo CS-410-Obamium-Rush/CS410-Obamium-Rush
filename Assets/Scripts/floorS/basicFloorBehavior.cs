@@ -16,13 +16,15 @@ public class basicFloorBehavior : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other){
+        
         // check tag if it's the destroyer tag
-        if(other.gameObject.tag == "gDestroy"){
-            // make new tiles
-            groundMaker.spawnFloor();
 
+        if(other.gameObject.tag == "gDestroy"){
             // erase old tiles 2 seconds after leaving them
-            Destroy(gameObject);
+            Destroy(gameObject, 2);
+            // make new tiles
+
+            groundMaker.spawnFloor();
         }
     }
 
