@@ -15,7 +15,6 @@ public class floorTile : MonoBehaviour{
     private void OnTriggerExit(Collider other){
         // make new tiles
         groundMaker.spawnFloor();
-
         // erase old tiles 2 seconds after leaving them
         Destroy(gameObject, 2);
     }

@@ -38,7 +38,7 @@ public class AttackPatterns : MonoBehaviour
     }
 
     public void unlocker() {
-        Debug.Log("Change Time");
+        //Debug.Log("Change Time");
         rechargeTime = timeInterval;
         AttackPatterns.key = true;
     }
@@ -59,7 +59,7 @@ public class AttackPatterns : MonoBehaviour
         // Decrement the time if it has not ran out yet
         if (rechargeTime > 0 && key) {
             rechargeTime = rechargeTime - Time.deltaTime;
-            Debug.Log("Countdown:" + rechargeTime);
+            //Debug.Log("Countdown:" + rechargeTime);
         }
         // If time is ran out, the enemy is able to perform an attack;
         // A key check is used here to prevent multiple usages of this elseif case simotainously
