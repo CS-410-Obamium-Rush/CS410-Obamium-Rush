@@ -8,7 +8,7 @@ public class basicFloorBehavior : MonoBehaviour
 {
     public float speed = 7.5f;
     private Rigidbody rb;
-    private static int count = 0;
+    //private static int count = 0;
     private GameObject fs;
     private floorSpawner floorCounter;
 
@@ -42,7 +42,7 @@ public class basicFloorBehavior : MonoBehaviour
             Destroy(gameObject); // Made this instance
             // make new tiles
             //! This is just a debug 
-            Debug.Log("Tile Destroy: " + count++);
+            //Debug.Log("Tile Destroy: " + count++);
             //groundMaker.spawnFloor();
         }
     }
@@ -52,9 +52,5 @@ public class basicFloorBehavior : MonoBehaviour
         Vector3 constForward = Vector3.back * speed * Time.deltaTime;
         rb.MovePosition(rb.position + constForward);
         //transform.position = constForward;
-        if (Input.GetKey("escape")) {
-            Application.Quit();
-            Debug.Log("1 was pressed");
-        }
     }
 }

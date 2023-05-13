@@ -24,6 +24,8 @@ public class AttackPatterns : MonoBehaviour
     private bool leftUse;
     private bool rightUse;
 
+    
+    public DamageDealer dmg;
     /* 
     Using a lock system to prevent multiple attacks occuring at once; only one attack at a time
     The idea is to implement a lock-like system where an inititated attack will hold onto the lock
@@ -87,14 +89,17 @@ public class AttackPatterns : MonoBehaviour
             // Right Hand then attack call
             if (bodyUse == 0 && rightUse) {
                 if (atkUse == 0) {
+                    dmg.setDmg(15);
                     punch(0);
                     atkDone = true;
                 }
                 else if (atkUse == 1) {
+                    dmg.setDmg(10);
                     sweep(0);
                     atkDone = true;
                 }
                 else if (atkUse == 2 && leftUse) {
+                    dmg.setDmg(5);
                     clap();
                     atkDone = true;
                 }
@@ -103,14 +108,17 @@ public class AttackPatterns : MonoBehaviour
             // Hand Left Hand then attack call
             else if (bodyUse == 1 && leftUse) {
                 if (atkUse == 0) {
+                    dmg.setDmg(15);
                     punch(1);
                     atkDone = true;
                 }
                 else if (atkUse == 1) {
+                    dmg.setDmg(10);
                     sweep(1);
                     atkDone = true;
                 }
                 else if (atkUse == 2 && rightUse) {
+                    dmg.setDmg(5);
                     clap();
                     atkDone = true;
                 }
@@ -118,10 +126,12 @@ public class AttackPatterns : MonoBehaviour
             }
             else if (bodyUse == 2) {
                 if (atkUse == 0) {
+                    dmg.setDmg(20);
                     punch(2);
                     atkDone = true;
                 }
                 else if (atkUse == 1){
+                    dmg.setDmg(10);
                     missle();
                     atkDone = true;
                 }
@@ -240,6 +250,7 @@ public class AttackPatterns : MonoBehaviour
         rh.setDefeat();
     }
 
+    
 
 
 }

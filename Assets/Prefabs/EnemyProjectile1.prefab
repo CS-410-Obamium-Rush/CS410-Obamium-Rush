@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 692185003252172451}
   - component: {fileID: 839635950176169737}
   - component: {fileID: 7402489350622984562}
-  - component: {fileID: 1803573743172431181}
   - component: {fileID: 7308292942636906724}
   m_Layer: 0
   m_Name: Cube
@@ -85,19 +84,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &1803573743172431181
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3089049938443236579}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1.1, y: 1.1, z: 1.1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &7308292942636906724
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -124,7 +110,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5226471818548892099}
   - component: {fileID: 8872398751898998021}
-  - component: {fileID: 1567878458085798242}
+  - component: {fileID: 1659604809525372434}
   m_Layer: 0
   m_Name: EnemyProjectile1
   m_TagString: Enemy
@@ -162,7 +148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 17
---- !u!136 &1567878458085798242
+--- !u!136 &1659604809525372434
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -172,10 +158,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 1.5
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0.4}
+  m_Radius: 1
+  m_Height: 4
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8090980847454458901
 GameObject:
   m_ObjectHideFlags: 0
@@ -187,7 +173,6 @@ GameObject:
   - component: {fileID: 3907846401437021270}
   - component: {fileID: 4976375809803924582}
   - component: {fileID: 3553214543883131958}
-  - component: {fileID: 8271725855276535404}
   - component: {fileID: 3575615032646847368}
   m_Layer: 0
   m_Name: Cylinder
@@ -261,20 +246,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &8271725855276535404
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8090980847454458901}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  m_Radius: 0.7
-  m_Height: 2.2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!54 &3575615032646847368
 Rigidbody:
   m_ObjectHideFlags: 0

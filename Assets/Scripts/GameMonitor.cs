@@ -81,11 +81,10 @@ public class GameMonitor : MonoBehaviour
     2 == Head
     */
     public void enemyTakeDamage(int amt, int body) {
-        Debug.Log("Damage: " + body);
+        //Debug.Log("Damage: " + body);
         if (body == 0) {
             rightHandHealth -= amt;
             if (rightHandHealth <= 0) {
-                //Function to disable right hand
                 atkPat.disableRight();
             }
         }
@@ -93,7 +92,6 @@ public class GameMonitor : MonoBehaviour
             leftHandHealth -= amt;
             //Function to disable left hand
             if (leftHandHealth <= 0) {
-                //Function to disable right hand
                  atkPat.disableLeft();
             }
         }

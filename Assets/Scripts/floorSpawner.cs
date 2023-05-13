@@ -10,7 +10,7 @@ public class floorSpawner : MonoBehaviour {
     public GameObject floorTile;
     public GameObject spawnPoint;
     Vector3 nextSpawnPoint;
-    private int count = 0;
+    //private int count = 0;
 
     public void spawnFloor () {
         /* how to spawn an object in unity
@@ -75,7 +75,7 @@ public class floorSpawner : MonoBehaviour {
     //! This involves changing the structure so that the floor spawner is spawning the floors rather than
     //! basicFloorBehavior relying on the destruction of the tiles
     private void OnTriggerExit(Collider other){
-        Debug.Log("Tile Created: " + count++);
+        //Debug.Log("Tile Created: " + count++);
         spawnFloor();
     }
 

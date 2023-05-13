@@ -29,8 +29,8 @@ public class ProjectileBehavior : MonoBehaviour
 
     void OnTriggerEnter(Collider other) {
         if (other.gameObject.CompareTag("Player")) {
+            Debug.Log("Player has been hit: -10");
             gm.playerTakeDamage(10);
-            //Debug.Log("Player has been hit");
         }
         /*
         else if (other.gameObject.CompareTag("Damage")) {
