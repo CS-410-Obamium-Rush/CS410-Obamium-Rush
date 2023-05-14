@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+//Author: Peter
+//Co-author: EAVI
+
 public class ThirdPersonMovement : MonoBehaviour
 {
     public GameObject laser;
@@ -40,8 +43,6 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             rb.AddForce(Vector3.up * jumpAmount, ForceMode.Impulse);
 
-            // revert to .play() if this doesn't work
-            // m_AudioSource.Play();
             playersfx.playJump();
             jumpCount++;  
         }
@@ -74,10 +75,9 @@ public class ThirdPersonMovement : MonoBehaviour
       
     }
 
-    // Update is called once per frame
     void Update()
     {
-        // QoL would like to make this while for the sfx
+        // EA QoL would like to make this while for the sfx
         if(Input.GetMouseButton(0))
         {
             playersfx.playShoot();
@@ -86,12 +86,11 @@ public class ThirdPersonMovement : MonoBehaviour
             emissionModule.enabled = true;
         }
         // DO NOT FUCKING REMOVE THIS ELSE
-        // YOU WILL START AN INFINITE LOOP
+        // YOU WILL START AN INFINITE LOOP -- EAVI
         else
         {
             var emissionModule = laser.GetComponent<ParticleSystem>().emission;
             emissionModule.enabled = false;
         }
     }
-
 }
