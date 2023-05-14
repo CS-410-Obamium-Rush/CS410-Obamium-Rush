@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 8092503449787763018}
   - component: {fileID: 4088022199182730350}
   - component: {fileID: 8217802939535521589}
-  - component: {fileID: 6920322896149705530}
+  - component: {fileID: 6881753508136427754}
   m_Layer: 0
   m_Name: NewGround
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 7.5
---- !u!54 &6920322896149705530
+--- !u!54 &6881753508136427754
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

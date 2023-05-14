@@ -69,6 +69,7 @@ public class AttackPatterns : MonoBehaviour
             
             // Lock this section; the actual attack's conclusion will unlock the key
             locker();
+            
             /* Generate which hand to use and which attack to use
             Body
                 0 = Right
@@ -132,6 +133,7 @@ public class AttackPatterns : MonoBehaviour
                 }
                 else if (atkUse == 1){
                     dmg.setDmg(10);
+                    //Debug.Log("Missles Shot");
                     missle();
                     atkDone = true;
                 }

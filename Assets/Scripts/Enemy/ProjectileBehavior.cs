@@ -7,15 +7,15 @@ public class ProjectileBehavior : MonoBehaviour
 
     private HeadBehavior head;
     public int speed = 0;
-    private Transform movPlayer;
+    private Transform playerHitBox;
     private GameMonitor gm;
-    private GameObject playerGO;
+    private GameObject gmObject;
     // Start is called before the first frame update
     void Start()
     {
-        playerGO = GameObject.Find("Player");
-        movPlayer = playerGO.transform.GetChild(1).gameObject.transform;
-        gm = playerGO.GetComponent<GameMonitor>();
+        gmObject = GameObject.Find("GameStorage");
+        playerHitBox = GameObject.Find("MovingPlayer").transform.GetChild(0).gameObject.transform;
+        gm = gmObject.GetComponent<GameMonitor>();
         head = GameObject.Find("Enemy").transform.GetChild(0).GetComponent<HeadBehavior>();
         transform.localEulerAngles = new Vector3(0, 180, 0);
     }
@@ -23,7 +23,7 @@ public class ProjectileBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 playerPos = new Vector3(movPlayer.position.x, 0, movPlayer.position.z);
+        Vector3 playerPos = new Vector3(playerHitBox.position.x, 0, playerHitBox.position.z);
         transform.position = Vector3.MoveTowards(transform.position, playerPos, speed * Time.deltaTime);
     }
 
@@ -31,16 +31,14 @@ public class ProjectileBehavior : MonoBehaviour
         if (other.gameObject.CompareTag("Player")) {
             Debug.Log("Player has been hit: -10");
             gm.playerTakeDamage(10);
-        }
-        /*
-        else if (other.gameObject.CompareTag("Damage")) {
-            //Debug.Log("Projectile has been hit");
+            head.countMissle();
+            Destroy(gameObject);
         }
         else if (other.gameObject.CompareTag("Ground")) {
             Debug.Log("Ground has been hit");
+            head.countMissle();
+            Destroy(gameObject);
         }
-        */
-        head.countMissle();
-        Destroy(gameObject);
+
     }
 }
