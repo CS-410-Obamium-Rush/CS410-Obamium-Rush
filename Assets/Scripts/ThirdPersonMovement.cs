@@ -9,7 +9,9 @@ public class ThirdPersonMovement : MonoBehaviour
     public float speed = 6f;
     public float jumpAmount = 10;
 
-    AudioSource m_AudioSource;  // EA contribution
+    // EA contribution
+    public playerAudioManager playersfx;
+    AudioSource m_AudioSource;
 
     private Rigidbody rb;
     private float movementX;
@@ -38,7 +40,9 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             rb.AddForce(Vector3.up * jumpAmount, ForceMode.Impulse);
 
-            m_AudioSource.Play();
+            // revert to .play() if this doesn't work
+            // m_AudioSource.Play();
+            playersfx.playJump();
             jumpCount++;  
         }
     }
@@ -73,17 +77,21 @@ public class ThirdPersonMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // QoL would like to make this while for the sfx
         if(Input.GetMouseButton(0))
         {
+            playersfx.playShoot();
+
             var emissionModule = laser.GetComponent<ParticleSystem>().emission;
             emissionModule.enabled = true;
         }
+        // DO NOT FUCKING REMOVE THIS ELSE
+        // YOU WILL START AN INFINITE LOOP
         else
         {
             var emissionModule = laser.GetComponent<ParticleSystem>().emission;
             emissionModule.enabled = false;
         }
-
     }
-}
 
+}
