@@ -18,9 +18,8 @@ public class GameMonitor : MonoBehaviour
     public int enemyThreshold;
     private bool powerUp1 = false;
 
-    private bool doOnce1 = true;
-    private bool doOnce2 = true;
-
+    public GameEnding end;
+    
 
     // Update() manages the progress of game in terms of player and enemy health
     void Update()
@@ -29,20 +28,12 @@ public class GameMonitor : MonoBehaviour
         calcEnemyHealth();
         // If player loses all health, player loses
         if (playerHealth <= 0) {
-            if (doOnce1 == true) {
-                Debug.Log("You lose");
-                doOnce1 = false;
-            }
-            
+            end.setLost();
             // Enemy Wins
         }
         // If enemy loses all health, player wins
         else if (enemyTotalHealth <= 0) {
-            if (doOnce2 == true) {
-                Debug.Log("You Win");
-                doOnce2 = false;
-            }
-            
+            end.setWin();
             // Player wins/move on to next phase
         }
         // Release powerup when player reduces enough of enemy health; add more for additional powerups

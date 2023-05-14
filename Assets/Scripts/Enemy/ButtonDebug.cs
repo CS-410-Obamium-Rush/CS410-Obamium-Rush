@@ -48,7 +48,7 @@ public class ButtonDebug : MonoBehaviour
     
     /*
     Press number keys to activate something
-    1: Quit Application
+    Esc: Quit Application
     2: turn off left hand's rotation
     3: use head's punch attack
     4: use both hand's clap attack
@@ -61,7 +61,7 @@ public class ButtonDebug : MonoBehaviour
     void Update() {
         if (Input.GetKey("escape")) {
             Application.Quit();
-            Debug.Log("1 was pressed");
+            Debug.Log("Esc was pressed");
         }
         if (Input.GetKey(KeyCode.Alpha2) && key) {
             head.callMissle(2);

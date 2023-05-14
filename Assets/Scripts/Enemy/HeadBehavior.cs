@@ -76,7 +76,6 @@ public class HeadBehavior : MonoBehaviour
         else if (startMissle) {
             if (doOnce) {
                 StartCoroutine(spawn(missleAmt));
-                Debug.Log("Missles Initated: " + missleAmt);
                 doOnce = false;
             }
             transform.position = new Vector3(initPos.x, Mathf.Sin(Time.time * freq) * height + initPos.y, initPos.z);
@@ -109,12 +108,10 @@ public class HeadBehavior : MonoBehaviour
 
     public void countMissle(){
         missleGone += 1;
-        Debug.Log("Missles Gone: " + missleGone);
         if (missleGone >= missleAmt) {
             startMissle = false;
             idle = true;
             missleGone = 0;
-            Debug.Log("Missles Reset");
             lockSys.unlocker();
             debugSys.unlocker();
          }

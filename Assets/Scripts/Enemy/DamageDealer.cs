@@ -25,7 +25,7 @@ public class DamageDealer : MonoBehaviour
         if (other.gameObject.CompareTag("Player") && !invincible) {
             invincible = true;
             StartCoroutine(flashDamageColor());
-            Debug.Log("Player has been hit: -" + dmgAmt);
+            //Debug.Log("Player has been hit: -" + dmgAmt);
             gm.playerTakeDamage(dmgAmt);
         }
     }
@@ -39,7 +39,7 @@ public class DamageDealer : MonoBehaviour
             playerRenderer.material.SetColor("_Color", initColor);
             yield return new WaitForSeconds(0.075f);
         }*/
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(1f);
         invincible = false;
     }
 }

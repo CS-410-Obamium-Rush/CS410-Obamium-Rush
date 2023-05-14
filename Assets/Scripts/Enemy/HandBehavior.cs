@@ -215,14 +215,6 @@ public class HandBehavior : MonoBehaviour
         transform.localEulerAngles = new Vector3(x, y, z);
     }
 
-
-    // OnTriggerEnter() Checks for detection with player (using Wall for now for testing purposes)
-    void OnTriggerEnter(Collider other) {
-        if(other.gameObject.CompareTag("Projectile")) {
-            Debug.Log("Wall has been hit");
-        }
-    }
-
     /* setRotators used to turn on and off rotation state; mainly for ButtonDebug*/
     public void setRotatorT() {
         rotator = true;

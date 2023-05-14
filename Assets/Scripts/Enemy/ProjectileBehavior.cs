@@ -13,7 +13,7 @@ public class ProjectileBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gmObject = GameObject.Find("GameStorage");
+        gmObject = GameObject.Find("GameSettings");
         playerHitBox = GameObject.Find("MovingPlayer").transform.GetChild(0).gameObject.transform;
         gm = gmObject.GetComponent<GameMonitor>();
         head = GameObject.Find("Enemy").transform.GetChild(0).GetComponent<HeadBehavior>();
@@ -29,13 +29,11 @@ public class ProjectileBehavior : MonoBehaviour
 
     void OnTriggerEnter(Collider other) {
         if (other.gameObject.CompareTag("Player")) {
-            Debug.Log("Player has been hit: -10");
             gm.playerTakeDamage(10);
             head.countMissle();
             Destroy(gameObject);
         }
         else if (other.gameObject.CompareTag("Ground")) {
-            Debug.Log("Ground has been hit");
             head.countMissle();
             Destroy(gameObject);
         }

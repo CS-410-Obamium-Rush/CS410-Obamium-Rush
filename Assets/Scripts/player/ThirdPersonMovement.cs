@@ -85,7 +85,7 @@ public class ThirdPersonMovement : MonoBehaviour
             var emissionModule = laser.GetComponent<ParticleSystem>().emission;
             emissionModule.enabled = true;
         }
-        // DO NOT FUCKING REMOVE THIS ELSE
+        // DO NOT REMOVE THIS ELSE
         // YOU WILL START AN INFINITE LOOP -- EAVI
         else
         {
