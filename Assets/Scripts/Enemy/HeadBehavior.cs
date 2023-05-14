@@ -46,7 +46,6 @@ public class HeadBehavior : MonoBehaviour
         startPunch = false;
         retractPunch = false;
         missleGone = 0;
-        missleAmt = 2;
     }
 
     // Update is called once per frame
@@ -77,25 +76,19 @@ public class HeadBehavior : MonoBehaviour
         else if (startMissle) {
             if (doOnce) {
                 StartCoroutine(spawn(missleAmt));
+                Debug.Log("Missles Initated: " + missleAmt);
                 doOnce = false;
             }
             transform.position = new Vector3(initPos.x, Mathf.Sin(Time.time * freq) * height + initPos.y, initPos.z);
             transform.localEulerAngles = new Vector3(initRot.x, Mathf.PingPong(Time.time * speed, range) - offset, initRot.z);
-            if (missleGone >= missleAmt) {
-                startMissle = false;
-                idle = true;
-                missleGone = 0;
-                lockSys.unlocker();
-                debugSys.unlocker();
-            }
-            
         }
     }
     IEnumerator spawn(int missleAmt) {
         for (int i = 0; i < missleAmt; i++) {
             Instantiate(misslePrefab, new Vector3(missleSpawner.position.x, missleSpawner.position.y, missleSpawner.position.z), Quaternion.identity);
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(2.5f);
         }
+        
     }
 
     public void callPunch(Transform target) {
@@ -116,5 +109,14 @@ public class HeadBehavior : MonoBehaviour
 
     public void countMissle(){
         missleGone += 1;
+        Debug.Log("Missles Gone: " + missleGone);
+        if (missleGone >= missleAmt) {
+            startMissle = false;
+            idle = true;
+            missleGone = 0;
+            Debug.Log("Missles Reset");
+            lockSys.unlocker();
+            debugSys.unlocker();
+         }
     }
 }
