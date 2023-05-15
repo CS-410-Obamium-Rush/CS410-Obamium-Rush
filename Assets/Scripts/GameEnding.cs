@@ -28,7 +28,7 @@ public class GameEnding : MonoBehaviour
         imageCanvas.alpha = m_Timer / fadeDuration;
         if(m_Timer > fadeDuration + displayImageDuration) {
             if (doRestart) {
-                SceneManager.LoadScene(0);
+                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
             else {
                 Application.Quit();

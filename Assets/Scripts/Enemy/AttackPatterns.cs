@@ -33,16 +33,16 @@ public class AttackPatterns : MonoBehaviour
     found in HandBehavior to decide the lock and unlock when appropiate.
     */
     
-    private static bool key = true;
+    private bool key = true;
 
     public void locker() {
-        AttackPatterns.key = false;
+        key = false;
     }
 
     public void unlocker() {
         //Debug.Log("Change Time");
         rechargeTime = timeInterval;
-        AttackPatterns.key = true;
+        key = true;
     }
 
 

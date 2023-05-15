@@ -1,25 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameMonitor : MonoBehaviour
 {
+    // For health bars
+    public Image playerBar;
+    public Image enemyBar;
+
+
     // For Enemy
     public int rightHandHealth = 300;
     public AttackPatterns atkPat;
     public int leftHandHealth = 300;
     public int headHealth = 300;
+    private int maxEnemyHealth;
     private int enemyTotalHealth;
 
     // For Player
     public int playerHealth = 100;
+    private int maxPlayerHealth;
     
     // For Powerups
     public int enemyThreshold;
     private bool powerUp1 = false;
 
     public GameEnding end;
-    
+    void Start() {
+        maxPlayerHealth = playerHealth;
+        maxEnemyHealth = headHealth + rightHandHealth + leftHandHealth;
+    }
 
     // Update() manages the progress of game in terms of player and enemy health
     void Update()
@@ -46,9 +57,14 @@ public class GameMonitor : MonoBehaviour
     /* Public Functions for player's health to be modified; use these in playerController and adjust if needed*/
     public void playerTakeDamage(int amt) {
         playerHealth -= amt;
+        playerBar.fillAmount = (float) playerHealth / maxPlayerHealth;
     }
     public void playerAddHealth(int amt) {
-        playerHealth += amt;
+        if (playerHealth + amt > maxPlayerHealth)
+            playerHealth = maxPlayerHealth;
+        else
+            playerHealth += amt;
+        playerBar.fillAmount = (float) playerHealth / maxPlayerHealth;
     }
 
     // Update the overall enemy health with calcEnemyHealth();
@@ -73,23 +89,31 @@ public class GameMonitor : MonoBehaviour
     */
     public void enemyTakeDamage(int amt, int body) {
         //Debug.Log("Damage: " + body);
-        if (body == 0) {
+        if (body == 0 && rightHandHealth > 0) {
             rightHandHealth -= amt;
+            calcEnemyHealth();
+            enemyBar.fillAmount = (float) enemyTotalHealth / maxEnemyHealth;
             if (rightHandHealth <= 0) {
+                rightHandHealth = 0;
                 atkPat.disableRight();
             }
         }
-        else if (body == 1) {
+        else if (body == 1 && leftHandHealth > 0) {
             leftHandHealth -= amt;
+            calcEnemyHealth();
+            enemyBar.fillAmount = (float) enemyTotalHealth / maxEnemyHealth;
             //Function to disable left hand
             if (leftHandHealth <= 0) {
-                 atkPat.disableLeft();
+                leftHandHealth = 0;
+                atkPat.disableLeft();
             }
         }
-        else {
-            if (leftHandHealth <= 0 && rightHandHealth <= 0)
+        else if (body == 2) {
+            if (leftHandHealth <= 0 && rightHandHealth <= 0 && headHealth > 0) {
                 headHealth -= amt;
-            //Function to disable head
+                calcEnemyHealth();
+                enemyBar.fillAmount = (float) enemyTotalHealth / maxEnemyHealth;
+            }
         }
     }
 

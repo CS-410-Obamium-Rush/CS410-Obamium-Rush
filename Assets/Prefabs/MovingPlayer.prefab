@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 50831985}
-  - component: {fileID: 50831986}
   m_Layer: 0
   m_Name: HitBox
   m_TagString: Player
@@ -32,19 +31,6 @@ Transform:
   m_Father: {fileID: 8879080919350134170}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &50831986
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 50831984}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 2}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8879080919350134149
 GameObject:
   m_ObjectHideFlags: 0
@@ -163,6 +149,7 @@ MonoBehaviour:
   laser: {fileID: 5951266761611912552}
   speed: 20
   jumpAmount: 200
+  playersfx: {fileID: 0}
 --- !u!54 &8879080919350134148
 Rigidbody:
   m_ObjectHideFlags: 0
