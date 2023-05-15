@@ -13,7 +13,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public float jumpAmount = 10;
 
     // EA contribution
-    public playerAudioManager playersfx;
+    public playerAudioManager playersfx; // need to figure out why the fuck this works
     AudioSource m_AudioSource;
 
     private Rigidbody rb;
@@ -44,6 +44,7 @@ public class ThirdPersonMovement : MonoBehaviour
             rb.AddForce(Vector3.up * jumpAmount, ForceMode.Impulse);
 
             playersfx.playJump();
+            //playerAudioManager.instance.playJump();
             jumpCount++;  
         }
     }
@@ -81,6 +82,7 @@ public class ThirdPersonMovement : MonoBehaviour
         if(Input.GetMouseButton(0))
         {
             playersfx.playShoot();
+            //playerAudioManager.instance.playShoot();
 
             var emissionModule = laser.GetComponent<ParticleSystem>().emission;
             emissionModule.enabled = true;

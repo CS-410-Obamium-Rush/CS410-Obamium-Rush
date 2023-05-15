@@ -15,9 +15,12 @@ public class playerAudioManager : MonoBehaviour{
     public AudioClip[] sfx; // append all sfx for player you want here
     private AudioSource godSource; // main audio player
 
-    void Start(){
+    // standard singletone practice: use awake instead of start
+    void Awake(){
         // need this instance in order to access in other scripts
+        //Debug.Log("Made player instance");
         if(instance != this){
+            //Debug.Log("Destroyed player instance");
             Destroy(this);
         }
         instance = this; //make an instance

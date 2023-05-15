@@ -16,6 +16,10 @@ public class HandBehavior : MonoBehaviour
     public AttackPatterns lockSys;
     public ButtonDebug debugSys;
 
+    // Ethan's audio stuff
+    public enemyAudioManager enemysfx; // need to figure out why the fuck this doesn't work
+    AudioSource m_AudioSource;
+
     // Speed Values
     public float rotSpeed = 0;
     public float punchLaunchSpeed = 0;
@@ -86,6 +90,8 @@ public class HandBehavior : MonoBehaviour
         useClap = false;
         retClap = false;
 
+        //get audiosource
+        m_AudioSource = GetComponent<AudioSource>();
 
         if (isRight) {
             dir = 1;
@@ -226,6 +232,14 @@ public class HandBehavior : MonoBehaviour
 
     // Use callPunch() by other script to do punch attack
     public void callPunch(Transform target) {
+        /*if(enemysfx != null){
+            Debug.Log("enemysfx is not null");
+        }*/
+        // ethan's sfx
+        //enemysfx.playPunch();
+        // enemyAudioManager.instance.playPrepunch();
+        enemyAudioManager.instance.playPunch();
+
         animator.SetBool("isAttacking", true);
         debugSys.locker();
         targetPunch = target;
@@ -235,6 +249,16 @@ public class HandBehavior : MonoBehaviour
 
     // Use callSwipe() by other script to do swipe attack
     public void callSwipe(Transform targetStart, Transform targetEnd) {
+
+        /*if(enemysfx != null){
+            Debug.Log("enemysfx is not null");
+        }*/
+        // play the movement sfx here
+        // will try to put it in a more interactive spot
+        // currently breaks hand movement when I place this in bool statements -- EAVI
+        //enemysfx.playWhoosh();
+        enemyAudioManager.instance.playWhoosh();
+
         animator.SetBool("isAttacking", true);
         debugSys.locker();
         targetSwipeStart = targetStart;
@@ -244,6 +268,9 @@ public class HandBehavior : MonoBehaviour
     }
 
     public void callClap(Transform targetStart, Transform targetEnd, Transform targetBack) {
+
+        enemyAudioManager.instance.playClap();
+
         animator.SetBool("isAttacking", true);
         debugSys.locker();
         targetClapStart = targetStart;
