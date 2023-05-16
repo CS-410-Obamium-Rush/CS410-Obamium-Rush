@@ -12,6 +12,10 @@ public class HeadBehavior : MonoBehaviour
     public float range = 0f; // The total amount of area covered in degrees
     public float offset = 0f;   // The initial position to start looking (do 1/2 of range to face the screen)
 
+    // ethan's audio stuff
+    public enemyAudioManager enemysfx; // need to figure out why the fuck this doesn't work
+    AudioSource m_AudioSource;
+
     private bool idle;
     private bool startPunch;
     private bool retractPunch;
@@ -46,6 +50,9 @@ public class HeadBehavior : MonoBehaviour
         startPunch = false;
         retractPunch = false;
         missleGone = 0;
+
+        // get audiosource
+        m_AudioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -91,6 +98,8 @@ public class HeadBehavior : MonoBehaviour
     }
 
     public void callPunch(Transform target) {
+        enemyAudioManager.instance.playWhirl();
+
         debugSys.locker();
         targetPunch = target;
         idle = false;
@@ -98,6 +107,8 @@ public class HeadBehavior : MonoBehaviour
     }
 
     public void callMissle(int amt) {
+        enemyAudioManager.instance.playShot();
+
         debugSys.locker();
         doOnce = true;
         //targetMissle = target;
@@ -107,6 +118,7 @@ public class HeadBehavior : MonoBehaviour
     }
 
     public void countMissle(){
+        enemyAudioManager.instance.playProjHit();
         missleGone += 1;
         if (missleGone >= missleAmt) {
             startMissle = false;

@@ -81,7 +81,7 @@ public class ThirdPersonMovement : MonoBehaviour
         // EA QoL would like to make this while for the sfx
         if(Input.GetMouseButton(0))
         {
-            playersfx.playShoot();
+            //playersfx.playShoot();    //ethan wants to fix this since it overlaps with the jumping sfx
             //playerAudioManager.instance.playShoot();
 
             var emissionModule = laser.GetComponent<ParticleSystem>().emission;

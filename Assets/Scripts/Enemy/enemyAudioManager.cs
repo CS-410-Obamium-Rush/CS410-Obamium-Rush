@@ -49,4 +49,19 @@ public class enemyAudioManager : MonoBehaviour{
         godSource.clip = sfx[2];
         godSource.PlayDelayed(1);
     }
+
+    public void playWhirl(){
+        godSource.clip = sfx[3];
+        godSource.Play();
+    }
+
+    public void playShot(){
+        godSource.clip = sfx[4];
+        godSource.Play();
+    }
+
+    public void playProjHit(){
+        godSource.clip = sfx[5];
+        godSource.Play();
+    }
 }
