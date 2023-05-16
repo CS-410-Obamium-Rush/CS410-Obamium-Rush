@@ -20,9 +20,9 @@ public class ButtonDebug : MonoBehaviour
     public Transform swipeL2;
     public Transform swipeR1;
     public Transform swipeR2;
-
     public Transform clapLevel;
-    
+    public DamageDealer dmg;
+    public GameMonitor gm;
     
 
 
@@ -49,7 +49,8 @@ public class ButtonDebug : MonoBehaviour
     /*
     Press number keys to activate something
     Esc: Quit Application
-    2: turn off left hand's rotation
+    1: Restore 100 of player's health
+    2: use head's missle attack
     3: use head's punch attack
     4: use both hand's clap attack
     5: use left hand's punch attack
@@ -63,32 +64,45 @@ public class ButtonDebug : MonoBehaviour
             Application.Quit();
             Debug.Log("Esc was pressed");
         }
+        
+        if (Input.GetKey(KeyCode.Alpha1)) {
+            gm.playerAddHealth(100);
+            Debug.Log("1 was pressed");
+        }
+
         if (Input.GetKey(KeyCode.Alpha2) && key) {
-            head.callMissle(2);
+            dmg.setDmg(1);
+            head.callMissle(3);
             Debug.Log("2 was pressed");
         }
         if (Input.GetKey(KeyCode.Alpha3) && key) {
+            dmg.setDmg(1);
             head.callPunch(punchH);
             Debug.Log("3 was pressed");
         }
         if (Input.GetKey(KeyCode.Alpha4) && key) {
+            dmg.setDmg(1);
             lh.callClap(clapLevel.transform.GetChild(3).gameObject.transform, clapLevel.transform.GetChild(4).gameObject.transform, clapLevel.transform.GetChild(5).gameObject.transform);
             rh.callClap(clapLevel.transform.GetChild(0).gameObject.transform, clapLevel.transform.GetChild(1).gameObject.transform, clapLevel.transform.GetChild(2).gameObject.transform);
             Debug.Log("4 was pressed");
         }
         if (Input.GetKey(KeyCode.Alpha5) && key) {
+            dmg.setDmg(1);
             lh.callPunch(punchL);
             Debug.Log("5 was pressed");
         }
         if (Input.GetKey(KeyCode.Alpha6) && key) {
+            dmg.setDmg(1);
             lh.callSwipe(swipeL1, swipeL2);
             Debug.Log("6 was pressed");
         }
         if (Input.GetKey(KeyCode.Alpha7) && key) {
+            dmg.setDmg(1);
             rh.callPunch(punchR);
             Debug.Log("7 was pressed");
         }
         if (Input.GetKey(KeyCode.Alpha8) && key) {
+            dmg.setDmg(1);
             rh.callSwipe(swipeR1, swipeR2);
             Debug.Log("8 was pressed");
         }
