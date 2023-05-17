@@ -1,13 +1,20 @@
+/*
+HandBehavior: Manage the different states that the enemy head can be in and is responsible 
+for performing the attacks it can do. Alters the GameObject's transform and animations to fit the attack.
+*/
+
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class HeadBehavior : MonoBehaviour
 {
-
+    // Head transform characteristics to use and alter
+    private Vector3 initPos;
+    private Vector3 initRot;
     public float height; // Determine how far the GameObject will go
     public float freq;  // Determine how quickly the GameObject will go
-
     public float speed = 0f; // How quickly
     public float range = 0f; // The total amount of area covered in degrees
     public float offset = 0f;   // The initial position to start looking (do 1/2 of range to face the screen)
@@ -16,32 +23,33 @@ public class HeadBehavior : MonoBehaviour
     public enemyAudioManager enemysfx; // need to figure out why the fuck this doesn't work
     AudioSource m_AudioSource;
 
+    // Different States
     private bool idle;
     private bool startPunch;
     private bool retractPunch;
     private bool startMissle;
     
-
+    // Punch Attack Speeds
     public int punchLaunchSpeed;
     public int punchRetractSpeed;
     public int spinSpeed;
 
+    // Target zones
     private Transform targetPunch;
-    private Transform targetMissle;
-    private int missleAmt;
+
+
+    // For performing the missle attack
+    private int missleAmt;  // Amount of missles for the current attack
     public Transform missleSpawner;
     public GameObject misslePrefab;
-    private int missleGone;
+    private int missleGone; // Amount of missles already used for the current attack
     private bool doOnce = false;
-
-    private Vector3 initPos;
-    private Vector3 initRot;
 
     // Files that call the attacks and use their lock systems
     public AttackPatterns lockSys;
     public ButtonDebug debugSys;
 
-    // Start is called before the first frame update
+    // Use Start() to establish initial characteristics and audio
     void Start()
     {
         idle = true;
@@ -55,12 +63,23 @@ public class HeadBehavior : MonoBehaviour
         m_AudioSource = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
+    // Use Update() to manage the states
+    /*
+        State Structure:
+
+        Check State
+            Set the rotation if needed
+            Use Vector3.MoveTowards to move hand to selected zone
+            (Except of Missle) One the hand reaches the designated zone
+                Disable its current state and move to the next one
+    */
     void Update() {
+        // Idle
         if (idle) {
             transform.position = new Vector3(initPos.x, Mathf.Sin(Time.time * freq) * height + initPos.y, initPos.z);
             transform.localEulerAngles = new Vector3(initRot.x, Mathf.PingPong(Time.time * speed, range) - offset, initRot.z);
         }
+        // Using punch
         else if (startPunch) {
             transform.Rotate(new Vector3(0, spinSpeed, 0) * Time.deltaTime);
             transform.position = Vector3.MoveTowards(transform.position, targetPunch.position, punchLaunchSpeed * Time.deltaTime);
@@ -69,9 +88,10 @@ public class HeadBehavior : MonoBehaviour
                 retractPunch = true;
             }
         }
+        // Retracting the punch
         else if (retractPunch) {
-            transform.position = Vector3.MoveTowards(transform.position, initPos, punchRetractSpeed * Time.deltaTime);
             transform.Rotate(new Vector3(0, spinSpeed, 0) * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, initPos, punchRetractSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, initPos) < 0.001f) {
                 retractPunch = false;
                 idle = true;
@@ -80,26 +100,40 @@ public class HeadBehavior : MonoBehaviour
                 debugSys.unlocker();
             }
         }
+        // Create the missle
         else if (startMissle) {
+            // Create the amount of missles only once
             if (doOnce) {
                 StartCoroutine(spawn(missleAmt));
                 doOnce = false;
             }
+            // Act as if in idle state until all the missles are gone
             transform.position = new Vector3(initPos.x, Mathf.Sin(Time.time * freq) * height + initPos.y, initPos.z);
             transform.localEulerAngles = new Vector3(initRot.x, Mathf.PingPong(Time.time * speed, range) - offset, initRot.z);
         }
     }
+
+    // spawn() creates the missles in the scene with a few second delay in between each creation
     IEnumerator spawn(int missleAmt) {
         for (int i = 0; i < missleAmt; i++) {
             Instantiate(misslePrefab, new Vector3(missleSpawner.position.x, missleSpawner.position.y, missleSpawner.position.z), Quaternion.identity);
-            yield return new WaitForSeconds(2.5f);
+            yield return new WaitForSeconds(1.75f);
         }
         
     }
 
+    /*
+    Public functions to initate an attack and changes in the state
+    Structure:
+
+        Play Audio
+        Place a lock on the ButtonDebug code
+        Get the attack target zone(s) if needed
+        Change the state to the start of the attack
+    */
+
     public void callPunch(Transform target) {
         enemyAudioManager.instance.playWhirl();
-
         debugSys.locker();
         targetPunch = target;
         idle = false;
@@ -108,15 +142,15 @@ public class HeadBehavior : MonoBehaviour
 
     public void callMissle(int amt) {
         enemyAudioManager.instance.playShot();
-
         debugSys.locker();
         doOnce = true;
-        //targetMissle = target;
         missleAmt = amt;
         idle = false;
         startMissle = true;
     }
 
+    // countMissle() used for collision detections to indicate the new removal of a missle;
+    // Will also be responsible for freeing up the attack state
     public void countMissle(){
         enemyAudioManager.instance.playProjHit();
         missleGone += 1;

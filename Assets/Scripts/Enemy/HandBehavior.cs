@@ -1,15 +1,19 @@
+/*
+HandBehavior: Manage the different states that each enemy hand can be in and is responsible 
+for performing the attacks it can do. Alters the GameObject's transform and animations to fit the attack.
+*/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-/*
-This script is used for the different states that each enemy hand can be in and is responsible 
-for performing the attacks it can do
-*/
+
 public class HandBehavior : MonoBehaviour
 {
     
+    // Need the aimator for the state
     public Animator animator;
-    private float deltaTimeCount = 0;
+
+    
     private Vector3 initPos;
     private Vector3 initRot;
     // Files that call the attacks and use their lock systems
@@ -21,6 +25,7 @@ public class HandBehavior : MonoBehaviour
     AudioSource m_AudioSource;
 
     // Speed Values
+    private float deltaTimeCount = 0;
     public float rotSpeed = 0;
     public float punchLaunchSpeed = 0;
     public float punchRetractSpeed = 0;
@@ -33,15 +38,12 @@ public class HandBehavior : MonoBehaviour
     public float clapBackSpeed = 0;
     public float clapRetSpeed = 0;
 
-
-
     // Rotation Paramters
     public float width = 0;
     public float height = 0;
     public bool isRight = false;
     private int dir = -1;
 
-    
     // Need GameObjects to direct attack positions
     private Transform targetPunch;
     private Transform targetSwipeStart;
@@ -51,9 +53,8 @@ public class HandBehavior : MonoBehaviour
     private Transform targetClapEnd;
     private Transform targetClapBack;
 
-    
     // States of rotation and attacks
-    private bool rotator;   // Turn on and off rotation
+    private bool idle;       
     private bool startPunch;    // Initate the punch
     private bool retractPunch;  // Return the hand
     private bool posSwipe;      // Initate the swipe/get hand into position
@@ -74,10 +75,9 @@ public class HandBehavior : MonoBehaviour
     // Use Start() to initiate the states
     void Start()
     {
-        //animator = transform.GetChild(0).gameObject.GetComponent<Animator>();
         initRot = transform.localEulerAngles;
         initPos = transform.position;
-        rotator = true;
+        idle = true;
         defeated = false;
         startPunch = false;
         retractPunch = false;
@@ -102,8 +102,9 @@ public class HandBehavior : MonoBehaviour
     void Update()
     {
         // Idle/rotate hands
-        if (rotator) {
+        if (idle) {
             animator.SetBool("idleState", true);
+            // Do not have the hand move around once it has lost all its health
             if (defeated) 
                 doRot(225, initRot.y, initRot.z);
             else {
@@ -115,7 +116,16 @@ public class HandBehavior : MonoBehaviour
             }
             
         }
-        
+        /*
+        State Structure:
+
+        Check State
+            Change animation condition variables if needed
+            Set the rotation if needed
+            Use Vector3.MoveTowards to move hand to selected zone
+            One the hand reaches the designated zone
+                Disable its current state and move to the next one
+        */
         // Punching State
         else if (startPunch) {
             animator.SetBool("punchState", true);
@@ -133,7 +143,7 @@ public class HandBehavior : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, initPos, punchRetractSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, initPos) < 0.001f) {
                 retractPunch = false;
-                rotator = true;
+                idle = true;
                 doRot(initRot.x, initRot.y, initRot.z);
                 lockSys.unlocker();
                 debugSys.unlocker();
@@ -164,14 +174,14 @@ public class HandBehavior : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, initPos, swipeRetSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, initPos) < 0.001f) {
                 retSwipe = false;
-                rotator = true;
+                idle = true;
                 lockSys.unlocker();
                 debugSys.unlocker();
             }
         }
 
+        // Position the Hand State (Clap)
         else if (posClap) {
-            animator.SetBool("idleState", false);
             animator.SetBool("flatState", true);
             doRot(initRot.x, -90 * dir, initRot.z);
             transform.position = Vector3.MoveTowards(transform.position, targetClapStart.position, clapPosSpeed * Time.deltaTime);
@@ -181,6 +191,7 @@ public class HandBehavior : MonoBehaviour
             }
         }
 
+        // Clap State
         else if (useClap) {
             transform.position = Vector3.MoveTowards(transform.position, targetClapEnd.position, clapUseSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, targetClapEnd.position) < 0.001f) {
@@ -188,6 +199,7 @@ public class HandBehavior : MonoBehaviour
                 backClap = true;
             }
         }
+        // Recoil the Hands after Clap
         else if (backClap) {
             transform.position = Vector3.MoveTowards(transform.position, targetClapBack.position, clapBackSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, targetClapBack.position) < 0.001f) {
@@ -195,39 +207,36 @@ public class HandBehavior : MonoBehaviour
                 retClap = true;
             }
         }
+        // Returning the Hand State (Clap)
         else if (retClap) {
             animator.SetBool("flatState", false);
             doRot(initRot.x, initRot.y, initRot.z);
             transform.position = Vector3.MoveTowards(transform.position, initPos, clapRetSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, initPos) < 0.001f) {
                 retClap = false;
-                rotator = true;
+                idle = true;
                 lockSys.unlocker();
                 debugSys.unlocker();
             }
         }
     }
 
-    // Use doRot() to set the rototation of objects hands during attacks based on the inspector Euler angles
+    // Helper Function: doRot() sets the rototation of objects hands during attacks based on the inspector Euler angles
     private void doRot(float x, float y, float z) {
-        /*
-        Scrap code for smooth transition rotation
-        Vector3 currRot = transform.localEulerAngles;
-        Vector3 newRot = new Vector3(x, y, z);
-        Vector3 transRot = Vector3.Lerp(currRot, newRot, Time.deltaTime * atkRotSpeed);
-        transform.eulerAngles = transRot; 
-        */
         transform.localEulerAngles = new Vector3(x, y, z);
     }
 
-    /* setRotators used to turn on and off rotation state; mainly for ButtonDebug*/
-    public void setRotatorT() {
-        rotator = true;
-    }
+    /*
+    Public functions to initate an attack and changes in the state
+    Structure:
 
-    public void setRotatorF() {
-        rotator = false;
-    }
+        Play Audio
+        Turn off idle animation
+        Place a lock on the ButtonDebug code
+        Get the attack target zone(s)
+        Change the state to the start of the attack
+    */
+
 
     // Use callPunch() by other script to do punch attack
     public void callPunch(Transform target) {
@@ -241,13 +250,12 @@ public class HandBehavior : MonoBehaviour
         animator.SetBool("idleState", false);
         debugSys.locker();
         targetPunch = target;
-        rotator = false;
+        idle = false;
         startPunch = true;
     }
 
     // Use callSwipe() by other script to do swipe attack
     public void callSwipe(Transform targetStart, Transform targetEnd) {
-
         /*if(enemysfx != null){
             Debug.Log("enemysfx is not null");
         }*/
@@ -260,19 +268,19 @@ public class HandBehavior : MonoBehaviour
         debugSys.locker();
         targetSwipeStart = targetStart;
         targetSwipeEnd = targetEnd;
-        rotator = false;
+        idle = false;
         posSwipe = true;
     }
 
+    // Use callClap() by other script to do clap attack
     public void callClap(Transform targetStart, Transform targetEnd, Transform targetBack) {
-
         enemyAudioManager.instance.playClap();
         animator.SetBool("idleState", false);
         debugSys.locker();
         targetClapStart = targetStart;
         targetClapEnd = targetEnd;
         targetClapBack = targetBack;
-        rotator = false;
+        idle = false;
         posClap = true;
     }
 

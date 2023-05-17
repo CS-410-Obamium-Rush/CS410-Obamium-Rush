@@ -1,16 +1,23 @@
+/*
+ProjectileBehavior: Used by missle attacks to track the player and inflict damage as the body parts of not contacting the player
+with this attack.
+*/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ProjectileBehavior : MonoBehaviour
 {
-
-    private HeadBehavior head;
     public int speed = 0;
+
+    // Gather the gameobjects and details needed to have the enemy interact with the player
+    private HeadBehavior head;
     private Transform playerHitBox;
     private GameMonitor gm;
     private GameObject gmObject;
-    // Start is called before the first frame update
+
+    // Use Start() to get all the information needed from the player (the missles' target) and enemy (to get countMissle())
     void Start()
     {
         gmObject = GameObject.Find("GameSettings");
@@ -20,14 +27,16 @@ public class ProjectileBehavior : MonoBehaviour
         transform.localEulerAngles = new Vector3(0, 180, 0);
     }
 
-    // Update is called once per frame
+    // use Update() for missles to approach the player
     void Update()
     {
         Vector3 playerPos = new Vector3(playerHitBox.position.x, 0, playerHitBox.position.z);
         transform.position = Vector3.MoveTowards(transform.position, playerPos, speed * Time.deltaTime);
     }
 
+    // Check for collisions; make sure it hits either the player or the ground
     void OnTriggerEnter(Collider other) {
+        // Player takes damage when the missles contact their hitbox
         if (other.gameObject.CompareTag("Player")) {
             gm.playerTakeDamage(10);
             head.countMissle();
