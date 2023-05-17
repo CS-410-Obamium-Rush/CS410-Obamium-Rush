@@ -167,8 +167,8 @@ public class AttackPatterns : MonoBehaviour
     }
 
     void clap() {
-        int scenarioNum = Random.Range(0,2);
-        Transform clapLevel = clapZones.transform.GetChild(scenarioNum).gameObject.transform;
+        int levelNum = Random.Range(0,2);
+        Transform clapLevel = clapZones.transform.GetChild(levelNum).gameObject.transform;
         lh.callClap(clapLevel.transform.GetChild(3).gameObject.transform, clapLevel.transform.GetChild(4).gameObject.transform, clapLevel.transform.GetChild(5).gameObject.transform);
         rh.callClap(clapLevel.transform.GetChild(0).gameObject.transform, clapLevel.transform.GetChild(1).gameObject.transform, clapLevel.transform.GetChild(2).gameObject.transform);
     }
@@ -182,39 +182,25 @@ public class AttackPatterns : MonoBehaviour
     // getPunchTarget() is a helper function to generate a random area to launch the punch towards
     Transform getPunchTarget(int body) {
         // Generate the location to use;
-        int scenarioNum = Random.Range(0, 4);
+        int levelNum = Random.Range(0, 2);
+        int scenarioNum = Random.Range(0, 2);
+
+        Transform punchLevel =  punchZones.transform.GetChild(levelNum).gameObject.transform;
         // Each hand can only punch on their respective side (Scenarios 0 and 1) 
         // (Ex. the left hand will not go diagonal to attack the right side of the screen)
         // So two checks are made in an expression, but both hands are allowed to attack the center of the path (Scenarios 2 and 3)
 
-        if (body == 0 && scenarioNum == 0) {
+        if (scenarioNum == 0 && body != 2) {
             // Top Left Side of Screen
-            return punchZones.transform.GetChild(0).gameObject.transform;
+            return punchLevel.transform.GetChild(body).gameObject.transform;
         }
-        else if (body == 1 && scenarioNum == 0) {
+        else if (scenarioNum == 1 && body != 2) {
             // Top Right Side of Screen
-            return punchZones.transform.GetChild(1).gameObject.transform;;
-        }
-        else if (body == 0  && scenarioNum == 1) {
-            // Bottom Left Side of Screen
-            return punchZones.transform.GetChild(2).gameObject.transform;
-        }
-        else if (body == 0 && scenarioNum == 1) {
-            // Bottom Right Side of Screen
-            return punchZones.transform.GetChild(3).gameObject.transform;
-        }
-        else if (body == 2 && (scenarioNum == 0 || scenarioNum == 1)) {
-            // Head to either left or right (Punch Zones 0-3)
-            int headNum = Random.Range(0, 4);
-            return punchZones.transform.GetChild(headNum).gameObject.transform;
-        }
-        else if (scenarioNum == 2) {
-            // Top Center
-            return punchZones.transform.GetChild(4).gameObject.transform;
+            return punchLevel.transform.GetChild(2).gameObject.transform;
         }
         else {
-            // Bottom Center
-            return punchZones.transform.GetChild(5).gameObject.transform;
+            scenarioNum = Random.Range(0, 3);
+            return punchLevel.transform.GetChild(scenarioNum).gameObject.transform;
         }
     }
 
@@ -222,22 +208,10 @@ public class AttackPatterns : MonoBehaviour
     Transform[] getSweepTarget() {
         Transform[] retArray = new Transform[2];
         // Generate a random number to determine the attack's elevation
-        int scenarioNum = Random.Range(0,3);
-        // High
-        if (scenarioNum == 0) {
-            retArray[0] = swipeZones.transform.GetChild(0).gameObject.transform;
-            retArray[1] = swipeZones.transform.GetChild(1).gameObject.transform;
-        }
-        // Middle
-        else if (scenarioNum == 1) {
-            retArray[0] = swipeZones.transform.GetChild(2).gameObject.transform;
-            retArray[1] = swipeZones.transform.GetChild(3).gameObject.transform;
-        }
-        // Low
-        else if (scenarioNum == 2) {
-            retArray[0] = swipeZones.transform.GetChild(4).gameObject.transform;;
-            retArray[1] = swipeZones.transform.GetChild(5).gameObject.transform;
-        }
+        int levelNum = Random.Range(0,2);
+        Transform swipeLevel = swipeZones.transform.GetChild(levelNum).gameObject.transform;
+        retArray[0] = swipeLevel.transform.GetChild(0).gameObject.transform;
+        retArray[1] = swipeLevel.transform.GetChild(1).gameObject.transform;
         return retArray;
     }
 
