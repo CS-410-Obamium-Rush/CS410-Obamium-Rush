@@ -1,7 +1,8 @@
 /*
 GameEnding: Used to display the victory or game over screen when the enemy or player run out of health.
-*/
 
+This is structed based on the Haunted House tutorial done for Assignment 2; this may be greatly adjusted in future builds
+*/
 
 using System.Collections;
 using System.Collections.Generic;
@@ -10,16 +11,18 @@ using UnityEngine.SceneManagement;
 
 public class GameEnding : MonoBehaviour
 {
+    // For the length of the ending screen
     public float fadeDuration = 1f;
     public float displayImageDuration = 1f;
-    // Start is called before the first frame update
     float m_Timer;
+    // Bools to determine if the player has won or lost
     private bool playerWin = false;
     private bool playerLost = false;
-
+    // Get the canvas containing the win and lost image
     public CanvasGroup winCanvas;
     public CanvasGroup loseCanvas;
 
+    // Update() displays canvas for when player wins or lost
     void Update()
     {
         if (playerWin)
@@ -28,6 +31,8 @@ public class GameEnding : MonoBehaviour
             EndGame(loseCanvas, true);
     }
 
+    // Displays the victory or game over image for a certain amount of time before either quitting the app (when player wins)
+    // or restarting the level (when the player loses)
     void EndGame (CanvasGroup imageCanvas, bool doRestart) {
         m_Timer += Time.deltaTime;
         imageCanvas.alpha = m_Timer / fadeDuration;
@@ -41,6 +46,7 @@ public class GameEnding : MonoBehaviour
         }
     }
 
+    // Used by the Game Monitor to determine that the player won or lost.
     public void setWin() {
         playerWin = true;
     }

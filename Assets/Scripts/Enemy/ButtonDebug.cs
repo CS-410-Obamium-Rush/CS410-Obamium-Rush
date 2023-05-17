@@ -13,7 +13,7 @@ public class ButtonDebug : MonoBehaviour
     public HandBehavior rh;
     public HeadBehavior head;
 
-    // Get the GameObject to target
+    // Get the GameObject to target; non-clap attacks need a specific zone to attack as opposed to the level
     public Transform punchH;
     public Transform punchL;
     public Transform punchR;
