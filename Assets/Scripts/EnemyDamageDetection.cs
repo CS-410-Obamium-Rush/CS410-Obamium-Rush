@@ -9,8 +9,8 @@ public class EnemyDamageDetection : MonoBehaviour
     private bool isFlashing = false;
 
     // ethan's audio stuff
-    public enemyAudioManager enemysfx; // need to figure out why the fuck this doesn't work
-    AudioSource m_AudioSource;
+    //public enemyAudioManager enemysfx; // need to figure out why the fuck this doesn't work
+    //AudioSource m_AudioSource;
     
     Color initColor;
 
@@ -20,14 +20,14 @@ public class EnemyDamageDetection : MonoBehaviour
        enemyRenderer = GetComponent<Renderer>();
        initColor = GetComponent<Renderer>().material.color;
 
-       m_AudioSource = GetComponent<AudioSource>();
+       //m_AudioSource = GetComponent<AudioSource>();
     }
 
     void OnParticleCollision(GameObject other) 
     {
         bool doFlash = false;
 
-        enemyAudioManager.instance.playHurt();  // plays the playerShooting sfx for now
+        //enemyAudioManager.instance.playHurt();  // plays the playerShooting sfx for now
 
         if (this.gameObject.name == "RightCore") {
             doFlash = true;
