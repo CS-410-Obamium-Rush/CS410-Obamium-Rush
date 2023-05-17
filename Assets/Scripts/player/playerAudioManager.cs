@@ -37,4 +37,10 @@ public class playerAudioManager : MonoBehaviour{
         godSource.clip = sfx[1];
         godSource.Play();
     }
+
+    // this should be one of the last sfx in the player sfx list
+    public void playHurt(){
+        godSource.clip = sfx[2];
+        godSource.Play();
+    }
 }

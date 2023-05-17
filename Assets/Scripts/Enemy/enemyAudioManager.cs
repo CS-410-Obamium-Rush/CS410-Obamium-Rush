@@ -64,4 +64,10 @@ public class enemyAudioManager : MonoBehaviour{
         godSource.clip = sfx[5];
         godSource.Play();
     }
+
+    // this sfx should be towards the end of the list
+    public void playHurt(){
+        godSource.clip = sfx[6];
+        godSource.Play();
+    }
 }

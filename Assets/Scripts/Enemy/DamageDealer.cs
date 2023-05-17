@@ -22,6 +22,7 @@ public class DamageDealer : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider other) {
+
         if (other.gameObject.CompareTag("Player") && !invincible) {
             invincible = true;
             StartCoroutine(flashDamageColor());
