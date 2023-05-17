@@ -19,7 +19,7 @@ public class playerAudioManager : MonoBehaviour{
     void Awake(){
         // need this instance in order to access in other scripts
         //Debug.Log("Made player instance");
-        if(instance != this){
+        if(instance != this && instance != null){
             //Debug.Log("Destroyed player instance");
             Destroy(this);
         }
