@@ -8,7 +8,7 @@ for performing the attacks it can do
 public class HandBehavior : MonoBehaviour
 {
     
-    Animator animator;
+    public Animator animator;
     private float deltaTimeCount = 0;
     private Vector3 initPos;
     private Vector3 initRot;
@@ -74,7 +74,7 @@ public class HandBehavior : MonoBehaviour
     // Use Start() to initiate the states
     void Start()
     {
-        animator = GetComponent<Animator>();
+        //animator = transform.GetChild(0).gameObject.GetComponent<Animator>();
         initRot = transform.localEulerAngles;
         initPos = transform.position;
         rotator = true;
@@ -103,9 +103,9 @@ public class HandBehavior : MonoBehaviour
     {
         // Idle/rotate hands
         if (rotator) {
-            animator.SetBool("isAttacking", false);
+            animator.SetBool("idleState", true);
             if (defeated) 
-                doRot(90, initRot.y, initRot.z);
+                doRot(225, initRot.y, initRot.z);
             else {
                 deltaTimeCount += Time.deltaTime * rotSpeed;
                 // Spin the hand in a circular motion; direction is dictated by hand so one goes clockwise while the other goes counterclockwise
@@ -118,7 +118,8 @@ public class HandBehavior : MonoBehaviour
         
         // Punching State
         else if (startPunch) {
-            doRot(0f, initRot.y, initRot.z);
+            animator.SetBool("punchState", true);
+            doRot(270f, initRot.y, initRot.z);
             transform.position = Vector3.MoveTowards(transform.position, targetPunch.position, punchLaunchSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, targetPunch.position) < 0.001f) {
                 startPunch = false;
@@ -128,22 +129,20 @@ public class HandBehavior : MonoBehaviour
         }
         // Returning Hand State (Punch)
         else if (retractPunch) {
-            animator.SetBool("isAttacking", false);
+            animator.SetBool("punchState", false);
             transform.position = Vector3.MoveTowards(transform.position, initPos, punchRetractSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, initPos) < 0.001f) {
                 retractPunch = false;
                 rotator = true;
+                doRot(initRot.x, initRot.y, initRot.z);
                 lockSys.unlocker();
                 debugSys.unlocker();
             }
-            doRot(initRot.x, initRot.y, initRot.z);
         }
         // Position Hand State
         else if (posSwipe) {
-            if (isRight) 
-                doRot(initRot.x, initRot.y, -90);
-            else
-                doRot(0, initRot.y, 90);
+            animator.SetBool("flatState", true);
+            doRot(initRot.x, -90 * dir, initRot.z);
             transform.position = Vector3.MoveTowards(transform.position, targetSwipeStart.position, swipePosSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, targetSwipeStart.position) < 0.001f) {
                 posSwipe = false;
@@ -160,6 +159,7 @@ public class HandBehavior : MonoBehaviour
         }
         // Returning the Hand State (Sweep)
         else if (retSwipe) {
+            animator.SetBool("flatState", false);
             doRot(initRot.x, initRot.y, initRot.z);
             transform.position = Vector3.MoveTowards(transform.position, initPos, swipeRetSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, initPos) < 0.001f) {
@@ -171,10 +171,9 @@ public class HandBehavior : MonoBehaviour
         }
 
         else if (posClap) {
-            if (isRight) 
-                doRot(initRot.x, initRot.y, -90);
-            else
-                doRot(0, initRot.y, 90);
+            animator.SetBool("idleState", false);
+            animator.SetBool("flatState", true);
+            doRot(initRot.x, -90 * dir, initRot.z);
             transform.position = Vector3.MoveTowards(transform.position, targetClapStart.position, clapPosSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, targetClapStart.position) < 0.001f) {
                 posClap= false;
@@ -197,8 +196,8 @@ public class HandBehavior : MonoBehaviour
             }
         }
         else if (retClap) {
+            animator.SetBool("flatState", false);
             doRot(initRot.x, initRot.y, initRot.z);
-            animator.SetBool("isAttacking", false);
             transform.position = Vector3.MoveTowards(transform.position, initPos, clapRetSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, initPos) < 0.001f) {
                 retClap = false;
@@ -239,8 +238,7 @@ public class HandBehavior : MonoBehaviour
         //enemysfx.playPunch();
         // enemyAudioManager.instance.playPrepunch();
         enemyAudioManager.instance.playPunch();
-
-        animator.SetBool("isAttacking", true);
+        animator.SetBool("idleState", false);
         debugSys.locker();
         targetPunch = target;
         rotator = false;
@@ -258,8 +256,7 @@ public class HandBehavior : MonoBehaviour
         // currently breaks hand movement when I place this in bool statements -- EAVI
         //enemysfx.playWhoosh();
         enemyAudioManager.instance.playWhoosh();
-
-        animator.SetBool("isAttacking", true);
+        animator.SetBool("idleState", false);
         debugSys.locker();
         targetSwipeStart = targetStart;
         targetSwipeEnd = targetEnd;
@@ -270,8 +267,7 @@ public class HandBehavior : MonoBehaviour
     public void callClap(Transform targetStart, Transform targetEnd, Transform targetBack) {
 
         enemyAudioManager.instance.playClap();
-
-        animator.SetBool("isAttacking", true);
+        animator.SetBool("idleState", false);
         debugSys.locker();
         targetClapStart = targetStart;
         targetClapEnd = targetEnd;

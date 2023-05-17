@@ -1,3 +1,8 @@
+/*
+GameEnding: Used to display the victory or game over screen when the enemy or player run out of health.
+*/
+
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
