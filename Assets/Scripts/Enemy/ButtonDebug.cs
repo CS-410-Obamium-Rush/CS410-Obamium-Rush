@@ -106,5 +106,10 @@ public class ButtonDebug : MonoBehaviour
             rh.callSwipe(swipeR1, swipeR2);
             Debug.Log("8 was pressed");
         }
+
+        if (Input.GetKey(KeyCode.Alpha9) && key) {
+            head.callLaser();
+            Debug.Log("9 was pressed");
+        }
     }
 }

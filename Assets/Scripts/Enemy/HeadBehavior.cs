@@ -18,6 +18,7 @@ public class HeadBehavior : MonoBehaviour
     public float speed = 0f; // How quickly
     public float range = 0f; // The total amount of area covered in degrees
     public float offset = 0f;   // The initial position to start looking (do 1/2 of range to face the screen)
+    public float laserTime = 0f;
 
     // ethan's audio stuff
     public enemyAudioManager enemysfx; // need to figure out why the fuck this doesn't work
@@ -28,6 +29,7 @@ public class HeadBehavior : MonoBehaviour
     private bool startPunch;
     private bool retractPunch;
     private bool startMissle;
+    private bool startLaser;
     
     // Punch Attack Speeds
     public int punchLaunchSpeed;
@@ -44,6 +46,11 @@ public class HeadBehavior : MonoBehaviour
     public GameObject misslePrefab;
     private int missleGone; // Amount of missles already used for the current attack
     private bool doOnce = false;
+
+    // For the laser attack
+    private LaserBehavior laserCode;
+    public GameObject laserPrefab;
+    GameObject laser;
 
     // Files that call the attacks and use their lock systems
     public AttackPatterns lockSys;
@@ -111,6 +118,17 @@ public class HeadBehavior : MonoBehaviour
             transform.position = new Vector3(initPos.x, Mathf.Sin(Time.time * freq) * height + initPos.y, initPos.z);
             transform.localEulerAngles = new Vector3(initRot.x, Mathf.PingPong(Time.time * speed, range) - offset, initRot.z);
         }
+        else if (startLaser) {
+            if (doOnce) {
+                laser = Instantiate(laserPrefab, new Vector3(missleSpawner.position.x, missleSpawner.position.y, missleSpawner.position.z + 60), Quaternion.identity);
+                laserCode = laser.GetComponent<LaserBehavior>();
+                StartCoroutine(fireLaser());
+                doOnce = false;
+            }
+        }
+
+
+
     }
 
     // spawn() creates the missles in the scene with a few second delay in between each creation
@@ -121,6 +139,15 @@ public class HeadBehavior : MonoBehaviour
         }
         
     }
+
+    IEnumerator fireLaser() {
+        yield return new WaitForSeconds(laserTime);
+        laserCode.destroyLaser();
+        lockSys.unlocker();
+        debugSys.unlocker();
+        startLaser = false;
+    }
+
 
     /*
     Public functions to initate an attack and changes in the state
@@ -148,6 +175,15 @@ public class HeadBehavior : MonoBehaviour
         idle = false;
         startMissle = true;
     }
+
+    public void callLaser() {
+        debugSys.locker();
+        doOnce = true;
+        idle = false;
+        startLaser = true;
+    }
+
+
 
     // countMissle() used for collision detections to indicate the new removal of a missle;
     // Will also be responsible for freeing up the attack state
