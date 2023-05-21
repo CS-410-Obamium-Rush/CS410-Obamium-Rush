@@ -5,7 +5,7 @@ using UnityEngine;
 public class LaserBehavior : MonoBehaviour
 {
 
-    public int speed = 0;
+    public float speed = 0.0f;
     public int time = 30;
     // Gather the gameobjects and details needed to have the enemy interact with the player
     private HeadBehavior head;
@@ -23,8 +23,6 @@ public class LaserBehavior : MonoBehaviour
         /*
         float xRot = calcXRot();
         float yRot = calcYRot();
-        Quaternion target = Quaternion.Euler(xRot, yRot, 0);
-        transform.rotation = Quaternion.Slerp(transform.rotation, target,  Time.deltaTime * speed);
         */
     }
 
@@ -38,9 +36,13 @@ public class LaserBehavior : MonoBehaviour
 
     void Update() {
         float xRot = calcXRot();
-        float yRot = calcYRot();
-        Quaternion target = Quaternion.Euler(50, yRot, 0);
-        transform.rotation = Quaternion.Slerp(transform.rotation, target,  Time.deltaTime * speed);
+        //float yRot = calcYRot();
+        //Quaternion target = Quaternion.Euler(0, yRot, 0);
+        //transform.rotation = Quaternion.Slerp(transform.rotation, target,  Time.deltaTime * speed);
+
+        Vector3 fromPlayer = transform.position - playerHitBox.transform.position ;
+        Vector3 newDirection = Vector3.RotateTowards(transform.forward, fromPlayer, Time.deltaTime * speed, 0.0f);
+        transform.rotation = Quaternion.LookRotation(newDirection);
     }
 
     float calcXRot() {
@@ -52,11 +54,13 @@ public class LaserBehavior : MonoBehaviour
     }
 
     float calcYRot() {
+        
         Vector3 fromPlayer = playerHitBox.transform.position - transform.position;
-        Vector3 backward = Vector3.back * 5; 
+        Vector3 backward = Vector3.back; 
         float dotVal = Vector3.Dot(fromPlayer, backward);
         float multMag = Vector3.Magnitude(fromPlayer) * Vector3.Magnitude(backward);
         return Mathf.Rad2Deg * Mathf.Acos(dotVal / multMag);
+        //transform.rotation = Quaternion.LookRotation(newDirection);
     }
 
     public void destroyLaser() {
