@@ -120,7 +120,7 @@ public class HeadBehavior : MonoBehaviour
         }
         else if (startLaser) {
             if (doOnce) {
-                laser = Instantiate(laserPrefab, new Vector3(missleSpawner.position.x, missleSpawner.position.y, missleSpawner.position.z + 60), Quaternion.identity);
+                laser = Instantiate(laserPrefab, new Vector3(missleSpawner.position.x, missleSpawner.position.y, missleSpawner.position.z), Quaternion.identity);
                 laserCode = laser.GetComponent<LaserBehavior>();
                 StartCoroutine(fireLaser());
                 doOnce = false;
@@ -145,6 +145,7 @@ public class HeadBehavior : MonoBehaviour
         laserCode.destroyLaser();
         lockSys.unlocker();
         debugSys.unlocker();
+        idle = true;
         startLaser = false;
     }
 

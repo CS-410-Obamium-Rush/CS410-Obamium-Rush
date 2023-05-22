@@ -15,16 +15,18 @@ public class LaserBehavior : MonoBehaviour
     private bool contact = false;
     private bool invincible = false;
     private GameObject spawnPoint;
-    private bool getPosition = true;
+    private bool longEnough = false;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        transform.localEulerAngles = new Vector3(-69, 0, 0);
         spawnPoint = GameObject.Find("ProjectileSpawner");
         gmObject = GameObject.Find("GameSettings");
         playerHitBox = GameObject.Find("MovingPlayer").transform.GetChild(0).gameObject.transform;
         gm = gmObject.GetComponent<GameMonitor>();
-        head = GameObject.Find("Enemy").transform.GetChild(0).GetComponent<HeadBehavior>();
+        StartCoroutine(spawnLaser());
     }
 
     // Update is called once per frame
@@ -43,22 +45,19 @@ public class LaserBehavior : MonoBehaviour
     }
 
     void Update() {
-        if (getPosition) {
-            transform.position = Vector3.MoveTowards(transform.position, spawnPoint.transform.position, 30 * Time.deltaTime);
-            if (transform.position == spawnPoint.transform.position)
-                getPosition = false;
-        }
-        else {
-            
-        }
+        float rotSpeed = Time.deltaTime * speed;
         Vector3 fromPlayer = transform.position - playerHitBox.transform.position;
-            Vector3 newDirection = Vector3.RotateTowards(transform.forward, fromPlayer, Time.deltaTime * speed, 0.0f);
-            transform.rotation = Quaternion.LookRotation(newDirection);
-            if (contact && !invincible) {
-                gm.playerTakeDamage(5);
-                invincible = true;
-                StartCoroutine(flashDamageColor());
-            }
+        Vector3 newDirection = Vector3.RotateTowards(transform.forward, fromPlayer, rotSpeed, 0.0f);
+        if (longEnough)
+            newDirection = Vector3.RotateTowards(transform.forward, fromPlayer, rotSpeed, 0.0f);
+        else
+            newDirection = Vector3.RotateTowards(transform.forward, fromPlayer, rotSpeed * 5, 0.0f);
+        transform.rotation = Quaternion.LookRotation(newDirection);
+        if (contact && !invincible) {
+            gm.playerTakeDamage(5);
+            invincible = true;
+            StartCoroutine(flashDamageColor());
+        }
             
     }
 
@@ -73,4 +72,17 @@ public class LaserBehavior : MonoBehaviour
         yield return new WaitForSeconds(2f);
         invincible = false;
     }
+
+    IEnumerator spawnLaser()
+    {
+        int children = transform.childCount;
+        
+        for (int i = 1; i < children; ++i) {
+            transform.GetChild(i).gameObject.SetActive(true);
+            if (i > 16)
+                longEnough = true;
+            yield return new WaitForSeconds(.05f);
+        }
+    }
 }
+    

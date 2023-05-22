@@ -38,6 +38,10 @@ public class HandBehavior : MonoBehaviour
     public float clapBackSpeed = 0;
     public float clapRetSpeed = 0;
 
+    public float slamPosSpeed = 0;
+    public float slamUseSpeed = 0;
+    public float slamRetSpeed = 0;
+
     // Rotation Paramters
     public float width = 0;
     public float height = 0;
@@ -53,6 +57,9 @@ public class HandBehavior : MonoBehaviour
     private Transform targetClapEnd;
     private Transform targetClapBack;
 
+    private Transform targetSlamStart;
+    private Transform targetSlamEnd;
+
     // States of rotation and attacks
     private bool idle;       
     private bool startPunch;    // Initate the punch
@@ -64,8 +71,13 @@ public class HandBehavior : MonoBehaviour
     private bool posClap;      
     private bool useClap;
     private bool backClap;
-    private bool retClap;      
+    private bool retClap;    
+    private bool posSlam;
+    private bool useSlam;
+    private bool retSlam;
     private bool defeated;
+
+    public ShockwaveSpawn shockwaveUse;
 
     public void setDefeat(){
         defeated = true;
@@ -89,6 +101,10 @@ public class HandBehavior : MonoBehaviour
         posClap = false;
         useClap = false;
         retClap = false;
+
+        posSlam = false;
+        useSlam = false;
+        retSlam = false;
 
         //get audiosource
         m_AudioSource = GetComponent<AudioSource>();
@@ -219,6 +235,35 @@ public class HandBehavior : MonoBehaviour
                 debugSys.unlocker();
             }
         }
+        else if (posSlam) {
+            animator.SetBool("punchState", true);
+            doRot(initRot.x, -90 * dir, 90 * dir);
+            transform.position = Vector3.MoveTowards(transform.position, targetSlamStart.position, slamPosSpeed * Time.deltaTime);
+            if (Vector3.Distance(transform.position, targetSlamStart.position) < 0.001f) {
+                shockwaveUse.setActive(true);
+                posSlam = false;
+                useSlam = true;
+            }
+        }
+        else if (useSlam) {
+            transform.position = Vector3.MoveTowards(transform.position, targetSlamEnd.position, slamUseSpeed * Time.deltaTime);
+            if (Vector3.Distance(transform.position, targetSlamEnd.position) < 0.001f) {
+                shockwaveUse.setActive(false);
+                useSlam = false;
+                retSlam = true;
+            }
+        }
+        else if (retSlam) {
+            transform.position = Vector3.MoveTowards(transform.position, initPos, slamRetSpeed * Time.deltaTime);
+            animator.SetBool("punchState", false);
+            if (Vector3.Distance(transform.position, initPos) < 0.001f) {
+                retSlam = false;
+                idle = true;
+                doRot(initRot.x, initRot.y, initRot.z);
+                lockSys.unlocker();
+                debugSys.unlocker();
+            }
+        }
     }
 
     // Helper Function: doRot() sets the rototation of objects hands during attacks based on the inspector Euler angles
@@ -282,6 +327,15 @@ public class HandBehavior : MonoBehaviour
         targetClapBack = targetBack;
         idle = false;
         posClap = true;
+    }
+
+    public void callSlam(Transform targetStart, Transform targetEnd) {
+        animator.SetBool("idleState", false);
+        debugSys.locker();
+        targetSlamStart = targetStart;
+        targetSlamEnd = targetEnd;
+        idle = false;
+        posSlam = true;
     }
 
 }

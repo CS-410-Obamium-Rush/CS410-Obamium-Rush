@@ -22,6 +22,10 @@ public class ButtonDebug : MonoBehaviour
     public Transform swipeR1;
     public Transform swipeR2;
     public Transform clapLevel;
+    public Transform slamSideL;
+    public Transform slamSideR;
+
+
 
     // Get other Scripts to inflict player damage and alter player health
     public DamageDealer dmg;
@@ -111,5 +115,17 @@ public class ButtonDebug : MonoBehaviour
             head.callLaser();
             Debug.Log("9 was pressed");
         }
+
+        if (Input.GetKey(KeyCode.F1) && key) {
+            dmg.setDmg(10);
+            lh.callSlam(slamSideL.transform.GetChild(0).gameObject.transform, slamSideL.transform.GetChild(1).gameObject.transform);
+            Debug.Log("F1 was pressed");
+        }
+        if (Input.GetKey(KeyCode.F2) && key) {
+            dmg.setDmg(10);
+            rh.callSlam(slamSideR.transform.GetChild(0).gameObject.transform, slamSideR.transform.GetChild(1).gameObject.transform);
+            Debug.Log("F2 was pressed");
+        }
+
     }
 }
