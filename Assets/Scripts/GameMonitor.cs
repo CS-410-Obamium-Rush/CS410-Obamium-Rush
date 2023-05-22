@@ -15,9 +15,12 @@ public class GameMonitor : MonoBehaviour
     public Image enemyBar;
 
     // For Enemy
-    public int rightHandHealth = 300;
+    public int rightHandHealth1 = 300;
+    public int leftHandHealth1 = 300;
+    public int rightHandHealth2 = 0;
+    public int leftHandHealth2 = 0;
     public AttackPatterns atkPat;
-    public int leftHandHealth = 300;
+    
     public int headHealth = 300;
     private int maxEnemyHealth;   // Max amount of health
     private int enemyTotalHealth; // Current health
@@ -33,10 +36,20 @@ public class GameMonitor : MonoBehaviour
     // To notify when the game has ended
     public GameEnding end;
 
+    public void setNewHealth(int r1, int l1, int r2, int l2) {
+        rightHandHealth1 = r1;
+        leftHandHealth1 = l1;
+        rightHandHealth2 = r2;
+        leftHandHealth2 = l2;
+        maxEnemyHealth = headHealth + rightHandHealth1 + leftHandHealth1 + rightHandHealth2 + leftHandHealth2;
+        enemyTotalHealth = maxEnemyHealth;
+        
+    }
+
     // Get the max amount of health that the player and enemy can have at a time
     void Start() {
         maxPlayerHealth = playerHealth;
-        maxEnemyHealth = headHealth + rightHandHealth + leftHandHealth;
+        maxEnemyHealth = headHealth + rightHandHealth1 + leftHandHealth1 + rightHandHealth2 + leftHandHealth2;
     }
 
     // Update() manages the progress of game in terms of player and enemy health
@@ -78,17 +91,23 @@ public class GameMonitor : MonoBehaviour
 
     // Update the overall enemy health with calcEnemyHealth();
     private void calcEnemyHealth() {
-        int healthR = rightHandHealth;
-        int healthL = leftHandHealth;
+        int healthR1 = rightHandHealth1;
+        int healthL1 = leftHandHealth1;
+        int healthR2 = rightHandHealth2;
+        int healthL2 = leftHandHealth2;
         int healthH = headHealth;
 
-        if (rightHandHealth < 0)
-            healthR = 0;
-        if (leftHandHealth < 0)
-            healthL = 0;
+        if (rightHandHealth1 < 0)
+            healthR1 = 0;
+        if (leftHandHealth1 < 0)
+            healthL1 = 0;
+        if (rightHandHealth2 < 0)
+            healthR2 = 0;
+        if (leftHandHealth2 < 0)
+            healthL2 = 0;
         if (headHealth < 0)
             healthH = 0;
-        enemyTotalHealth = healthR + healthL + healthH;
+        enemyTotalHealth = healthR1 + healthL1 + healthR2 + healthL2 + healthH;
     }
 
     /* Function for Enemy's health to be modified; used by EnemyDamageDedeuction scripts*/
@@ -114,26 +133,44 @@ public class GameMonitor : MonoBehaviour
 
     public void enemyTakeDamage(int amt, int body) {
         // Check if right hand is active
-        if (body == 0 && rightHandHealth > 0) {
-            rightHandHealth -= amt;
+        if (body == 0 && rightHandHealth1 > 0) {
+            rightHandHealth1 -= amt;
             calcEnemyHealth();
             enemyBar.fillAmount = (float) enemyTotalHealth / maxEnemyHealth;
-            if (rightHandHealth <= 0) {
-                rightHandHealth = 0;
-                atkPat.disableRight();
+            if (rightHandHealth1 <= 0) {
+                rightHandHealth1 = 0;
+                atkPat.disableHand(body);
             }
         }
-        else if (body == 1 && leftHandHealth > 0) {
-            leftHandHealth -= amt;
+        else if (body == 1 && leftHandHealth1 > 0) {
+            leftHandHealth1 -= amt;
             calcEnemyHealth();
             enemyBar.fillAmount = (float) enemyTotalHealth / maxEnemyHealth;
-            if (leftHandHealth <= 0) {
-                leftHandHealth = 0;
-                atkPat.disableLeft();
+            if (leftHandHealth1 <= 0) {
+                leftHandHealth1 = 0;
+                atkPat.disableHand(body);
+            }
+        }
+        else if (body == 3 && rightHandHealth2 > 0) {
+            rightHandHealth2 -= amt;
+            calcEnemyHealth();
+            enemyBar.fillAmount = (float) enemyTotalHealth / maxEnemyHealth;
+            if (rightHandHealth2 <= 0) {
+                rightHandHealth2 = 0;
+                atkPat.disableHand(body);
+            }
+        }
+        else if (body == 4 && leftHandHealth2 > 0) {
+            leftHandHealth2 -= amt;
+            calcEnemyHealth();
+            enemyBar.fillAmount = (float) enemyTotalHealth / maxEnemyHealth;
+            if (leftHandHealth2 <= 0) {
+                leftHandHealth2 = 0;
+                atkPat.disableHand(body);
             }
         }
         else if (body == 2) {
-            if (leftHandHealth <= 0 && rightHandHealth <= 0 && headHealth > 0) {
+            if (leftHandHealth1 <= 0 && rightHandHealth1 <= 0 && leftHandHealth2 <= 0 && rightHandHealth2 <= 0 && headHealth > 0) {
                 headHealth -= amt;
                 calcEnemyHealth();
                 enemyBar.fillAmount = (float) enemyTotalHealth / maxEnemyHealth;
@@ -143,6 +180,6 @@ public class GameMonitor : MonoBehaviour
 
     // Public function to let other scripts know whether all the hands have been defeated
     public bool handsDefeated() {
-        return (leftHandHealth <= 0) && (rightHandHealth <= 0);
+        return (leftHandHealth1 <= 0) && (rightHandHealth1 <= 0) && (leftHandHealth2 <= 0) && (rightHandHealth2 <= 0);
     }
 }

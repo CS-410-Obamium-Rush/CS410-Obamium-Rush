@@ -20,18 +20,33 @@ public class AttackPatterns : MonoBehaviour
     public GameObject punchZones;
     public GameObject swipeZones;
     public GameObject clapZones;
+    public GameObject slamZones;
 
     // Get the left and right hand and head's behavior to call attacks
-    public HandBehavior lh;
-    public HandBehavior rh;
+    public HandBehavior lh1;
+    public HandBehavior rh1;
+    public HandBehavior lh2;
+    public HandBehavior rh2;
     public HeadBehavior head;
 
     // Decide if hands are allowed to use (i.e have been defeated yet)
-    private bool leftUse;
-    private bool rightUse;
+    private bool leftUse1;
+    private bool rightUse1;
+    private bool leftUse2;
+    private bool rightUse2;
 
     // Used to set how much damage is inflicted for an attack
     public DamageDealer dmg;
+
+    private int atkAmt;
+
+    public void setAttackAmt(int newAmt) {
+        atkAmt = newAmt;
+    }
+
+    public void setHeadBehavior(HeadBehavior newHead) {
+        head = newHead.GetComponent<HeadBehavior>();
+    }
 
     /* 
     Using a lock system to prevent multiple attacks occuring at once; only one attack at a time
@@ -51,16 +66,15 @@ public class AttackPatterns : MonoBehaviour
 
     // Use Start() to gather how long the enemy should wait before attacking and to allow the hands to be used
     void Start() {
-        rightUse = true;
-        leftUse = true;
+        rightUse1 = true;
+        leftUse1 = true;
+        atkAmt = 2;
         rechargeTime = timeInterval;
     }
 
     // Use Update() to decrement time and initate an attack from HandBehavior
     void Update()
     {
-        // To check if a valid attack is used; assume not (false) until proven true
-        bool atkDone = false;
         // Decrement the time if it has not ran out yet
         if (rechargeTime > 0 && key) {
             rechargeTime = rechargeTime - Time.deltaTime;
@@ -76,101 +90,156 @@ public class AttackPatterns : MonoBehaviour
             
             /* Generate which hand to use and which attack to use
             Body
-                0 = Right
-                1 = Left
+                0 = Right (Phase 1)
+                1 = Left (Phase 1)
                 2 = Head
+                3 = Right (Phase 2)
+                4 = Left (Phase 2)
             Attack (Hand)
                 0 = Punch
                 1 = Swipe/Sweep
                 2 = Clap
+                3 = Slam Shockwave
             Attack (Head)
                 0 = Punch
-                1/2 = Missle
+                1 = Missle
+                2 = Laser
             */
-            int atkUse = Random.Range(0,3);
+            int atkUse = Random.Range(0,atkAmt);
             int bodyUse = Random.Range(0,3);
             
-            /*
-            Format:
+            // When a valid attack could not be used, release the key to allow another reroll for a valid attack
+            if (! callAtk(atkUse, bodyUse))
+                key = true;
+        }
+    }
+
+    /*
+        Format:
             Check body
                 Check which attack
                     Set damage amount
                     Call the attack
                     verify that a valid attack is used
-            */
-            if (bodyUse == 0 && rightUse) {
-                if (atkUse == 0) {
-                    dmg.setDmg(15);
-                    punch(0);
-                    atkDone = true;
-                }
-                else if (atkUse == 1) {
-                    dmg.setDmg(10);
-                    sweep(0);
-                    atkDone = true;
-                }
-                else if (atkUse == 2 && leftUse) {
-                    dmg.setDmg(5);
-                    clap();
-                    atkDone = true;
-                }
+    */
+
+    private bool callAtk(int atkUse, int bodyInput) {
+        // Use atkDone to indicate
+        bool atkDone = false;
+        if (bodyInput == 2) {
+            if (atkUse == 0) {
+                dmg.setDmg(20);
+                punch(bodyInput);
+                atkDone = true;
             }
-            else if (bodyUse == 1 && leftUse) {
-                if (atkUse == 0) {
-                    dmg.setDmg(15);
-                    punch(1);
-                    atkDone = true;
-                }
-                else if (atkUse == 1) {
-                    dmg.setDmg(10);
-                    sweep(1);
-                    atkDone = true;
-                }
-                else if (atkUse == 2 && rightUse) {
-                    dmg.setDmg(5);
-                    clap();
-                    atkDone = true;
-                }
+            else if (atkUse == 1){
+                dmg.setDmg(10);
+                missle();
+                atkDone = true;
             }
-            else if (bodyUse == 2) {
-                if (atkUse == 0) {
-                    dmg.setDmg(20);
-                    punch(2);
-                    atkDone = true;
-                }
-                else if (atkUse == 1){
-                    dmg.setDmg(10);
-                    missle();
-                    atkDone = true;
-                }
+            else if (atkUse == 2){
+                laser();
+                atkDone = true;
             }
-            // When a valid attack could not be used, release the key to allow another reroll for a valid attack
-            if (!atkDone)
-                key = true;
         }
+        else {
+            if (atkUse == 0) {
+                dmg.setDmg(15);
+                if (bodyInput == 0 && rightUse1) {
+                    punch(bodyInput);
+                    atkDone = true;
+                }
+                else if (bodyInput == 1 && leftUse1) {
+                    punch(bodyInput);
+                    atkDone = true;
+                }
+                else if (bodyInput == 3 && rightUse2) {
+                    punch(bodyInput);
+                    atkDone = true;
+                }
+                else if (bodyInput == 4 && leftUse2) {
+                    punch(bodyInput);
+                    atkDone = true;
+                }
+            }
+            else if (atkUse == 1) {
+                dmg.setDmg(10);
+                if (bodyInput == 0 && rightUse1) {
+                    sweep(bodyInput);
+                    atkDone = true;
+                }
+                else if (bodyInput == 1 && leftUse1) {
+                    sweep(bodyInput);
+                    atkDone = true;
+                }
+                else if (bodyInput == 3 && rightUse2) {
+                    sweep(bodyInput);
+                    atkDone = true;
+                }
+                else if (bodyInput == 4 && leftUse2) {
+                    sweep(bodyInput);
+                    atkDone = true;
+                }
+            }
+            else if (atkUse == 2) {
+                dmg.setDmg(5);
+                if ((bodyInput == 0 || bodyInput == 1) && (rightUse1 && leftUse1)) {
+                    clap(0);
+                    atkDone = true;
+                }
+                else if ((bodyInput == 3 || bodyInput == 4) && (rightUse2 && leftUse2)) {
+                    clap(1);
+                    atkDone = true;
+                }
+            }
+            else if (atkUse == 3) {
+                dmg.setDmg(10);
+                if (bodyInput == 0 && rightUse1) {
+                    slam(bodyInput);
+                    atkDone = true;
+                }
+                else if (bodyInput == 1 && leftUse1) {
+                    slam(bodyInput);
+                    atkDone = true;
+                }
+                else if (bodyInput == 3 && rightUse2) {
+                    slam(bodyInput);
+                    atkDone = true;
+                }
+                else if (bodyInput == 4 && leftUse2) {
+                    slam(bodyInput);
+                    atkDone = true;
+                }
+            }
+        }
+        return atkDone;
     }
+
     /*
     Functions that initate the attack
         Most of them have a random number generator to decide whether to attack high or low
         0 = High
         1 = Low
 
-        Most will also have another random number generator that veries.
+        Most will also have another random number generator that varies.
 
     */
-
-
     // punch() calls the punch attack based on which body part it is using
     void punch(int body) {
         // Get the randomly selected zone to use
         Transform target = getPunchTarget(body);
         // Handiness determines which hand to use
         if (body == 0) 
-            rh.callPunch(target);
+            rh1.callPunch(target);
         else if (body == 1) 
-            lh.callPunch(target);
-        else 
+            lh1.callPunch(target);
+        else if (body == 2)
             head.callPunch(target);
+        else if (body == 3) 
+            rh2.callPunch(target);
+        else if (body == 4) 
+            lh2.callPunch(target);
+
     }
 
 
@@ -180,19 +249,31 @@ public class AttackPatterns : MonoBehaviour
         Transform[] sweepTargets = getSweepTarget();
         // Handiness determines which hand to use and the zones that dictate the motion
         if (hand == 0) 
-            rh.callSwipe(sweepTargets[0], sweepTargets[1]);
-        else 
-            lh.callSwipe(sweepTargets[1], sweepTargets[0]);
+            rh1.callSwipe(sweepTargets[0], sweepTargets[1]);
+        else if (hand == 1) 
+            lh1.callSwipe(sweepTargets[1], sweepTargets[0]);
+        else if (hand == 3) 
+            rh2.callSwipe(sweepTargets[0], sweepTargets[1]);
+        else if (hand == 4) 
+            lh2.callSwipe(sweepTargets[1], sweepTargets[0]);
+        
     }
 
     // clap() calls the hand attack where both hands clap together; only works when both hands are still active
-    void clap() {
+    // handGroup involves which pair of hands to use
+    void clap(int handGroup) {
         // Generate whether to go high or low
         int levelNum = Random.Range(0,2);
         // Gather the level to get the targets (children of the level's GameObject)
         Transform clapLevel = clapZones.transform.GetChild(levelNum).gameObject.transform;
-        lh.callClap(clapLevel.transform.GetChild(3).gameObject.transform, clapLevel.transform.GetChild(4).gameObject.transform, clapLevel.transform.GetChild(5).gameObject.transform);
-        rh.callClap(clapLevel.transform.GetChild(0).gameObject.transform, clapLevel.transform.GetChild(1).gameObject.transform, clapLevel.transform.GetChild(2).gameObject.transform);
+        if (handGroup == 0) {
+            lh1.callClap(clapLevel.transform.GetChild(3).gameObject.transform, clapLevel.transform.GetChild(4).gameObject.transform, clapLevel.transform.GetChild(5).gameObject.transform);
+            rh1.callClap(clapLevel.transform.GetChild(0).gameObject.transform, clapLevel.transform.GetChild(1).gameObject.transform, clapLevel.transform.GetChild(2).gameObject.transform);
+        }
+        else {
+            lh2.callClap(clapLevel.transform.GetChild(3).gameObject.transform, clapLevel.transform.GetChild(4).gameObject.transform, clapLevel.transform.GetChild(5).gameObject.transform);
+            rh2.callClap(clapLevel.transform.GetChild(0).gameObject.transform, clapLevel.transform.GetChild(1).gameObject.transform, clapLevel.transform.GetChild(2).gameObject.transform);
+        }
     }
 
     // missle() calls the missle attack where the enemy fires off a few projectiles that track the player and vanish when
@@ -203,6 +284,21 @@ public class AttackPatterns : MonoBehaviour
         head.callMissle(scenarioNum);
     }
 
+    void laser() {
+        head.callLaser();
+    }
+
+    void slam(int hand) {
+        Transform[] slamTargets = getSlamTarget();
+        if (hand == 0) 
+            rh1.callSwipe(slamTargets[0], slamTargets[1]);
+        else if (hand == 1) 
+            lh1.callSwipe(slamTargets[0], slamTargets[1]);
+        else if (hand == 3) 
+            rh2.callSwipe(slamTargets[0], slamTargets[1]);
+        else if (hand == 4) 
+            lh2.callSwipe(slamTargets[0], slamTargets[1]);
+    }
 
     // getPunchTarget() is a helper function to generate a random area to launch the punch towards
     Transform getPunchTarget(int body) {
@@ -244,18 +340,40 @@ public class AttackPatterns : MonoBehaviour
         return retArray;
     }
 
+    // getSlamTarget() is a helper function to generate the randomized level to sweep across
+    Transform[] getSlamTarget() {
+        Transform[] retArray = new Transform[2];
+        // Generate a random number to determine the attack's level
+        int scenarioNum = Random.Range(0, 3);
+        Transform slamSide = slamZones.transform.GetChild(scenarioNum).gameObject.transform;
+        retArray[0] = slamSide.transform.GetChild(0).gameObject.transform;
+        retArray[1] = slamSide.transform.GetChild(1).gameObject.transform;
+        return retArray;
+    }
+
+
+
     /* 
     Functions used by the Game Monitor to disable hand use and let their HandBehavior know that
     the GameObject needs to indicate defeat
     */
-    public void disableLeft() {
-        leftUse = false;
-        lh.setDefeat();
-    }
-
-    public void disableRight() {
-        rightUse = false;
-        rh.setDefeat();
+    public void disableHand(int hand) {
+        if (hand == 0) {
+            rightUse1 = false;
+            rh1.setDefeat();
+        }
+        else if (hand == 1) {
+            leftUse1 = false;
+            lh1.setDefeat();
+        }
+        else if (hand == 3) {
+            rightUse2 = false;
+            rh2.setDefeat();
+        }
+        else if (hand == 4) {
+            leftUse2 = false;
+            lh2.setDefeat();
+        }
     }
 }
 

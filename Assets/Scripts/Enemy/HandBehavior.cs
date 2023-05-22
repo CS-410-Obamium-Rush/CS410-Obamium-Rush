@@ -83,6 +83,10 @@ public class HandBehavior : MonoBehaviour
         defeated = true;
     }
 
+    public void setNextPhase(){
+        defeated = false;
+    }
+
 
     // Use Start() to initiate the states
     void Start()
