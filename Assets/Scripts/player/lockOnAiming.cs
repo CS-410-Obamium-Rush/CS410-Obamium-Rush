@@ -17,7 +17,7 @@ public class lockOnAiming : MonoBehaviour
         if(mouse.rightButton.wasPressedThisFrame)
         {
             targetInd++;
-            if(targetInd > 2)
+            if(targetInd >= transforms.Length)
             {
                 targetInd = 0;
             } 

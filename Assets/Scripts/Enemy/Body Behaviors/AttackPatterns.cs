@@ -38,15 +38,24 @@ public class AttackPatterns : MonoBehaviour
     // Used to set how much damage is inflicted for an attack
     public DamageDealer dmg;
 
+    private bool phaseTransition = false;
     private int atkAmt;
+    private int bodyAmt;
+    public void setAmt(int newAtkAmt, int newBodyAmt) {
+        atkAmt = newAtkAmt;
+        bodyAmt = newBodyAmt;
+    }
 
-    public void setAttackAmt(int newAmt) {
-        atkAmt = newAmt;
+    public void setPhaseTransition(bool val) {
+        phaseTransition = val;
     }
 
     public void setHeadBehavior(HeadBehavior newHead) {
         head = newHead.GetComponent<HeadBehavior>();
     }
+
+
+
 
     /* 
     Using a lock system to prevent multiple attacks occuring at once; only one attack at a time
@@ -69,6 +78,7 @@ public class AttackPatterns : MonoBehaviour
         rightUse1 = true;
         leftUse1 = true;
         atkAmt = 2;
+        bodyAmt = 3;
         rechargeTime = timeInterval;
     }
 
@@ -76,14 +86,15 @@ public class AttackPatterns : MonoBehaviour
     void Update()
     {
         // Decrement the time if it has not ran out yet
-        if (rechargeTime > 0 && key) {
+        if (rechargeTime > 0 && key && !phaseTransition) {
+            head.setIdle(true);
             rechargeTime = rechargeTime - Time.deltaTime;
             // Debug line to verify the countdown works or not
             //Debug.Log("Countdown:" + rechargeTime);
         }
         // If time is ran out, the enemy is able to perform an attack;
         // A key check is used here to prevent multiple usages of this elseif case simotainously
-        else if (key) {
+        else if (key && !phaseTransition) {
             // Lock this section; the actual attack's conclusion or if an invalid hand attack is selected (won't be used) 
             // will unlock the key
             locker();
@@ -106,7 +117,7 @@ public class AttackPatterns : MonoBehaviour
                 2 = Laser
             */
             int atkUse = Random.Range(0,atkAmt);
-            int bodyUse = Random.Range(0,3);
+            int bodyUse = Random.Range(0,bodyAmt);
             
             // When a valid attack could not be used, release the key to allow another reroll for a valid attack
             if (! callAtk(atkUse, bodyUse))

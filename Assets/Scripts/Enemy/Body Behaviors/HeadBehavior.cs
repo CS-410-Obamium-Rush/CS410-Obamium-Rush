@@ -56,10 +56,13 @@ public class HeadBehavior : MonoBehaviour
     public AttackPatterns lockSys;
     public ButtonDebug debugSys;
 
+    public void setIdle(bool val) {
+        idle = val;
+    }
     // Use Start() to establish initial characteristics and audio
     void Start()
     {
-        idle = true;
+        idle = false;
         initRot = transform.localEulerAngles;
         initPos = transform.position;
         startPunch = false;

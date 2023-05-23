@@ -85,6 +85,7 @@ public class HandBehavior : MonoBehaviour
 
     public void setNextPhase(){
         defeated = false;
+        doRot(initRot.x, initRot.y, initRot.z);
     }
 
 

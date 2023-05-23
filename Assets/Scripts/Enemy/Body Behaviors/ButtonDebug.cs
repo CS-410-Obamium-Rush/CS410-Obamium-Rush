@@ -62,8 +62,10 @@ public class ButtonDebug : MonoBehaviour
     7: use right hand's punch attack
     8: use right hand's swipe attack
     */
+    
 
     void Update() {
+        head.setIdle(true);
         if (Input.GetKey("escape")) {
             Application.Quit();
             Debug.Log("Esc was pressed");
