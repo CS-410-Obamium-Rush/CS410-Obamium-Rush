@@ -43,11 +43,20 @@ public class EnemyDamageDetection : MonoBehaviour
             gm.enemyTakeDamage(5,1);
         }
             
-        else if (this.gameObject.name == "obama_sphere"  && !phaseTransition) {
+        else if ((this.gameObject.name == "obama_sphere" || this.gameObject.name == "Obama Cube")  && !phaseTransition) {
             if (gm.handsDefeated()) {
                 doFlash = true;
                 gm.enemyTakeDamage(5,2);
             }
+        }
+        else if (this.transform.parent.gameObject.name == "RightHand2"  && !phaseTransition) {
+            doFlash = true;
+            gm.enemyTakeDamage(5,3);
+        }
+
+        else if (this.transform.parent.gameObject.name == "LeftHand2"  && !phaseTransition) {
+            doFlash = true;
+            gm.enemyTakeDamage(5,4);
         }
 
         if(isFlashing == false && doFlash == true) {

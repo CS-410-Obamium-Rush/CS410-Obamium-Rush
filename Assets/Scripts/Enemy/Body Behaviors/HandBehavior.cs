@@ -12,7 +12,7 @@ public class HandBehavior : MonoBehaviour
     
     // Need the aimator for the state
     public Animator animator;
-
+    public bool inPhase1;
     
     private Vector3 initPos;
     private Vector3 initRot;
@@ -83,18 +83,33 @@ public class HandBehavior : MonoBehaviour
         defeated = true;
     }
 
-    public void setNextPhase(){
+    public void setIdle(bool val){
+        idle = val;
+    }
+
+
+
+    public void setPause() {
+        idle = false;
         defeated = false;
         doRot(initRot.x, initRot.y, initRot.z);
     }
 
+    public void setResume() {
+        initPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        idle = true;
+        defeated = false;
+    }
 
     // Use Start() to initiate the states
     void Start()
     {
         initRot = transform.localEulerAngles;
         initPos = transform.position;
-        idle = true;
+        if (inPhase1) 
+            idle = true;
+        else
+            idle = false;
         defeated = false;
         startPunch = false;
         retractPunch = false;
@@ -342,5 +357,16 @@ public class HandBehavior : MonoBehaviour
         idle = false;
         posSlam = true;
     }
+
+    public bool resetHand() {
+        transform.position = Vector3.MoveTowards(transform.position, initPos, 5 * Time.deltaTime);
+        if (Vector3.Distance(transform.position, initPos) < 0.001f) {
+            doRot(initRot.x, initRot.y, initRot.z);
+            return true;
+        }
+        else
+            return false;
+    }
+
 
 }

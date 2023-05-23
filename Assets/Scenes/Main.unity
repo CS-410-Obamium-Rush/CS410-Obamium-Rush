@@ -3282,7 +3282,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 697083761}
-  m_LocalRotation: {x: -0.04560729, y: -0.000000034577795, z: -0.0000000015786422, w: 0.9989595}
+  m_LocalRotation: {x: -0.04560729, y: 0.000000034577795, z: 0.0000000015786422, w: 0.9989595}
   m_LocalPosition: {x: 0, y: 4.4, z: -17.59}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3501,6 +3501,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1569348962}
+  inPhase1: 0
   lockSys: {fileID: 17457383}
   debugSys: {fileID: 17457384}
   enemysfx: {fileID: 0}
@@ -3726,6 +3727,7 @@ GameObject:
   m_Component:
   - component: {fileID: 859794058}
   - component: {fileID: 859794057}
+  - component: {fileID: 859794060}
   - component: {fileID: 859794059}
   m_Layer: 0
   m_Name: GameSettings
@@ -3748,12 +3750,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerBar: {fileID: 728045858}
   enemyBar: {fileID: 1775641559}
-  rightHandHealth1: 300
-  leftHandHealth1: 300
+  rightHandHealth1: 1
+  leftHandHealth1: 1
   rightHandHealth2: 0
   leftHandHealth2: 0
   atkPat: {fileID: 17457383}
-  headHealth: 250
+  headHealth: 1
   playerHealth: 50
   enemyThreshold: 200
   end: {fileID: 859794059}
@@ -3784,10 +3786,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa0cd6d301429e48981bb1f0ee78bf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  np: {fileID: 859794060}
   fadeDuration: 1
   displayImageDuration: 3
   winCanvas: {fileID: 1348452342}
   loseCanvas: {fileID: 1070102358}
+--- !u!114 &859794060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 859794056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d080278db2f9b4f4b80e0205e219d997, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  atkPat: {fileID: 17457383}
+  enDamDet: {fileID: 1822434120}
+  rightHand1: {fileID: 1976517822}
+  leftHand1: {fileID: 1830027174}
+  rightHand2: {fileID: 1644185840}
+  leftHand2: {fileID: 749262214}
+  headSphere: {fileID: 1263741140}
+  headCube: {fileID: 1852655451}
+  gm: {fileID: 859794057}
+  ge: {fileID: 859794059}
+  loa: {fileID: 1645732939}
+  enemyBar: {fileID: 1775641559}
 --- !u!1 &914939508
 GameObject:
   m_ObjectHideFlags: 0
@@ -4952,7 +4979,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1236700145}
-  m_LocalRotation: {x: -0.045607287, y: -0.000000017188476, z: -7.847364e-10, w: 0.9989595}
+  m_LocalRotation: {x: -0.045607287, y: 0.000000017188476, z: 7.847364e-10, w: 0.9989595}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6164,6 +6191,11 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2, y: 7, z: 4}
   m_Center: {x: 0.1, y: 0, z: 0.5}
+--- !u!4 &1581841024 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3203880095154762214, guid: f9f6207879b0d044cb6afb5c6b4b0690, type: 3}
+  m_PrefabInstance: {fileID: 1918393992}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1591136702
 GameObject:
   m_ObjectHideFlags: 0
@@ -6494,6 +6526,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1650972375}
+  inPhase1: 0
   lockSys: {fileID: 17457383}
   debugSys: {fileID: 17457384}
   enemysfx: {fileID: 235749596}
@@ -6527,6 +6560,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 6, y: 7.5, z: 2}
   m_Center: {x: 0.25, y: 0.5, z: -0.3}
+--- !u!114 &1645732939 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8879080919707439131, guid: 138b1fb074c8faf45878273bbef504af, type: 3}
+  m_PrefabInstance: {fileID: 8879080921364215113}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10e7f14408652604b847906e17544506, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1648686581
 GameObject:
   m_ObjectHideFlags: 0
@@ -7002,6 +7046,22 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.009999999
   m_Center: {x: -0.0000000032596286, y: 0.0000000032596286, z: 0}
+--- !u!4 &1822434116 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5589245769460872657, guid: 02fbd5d9ae2245c418dc69b36907b654, type: 3}
+  m_PrefabInstance: {fileID: 432436761}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1822434120 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1822434114, guid: 02fbd5d9ae2245c418dc69b36907b654, type: 3}
+  m_PrefabInstance: {fileID: 432436761}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822434110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 584cdc8d20a24474dbec3db3db1e9878, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1830027174 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7784065090503092128, guid: 2838dd6c1df3fb54e95c7df9bed9804c, type: 3}
@@ -7025,6 +7085,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1698274992}
+  inPhase1: 1
   lockSys: {fileID: 17457383}
   debugSys: {fileID: 17457384}
   enemysfx: {fileID: 0}
@@ -7082,6 +7143,8 @@ GameObject:
   - component: {fileID: 1852655452}
   - component: {fileID: 1852655455}
   - component: {fileID: 1852655454}
+  - component: {fileID: 1852655457}
+  - component: {fileID: 1852655456}
   - component: {fileID: 1852655453}
   m_Layer: 0
   m_Name: Obama Cube
@@ -7168,6 +7231,46 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1852655451}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1852655456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1852655451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 584cdc8d20a24474dbec3db3db1e9878, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gm: {fileID: 859794057}
+--- !u!114 &1852655457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1852655451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6791d8632a1aa0a4ab33ead4131769b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  height: 4
+  freq: 2
+  speed: 30
+  range: 40
+  offset: 20
+  laserTime: 7
+  enemysfx: {fileID: 235749596}
+  punchLaunchSpeed: 40
+  punchRetractSpeed: 40
+  spinSpeed: 1000
+  missleSpawner: {fileID: 1911416663}
+  misslePrefab: {fileID: 8075107345226129200, guid: f5a22469640f5504eb5a86e0cf325f1f, type: 3}
+  laserPrefab: {fileID: 2741628682957639215, guid: d9128c62538bc104baec6b93acf3820e, type: 3}
+  lockSys: {fileID: 17457383}
+  debugSys: {fileID: 17457384}
 --- !u!1 &1870625288
 GameObject:
   m_ObjectHideFlags: 0
@@ -7754,6 +7857,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1035574653}
+  inPhase1: 1
   lockSys: {fileID: 17457383}
   debugSys: {fileID: 17457384}
   enemysfx: {fileID: 235749596}
@@ -8143,6 +8247,11 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2, y: 7, z: 4}
   m_Center: {x: -0.1, y: 0, z: 0.5}
+--- !u!4 &2051540264 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8482087343661435988, guid: 2838dd6c1df3fb54e95c7df9bed9804c, type: 3}
+  m_PrefabInstance: {fileID: 67308934}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2104183837
 GameObject:
   m_ObjectHideFlags: 0
@@ -8527,6 +8636,18 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 1976517823}
+    - target: {fileID: 8879080919707439131, guid: 138b1fb074c8faf45878273bbef504af, type: 3}
+      propertyPath: target1
+      value: 
+      objectReference: {fileID: 1581841024}
+    - target: {fileID: 8879080919707439131, guid: 138b1fb074c8faf45878273bbef504af, type: 3}
+      propertyPath: target2
+      value: 
+      objectReference: {fileID: 1822434116}
+    - target: {fileID: 8879080919707439131, guid: 138b1fb074c8faf45878273bbef504af, type: 3}
+      propertyPath: target3
+      value: 
+      objectReference: {fileID: 2051540264}
     - target: {fileID: 8879080919707439131, guid: 138b1fb074c8faf45878273bbef504af, type: 3}
       propertyPath: transforms.Array.data[0]
       value: 

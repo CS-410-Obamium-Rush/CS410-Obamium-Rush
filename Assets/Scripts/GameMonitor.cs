@@ -35,15 +35,16 @@ public class GameMonitor : MonoBehaviour
 
     // To notify when the game has ended
     public GameEnding end;
-
-    public void setNewHealth(int r1, int l1, int r2, int l2) {
+    private bool doWinOnce = true;
+    public int setNewHealth(int r1, int l1, int r2, int l2, int head) {
         rightHandHealth1 = r1;
         leftHandHealth1 = l1;
         rightHandHealth2 = r2;
         leftHandHealth2 = l2;
+        headHealth = head;
         maxEnemyHealth = headHealth + rightHandHealth1 + leftHandHealth1 + rightHandHealth2 + leftHandHealth2;
         enemyTotalHealth = maxEnemyHealth;
-        
+        return maxEnemyHealth;
     }
 
     // Get the max amount of health that the player and enemy can have at a time
@@ -64,7 +65,10 @@ public class GameMonitor : MonoBehaviour
         }
         // If enemy loses all health, player wins and moves on to the next phase or game ends
         else if (enemyTotalHealth <= 0) {
-            end.setWin();
+            if (doWinOnce && atkPat.getKey()) {
+                end.setWin();
+                doWinOnce = false;
+            }
         }
 
         // Release powerup when player reduces enough of enemy health; add more for additional powerups
@@ -131,6 +135,24 @@ public class GameMonitor : MonoBehaviour
             Update the enemy health bar
     */
 
+    /*public void enemyAddHealth(int amt, int body) {
+        if (body == 0) {
+            rightHandHealth1 += amt;
+        }
+        else if (body == 1) {
+            leftHandHealth1 += amt;
+        }
+        else if (body == 2) {
+            headHealth += amt;
+        }
+        else if (body == 3) {
+
+        }
+        else if (body == 4) {
+            leftHandHealth2 += amt;
+        }
+    }*/
+
     public void enemyTakeDamage(int amt, int body) {
         // Check if right hand is active
         if (body == 0 && rightHandHealth1 > 0) {
@@ -139,7 +161,7 @@ public class GameMonitor : MonoBehaviour
             enemyBar.fillAmount = (float) enemyTotalHealth / maxEnemyHealth;
             if (rightHandHealth1 <= 0) {
                 rightHandHealth1 = 0;
-                atkPat.disableHand(body);
+                atkPat.disableBody(body);
             }
         }
         else if (body == 1 && leftHandHealth1 > 0) {
@@ -148,7 +170,7 @@ public class GameMonitor : MonoBehaviour
             enemyBar.fillAmount = (float) enemyTotalHealth / maxEnemyHealth;
             if (leftHandHealth1 <= 0) {
                 leftHandHealth1 = 0;
-                atkPat.disableHand(body);
+                atkPat.disableBody(body);
             }
         }
         else if (body == 3 && rightHandHealth2 > 0) {
@@ -157,7 +179,7 @@ public class GameMonitor : MonoBehaviour
             enemyBar.fillAmount = (float) enemyTotalHealth / maxEnemyHealth;
             if (rightHandHealth2 <= 0) {
                 rightHandHealth2 = 0;
-                atkPat.disableHand(body);
+                atkPat.disableBody(body);
             }
         }
         else if (body == 4 && leftHandHealth2 > 0) {
@@ -166,7 +188,7 @@ public class GameMonitor : MonoBehaviour
             enemyBar.fillAmount = (float) enemyTotalHealth / maxEnemyHealth;
             if (leftHandHealth2 <= 0) {
                 leftHandHealth2 = 0;
-                atkPat.disableHand(body);
+                atkPat.disableBody(body);
             }
         }
         else if (body == 2) {
@@ -174,6 +196,10 @@ public class GameMonitor : MonoBehaviour
                 headHealth -= amt;
                 calcEnemyHealth();
                 enemyBar.fillAmount = (float) enemyTotalHealth / maxEnemyHealth;
+                if (headHealth <= 0) {
+                    headHealth = 0;
+                    atkPat.disableBody(body);
+                }
             }
         }
     }

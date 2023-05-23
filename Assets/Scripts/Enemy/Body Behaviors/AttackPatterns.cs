@@ -34,6 +34,7 @@ public class AttackPatterns : MonoBehaviour
     private bool rightUse1;
     private bool leftUse2;
     private bool rightUse2;
+    private bool headUse;
 
     // Used to set how much damage is inflicted for an attack
     public DamageDealer dmg;
@@ -64,6 +65,9 @@ public class AttackPatterns : MonoBehaviour
     found in HandBehavior to decide the lock and unlock when appropiate.
     */
     private bool key = true;
+    public bool getKey() {
+        return key;
+    }
     public void locker() {
         key = false;
     }
@@ -77,6 +81,7 @@ public class AttackPatterns : MonoBehaviour
     void Start() {
         rightUse1 = true;
         leftUse1 = true;
+        headUse = true;
         atkAmt = 2;
         bodyAmt = 3;
         rechargeTime = timeInterval;
@@ -137,7 +142,7 @@ public class AttackPatterns : MonoBehaviour
     private bool callAtk(int atkUse, int bodyInput) {
         // Use atkDone to indicate
         bool atkDone = false;
-        if (bodyInput == 2) {
+        if (bodyInput == 2 && headUse) {
             if (atkUse == 0) {
                 dmg.setDmg(20);
                 punch(bodyInput);
@@ -368,23 +373,29 @@ public class AttackPatterns : MonoBehaviour
     Functions used by the Game Monitor to disable hand use and let their HandBehavior know that
     the GameObject needs to indicate defeat
     */
-    public void disableHand(int hand) {
-        if (hand == 0) {
+    public void disableBody(int body) {
+        if (body == 0) {
             rightUse1 = false;
             rh1.setDefeat();
         }
-        else if (hand == 1) {
+        else if (body == 1) {
             leftUse1 = false;
             lh1.setDefeat();
         }
-        else if (hand == 3) {
+        else if (body == 2) {
+            headUse = false;
+            head.setDefeat();
+        }
+        else if (body == 3) {
             rightUse2 = false;
             rh2.setDefeat();
         }
-        else if (hand == 4) {
+        else if (body == 4) {
             leftUse2 = false;
             lh2.setDefeat();
         }
     }
+
+
 }
 

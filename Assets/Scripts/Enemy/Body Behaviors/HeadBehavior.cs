@@ -30,6 +30,7 @@ public class HeadBehavior : MonoBehaviour
     private bool retractPunch;
     private bool startMissle;
     private bool startLaser;
+    private bool defeated;
     
     // Punch Attack Speeds
     public int punchLaunchSpeed;
@@ -59,16 +60,23 @@ public class HeadBehavior : MonoBehaviour
     public void setIdle(bool val) {
         idle = val;
     }
+
+    public void setResume() {
+        idle = true;
+        defeated = false;
+        initRot = new Vector3(initRot.x, 90, initRot.z);
+    }
+
     // Use Start() to establish initial characteristics and audio
     void Start()
     {
-        idle = false;
+        defeated = false;
+        idle = true;
         initRot = transform.localEulerAngles;
         initPos = transform.position;
         startPunch = false;
         retractPunch = false;
         missleGone = 0;
-
         // get audiosource
         m_AudioSource = GetComponent<AudioSource>();
     }
@@ -86,8 +94,10 @@ public class HeadBehavior : MonoBehaviour
     void Update() {
         // Idle
         if (idle) {
-            transform.position = new Vector3(initPos.x, Mathf.Sin(Time.time * freq) * height + initPos.y, initPos.z);
-            transform.localEulerAngles = new Vector3(initRot.x, Mathf.PingPong(Time.time * speed, range) - offset, initRot.z);
+            if (!defeated) {
+                transform.position = new Vector3(initPos.x, Mathf.Sin(Time.time * freq) * height + initPos.y, initPos.z);
+                transform.localEulerAngles = new Vector3(initRot.x, Mathf.PingPong(Time.time * speed, range) - offset + initRot.y, initRot.z);
+            }
         }
         // Using punch
         else if (startPunch) {
@@ -187,7 +197,14 @@ public class HeadBehavior : MonoBehaviour
         startLaser = true;
     }
 
+    public void setDefeat() {
+        defeated = true;
+    }
 
+    public void setActive() {
+        defeated = false;
+        idle = true;
+    }
 
     // countMissle() used for collision detections to indicate the new removal of a missle;
     // Will also be responsible for freeing up the attack state

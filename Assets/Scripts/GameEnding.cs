@@ -11,6 +11,7 @@ using UnityEngine.SceneManagement;
 
 public class GameEnding : MonoBehaviour
 {
+    public NextPhase np;
     // For the length of the ending screen
     public float fadeDuration = 1f;
     public float displayImageDuration = 1f;
@@ -21,12 +22,18 @@ public class GameEnding : MonoBehaviour
     // Get the canvas containing the win and lost image
     public CanvasGroup winCanvas;
     public CanvasGroup loseCanvas;
-
+    private bool doOnce = true;
     // Update() displays canvas for when player wins or lost
     void Update()
     {
-        if (playerWin)
-            EndGame(winCanvas, false);
+        if (playerWin) {
+            if(doOnce) {
+                np.phase2();
+                doOnce = false;
+            }
+        }
+            
+            //EndGame(winCanvas, false);
         else if (playerLost)
             EndGame(loseCanvas, true);
     }
@@ -44,6 +51,10 @@ public class GameEnding : MonoBehaviour
                 Application.Quit();
             }
         }
+    }
+
+    public void callEndWin() {
+        EndGame(winCanvas, true);
     }
 
     // Used by the Game Monitor to determine that the player won or lost.
