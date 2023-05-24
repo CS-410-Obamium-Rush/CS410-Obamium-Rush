@@ -7,7 +7,7 @@ public class EnemyDamageDetection : MonoBehaviour
     private Renderer enemyRenderer;
     public GameMonitor gm;
     private bool isFlashing = false;
-    private bool phaseTransition = false;
+    private static bool phaseTransition = false;
 
     // ethan's audio stuff
     //public enemyAudioManager enemysfx; // need to figure out why the fuck this doesn't work
@@ -35,28 +35,28 @@ public class EnemyDamageDetection : MonoBehaviour
 
         if (this.transform.parent.gameObject.name == "RightHand1" && !phaseTransition) {
             doFlash = true;
-            gm.enemyTakeDamage(5,0);
+            gm.enemyTakeDamage(900,0);
         }
             
         else if (this.transform.parent.gameObject.name == "LeftHand1"  && !phaseTransition) {
             doFlash = true;
-            gm.enemyTakeDamage(5,1);
+            gm.enemyTakeDamage(900,1);
         }
             
         else if ((this.gameObject.name == "obama_sphere" || this.gameObject.name == "Obama Cube")  && !phaseTransition) {
             if (gm.handsDefeated()) {
                 doFlash = true;
-                gm.enemyTakeDamage(5,2);
+                gm.enemyTakeDamage(900,2);
             }
         }
         else if (this.transform.parent.gameObject.name == "RightHand2"  && !phaseTransition) {
             doFlash = true;
-            gm.enemyTakeDamage(5,3);
+            gm.enemyTakeDamage(900,3);
         }
 
         else if (this.transform.parent.gameObject.name == "LeftHand2"  && !phaseTransition) {
             doFlash = true;
-            gm.enemyTakeDamage(5,4);
+            gm.enemyTakeDamage(900,4);
         }
 
         if(isFlashing == false && doFlash == true) {

@@ -126,6 +126,7 @@ public class NextPhase : MonoBehaviour
                 rh2.setResume();
                 lh1.setResume();
                 lh2.setResume(); 
+                loa.changeTarget(headCube.transform, 1);
                 loa.addTargets(rightHand2.transform.GetChild(1).gameObject.transform);
                 loa.addTargets(leftHand2.transform.GetChild(1).gameObject.transform);
                 StartCoroutine(regenHealth());
@@ -134,12 +135,13 @@ public class NextPhase : MonoBehaviour
                 
         }
         else if (stepList[7]) {
+            enDamDet.setPhaseTransition(false);
+            atkPat.activateAllHands();
+            atkPat.setPhaseTransition(false);
             stepList[7] = false;
-            stepList[8] = true;     
+            //stepList[8] = true;     
         }
-        else if (stepList[8]) {
-            ge.callEndWin();     
-        }
+
              
     }
     private bool shiftHands() {
@@ -176,12 +178,14 @@ public class NextPhase : MonoBehaviour
         for (int i = 0; healthRecord < maxHealth; i += step) {
             healthRecord += step;
             enemyBar.fillAmount = (float) healthRecord / maxHealth;
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.001f);
         }
-        yield return new WaitForSeconds(60.00f);
+        //yield return new WaitForSeconds(60.00f);
         stepList[6] = false;
         stepList[7] = true;
     }
+
+
 
     public void phase2() {
         stepList[0] = true;

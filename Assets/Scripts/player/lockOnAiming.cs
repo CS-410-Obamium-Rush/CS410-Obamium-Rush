@@ -33,7 +33,6 @@ public class lockOnAiming : MonoBehaviour
         Mouse mouse = Mouse.current;
         if(mouse.rightButton.wasPressedThisFrame)
         {
-            Debug.Log(targetInd);
             targetInd++;
             if(targetInd >= transforms.Count)
             {
@@ -46,14 +45,11 @@ public class lockOnAiming : MonoBehaviour
     }
 
     public void addTargets(Transform newTarget) {
-        /*
-        for (int i = 0; i < transforms.Length) {
-            newTransforms[i] = transforms[i];
-        }
-        newTransforms[]
-        */
         transforms.Add(newTarget);
-        //transforms[transforms.length] = newTarget;
+    }
+
+    public void changeTarget(Transform newTarget, int i) {
+        transforms[i] = newTarget;
     }
 
 }

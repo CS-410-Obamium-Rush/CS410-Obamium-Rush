@@ -35,7 +35,8 @@ public class GameMonitor : MonoBehaviour
 
     // To notify when the game has ended
     public GameEnding end;
-    private bool doWinOnce = true;
+    private bool startPhase2 = true;
+    private int phaseCount = 0;
     public int setNewHealth(int r1, int l1, int r2, int l2, int head) {
         rightHandHealth1 = r1;
         leftHandHealth1 = l1;
@@ -65,10 +66,16 @@ public class GameMonitor : MonoBehaviour
         }
         // If enemy loses all health, player wins and moves on to the next phase or game ends
         else if (enemyTotalHealth <= 0) {
-            if (doWinOnce && atkPat.getKey()) {
-                end.setWin();
-                doWinOnce = false;
+            if (startPhase2 && atkPat.getKey()) {
+                startPhase2 = false;
+                end.setPhase2();
+                phaseCount++;
             }
+            else if (phaseCount == 3) {
+                Debug.Log("You Wind");
+                end.setWin();
+            }
+                
         }
 
         // Release powerup when player reduces enough of enemy health; add more for additional powerups
@@ -206,6 +213,6 @@ public class GameMonitor : MonoBehaviour
 
     // Public function to let other scripts know whether all the hands have been defeated
     public bool handsDefeated() {
-        return (leftHandHealth1 <= 0) && (rightHandHealth1 <= 0) && (leftHandHealth2 <= 0) && (rightHandHealth2 <= 0);
+        return ((leftHandHealth1 <= 0) && (rightHandHealth1 <= 0) && (leftHandHealth2 <= 0) && (rightHandHealth2 <= 0));
     }
 }

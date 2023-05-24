@@ -55,9 +55,13 @@ public class AttackPatterns : MonoBehaviour
         head = newHead.GetComponent<HeadBehavior>();
     }
 
-
-
-
+    public void activateAllHands() {
+        headUse = true;
+        rightUse1 = true;
+        rightUse2 = true;
+        leftUse1 = true;
+        leftUse2 = true;
+    }
     /* 
     Using a lock system to prevent multiple attacks occuring at once; only one attack at a time
     The idea is to implement a lock-like system where an inititated attack will hold onto the lock
@@ -92,11 +96,11 @@ public class AttackPatterns : MonoBehaviour
     {
         // Decrement the time if it has not ran out yet
         if (rechargeTime > 0 && key && !phaseTransition) {
-            head.setIdle(true);
             rechargeTime = rechargeTime - Time.deltaTime;
             // Debug line to verify the countdown works or not
             //Debug.Log("Countdown:" + rechargeTime);
         }
+        
         // If time is ran out, the enemy is able to perform an attack;
         // A key check is used here to prevent multiple usages of this elseif case simotainously
         else if (key && !phaseTransition) {
@@ -123,10 +127,17 @@ public class AttackPatterns : MonoBehaviour
             */
             int atkUse = Random.Range(0,atkAmt);
             int bodyUse = Random.Range(0,bodyAmt);
-            
+            //Debug.Log("BodyAmt = " + bodyUse);
+            //Debug.Log("Calc: (" + atkUse + ", " + bodyUse + ")");
             // When a valid attack could not be used, release the key to allow another reroll for a valid attack
-            if (! callAtk(atkUse, bodyUse))
+            if (! callAtk(atkUse, bodyUse)) {
+                Debug.Log("Reroll: (" + atkUse + ", " + bodyUse + ")");
                 key = true;
+            }
+            else {
+                Debug.Log("Atk Used: (" + atkUse + ", " + bodyUse + ")");
+            }
+                
         }
     }
 
@@ -145,15 +156,18 @@ public class AttackPatterns : MonoBehaviour
         if (bodyInput == 2 && headUse) {
             if (atkUse == 0) {
                 dmg.setDmg(20);
+                Debug.Log("Punch");
                 punch(bodyInput);
                 atkDone = true;
             }
-            else if (atkUse == 1){
+            else if (atkUse == 1) {
+                Debug.Log("Missle");
                 dmg.setDmg(10);
                 missle();
                 atkDone = true;
             }
-            else if (atkUse == 2){
+            else if (atkUse == 2 || atkUse == 3){
+                Debug.Log("Laser");
                 laser();
                 atkDone = true;
             }
@@ -307,13 +321,13 @@ public class AttackPatterns : MonoBehaviour
     void slam(int hand) {
         Transform[] slamTargets = getSlamTarget();
         if (hand == 0) 
-            rh1.callSwipe(slamTargets[0], slamTargets[1]);
+            rh1.callSlam(slamTargets[0], slamTargets[1]);
         else if (hand == 1) 
-            lh1.callSwipe(slamTargets[0], slamTargets[1]);
+            lh1.callSlam(slamTargets[0], slamTargets[1]);
         else if (hand == 3) 
-            rh2.callSwipe(slamTargets[0], slamTargets[1]);
+            rh2.callSlam(slamTargets[0], slamTargets[1]);
         else if (hand == 4) 
-            lh2.callSwipe(slamTargets[0], slamTargets[1]);
+            lh2.callSlam(slamTargets[0], slamTargets[1]);
     }
 
     // getPunchTarget() is a helper function to generate a random area to launch the punch towards
@@ -333,7 +347,10 @@ public class AttackPatterns : MonoBehaviour
         */
 
         if (scenarioNum == 0 && body != 2) {
-            return punchLevel.transform.GetChild(body).gameObject.transform;
+            if (body > 2)
+                return punchLevel.transform.GetChild(body - 3).gameObject.transform;
+            else
+                return punchLevel.transform.GetChild(body).gameObject.transform;
         }
         else if (scenarioNum == 1 && body != 2) {
             return punchLevel.transform.GetChild(2).gameObject.transform;

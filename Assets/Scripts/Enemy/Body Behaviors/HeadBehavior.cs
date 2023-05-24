@@ -129,7 +129,7 @@ public class HeadBehavior : MonoBehaviour
             }
             // Act as if in idle state until all the missles are gone
             transform.position = new Vector3(initPos.x, Mathf.Sin(Time.time * freq) * height + initPos.y, initPos.z);
-            transform.localEulerAngles = new Vector3(initRot.x, Mathf.PingPong(Time.time * speed, range) - offset, initRot.z);
+            transform.localEulerAngles = new Vector3(initRot.x, Mathf.PingPong(Time.time * speed, range) - offset + initRot.y, initRot.z);
         }
         else if (startLaser) {
             if (doOnce) {
@@ -158,8 +158,8 @@ public class HeadBehavior : MonoBehaviour
         laserCode.destroyLaser();
         lockSys.unlocker();
         debugSys.unlocker();
-        idle = true;
         startLaser = false;
+        idle = true;
     }
 
 

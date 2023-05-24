@@ -18,22 +18,20 @@ public class GameEnding : MonoBehaviour
     float m_Timer;
     // Bools to determine if the player has won or lost
     private bool playerWin = false;
+    private bool doPhase2 = false;
     private bool playerLost = false;
     // Get the canvas containing the win and lost image
     public CanvasGroup winCanvas;
     public CanvasGroup loseCanvas;
-    private bool doOnce = true;
     // Update() displays canvas for when player wins or lost
     void Update()
     {
-        if (playerWin) {
-            if(doOnce) {
-                np.phase2();
-                doOnce = false;
-            }
+        if (playerWin) 
+            EndGame(winCanvas, false);
+        else if (doPhase2) {
+            np.phase2();
+            doPhase2 = false;
         }
-            
-            //EndGame(winCanvas, false);
         else if (playerLost)
             EndGame(loseCanvas, true);
     }
@@ -58,6 +56,11 @@ public class GameEnding : MonoBehaviour
     }
 
     // Used by the Game Monitor to determine that the player won or lost.
+    
+    public void setPhase2() {
+        doPhase2 = true;
+    }
+
     public void setWin() {
         playerWin = true;
     }
