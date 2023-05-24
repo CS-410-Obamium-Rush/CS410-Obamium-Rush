@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 638adab21e205df4aaac0a7765443244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeInterval: 3
+  timeInterval: 1
   punchZones: {fileID: 323099316}
   swipeZones: {fileID: 183727212}
   clapZones: {fileID: 262949222}
@@ -2120,7 +2120,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 445492956}
-  m_LocalRotation: {x: -0.069343105, y: 0.00000001716496, z: 0.0000000011931437, w: 0.99759287}
+  m_LocalRotation: {x: -0.069343105, y: -0.000000017164966, z: -0.0000000011931443, w: 0.99759287}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3921,11 +3921,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa0cd6d301429e48981bb1f0ee78bf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  np: {fileID: 859794060}
   fadeDuration: 1
   displayImageDuration: 3
   winCanvas: {fileID: 1348452342}
   loseCanvas: {fileID: 1070102358}
+  np: {fileID: 859794060}
 --- !u!114 &859794060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3940,15 +3940,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   atkPat: {fileID: 17457383}
   enDamDet: {fileID: 1822434120}
+  gm: {fileID: 859794057}
+  loa: {fileID: 1645732939}
   rightHand1: {fileID: 1976517822}
   leftHand1: {fileID: 1830027174}
   rightHand2: {fileID: 1644185840}
   leftHand2: {fileID: 749262214}
   headSphere: {fileID: 1263741140}
   headCube: {fileID: 1408986852}
-  gm: {fileID: 859794057}
-  ge: {fileID: 859794059}
-  loa: {fileID: 1645732939}
   enemyBar: {fileID: 1775641559}
 --- !u!1 &914939508
 GameObject:

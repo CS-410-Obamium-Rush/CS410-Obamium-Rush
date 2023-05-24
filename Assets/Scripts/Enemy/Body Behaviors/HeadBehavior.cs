@@ -57,6 +57,7 @@ public class HeadBehavior : MonoBehaviour
     public AttackPatterns lockSys;
     public ButtonDebug debugSys;
 
+    /* Public functions used to manage a change in phase */
     public void setIdle(bool val) {
         idle = val;
     }
@@ -65,6 +66,10 @@ public class HeadBehavior : MonoBehaviour
         idle = true;
         defeated = false;
         initRot = new Vector3(initRot.x, 90, initRot.z);
+    }
+
+    public void setDefeat() {
+        defeated = true;
     }
 
     // Use Start() to establish initial characteristics and audio
@@ -122,7 +127,6 @@ public class HeadBehavior : MonoBehaviour
         }
         // Create the missle
         else if (startMissle) {
-            
             // Create the amount of missles only once
             if (doOnce) {
                 StartCoroutine(spawn(missleAmt));
@@ -171,7 +175,7 @@ public class HeadBehavior : MonoBehaviour
         Play Audio
         Place a lock on the ButtonDebug code
         Get the attack target zone(s) if needed
-        Change the state to the start of the attack
+        Change the state to be the start of the attack
     */
 
     public void callPunch(Transform target) {
@@ -198,14 +202,6 @@ public class HeadBehavior : MonoBehaviour
         startLaser = true;
     }
 
-    public void setDefeat() {
-        defeated = true;
-    }
-
-    public void setActive() {
-        defeated = false;
-        idle = true;
-    }
 
     // countMissle() used for collision detections to indicate the new removal of a missle;
     // Will also be responsible for freeing up the attack state

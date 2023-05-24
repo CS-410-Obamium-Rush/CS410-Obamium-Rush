@@ -77,8 +77,10 @@ public class HandBehavior : MonoBehaviour
     private bool retSlam;
     private bool defeated;
 
+    // Used to spawn shockwaves from a Slam attack
     public ShockwaveSpawn shockwaveUse;
 
+    /* Public functions used for a phase change by altering the state of the hands */
     public void setDefeat(){
         defeated = true;
     }
@@ -86,19 +88,27 @@ public class HandBehavior : MonoBehaviour
     public void setIdle(bool val){
         idle = val;
     }
-
-
-
     public void setPause() {
         idle = false;
         defeated = false;
         doRot(initRot.x, initRot.y, initRot.z);
     }
-
     public void setResume() {
         initPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         idle = true;
         defeated = false;
+    }
+
+    // Public Function to get the hands to their original positions during a phase change; returns a bool to indicate they reached
+    // their location yet or not
+    public bool resetHand() {
+        transform.position = Vector3.MoveTowards(transform.position, initPos, 30 * Time.deltaTime);
+        if (Vector3.Distance(transform.position, initPos) < 0.001f) {
+            doRot(initRot.x, initRot.y, initRot.z);
+            return true;
+        }
+        else
+            return false;
     }
 
     // Use Start() to initiate the states
@@ -357,16 +367,4 @@ public class HandBehavior : MonoBehaviour
         idle = false;
         posSlam = true;
     }
-
-    public bool resetHand() {
-        transform.position = Vector3.MoveTowards(transform.position, initPos, 30 * Time.deltaTime);
-        if (Vector3.Distance(transform.position, initPos) < 0.001f) {
-            doRot(initRot.x, initRot.y, initRot.z);
-            return true;
-        }
-        else
-            return false;
-    }
-
-
 }

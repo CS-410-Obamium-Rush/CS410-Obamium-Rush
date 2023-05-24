@@ -1,7 +1,8 @@
 /*
-GameEnding: Used to display the victory or game over screen when the enemy or player run out of health.
+GameEnding: Used to display the victory or game over screen or to trigger the next enemy phase when the enemy or player run out of health.
 
-This is structed based on the Haunted House tutorial done for Assignment 2; this may be greatly adjusted in future builds
+This is structed based on the Haunted House tutorial done for Assignment 2, but has received modifications to incorporate additional
+enemy phases
 */
 
 using System.Collections;
@@ -11,27 +12,53 @@ using UnityEngine.SceneManagement;
 
 public class GameEnding : MonoBehaviour
 {
-    public NextPhase np;
     // For the length of the ending screen
     public float fadeDuration = 1f;
     public float displayImageDuration = 1f;
     float m_Timer;
-    // Bools to determine if the player has won or lost
+    // Bools to determine if the player has won, needs to do the next phase, or hase lost
     private bool playerWin = false;
     private bool doPhase2 = false;
     private bool playerLost = false;
     // Get the canvas containing the win and lost image
     public CanvasGroup winCanvas;
     public CanvasGroup loseCanvas;
+
+    // Trigger the next phase with their public functions
+    public NextPhase np;
+
+    /* Public Functions */
+
+    // Used for debugging phase changing scripts
+    public void callEndWin() {
+        EndGame(winCanvas, true);
+    }
+
+    // Used by the Game Monitor to next part of the game
+    public void setPhase2() {
+        doPhase2 = true;
+    }
+    public void setWin() {
+        playerWin = true;
+    }
+    public void setLost() {
+        playerLost = true;
+    }
+
+
+
     // Update() displays canvas for when player wins or lost
     void Update()
     {
+        // Put Victory image if all phasesa are defeated
         if (playerWin) 
             EndGame(winCanvas, false);
+        // Trigger phase 2 if enemy has lost all their health once
         else if (doPhase2) {
             np.phase2();
             doPhase2 = false;
         }
+        // Put Defeat image is player loses all their health
         else if (playerLost)
             EndGame(loseCanvas, true);
     }
@@ -51,21 +78,5 @@ public class GameEnding : MonoBehaviour
         }
     }
 
-    public void callEndWin() {
-        EndGame(winCanvas, true);
-    }
-
-    // Used by the Game Monitor to determine that the player won or lost.
     
-    public void setPhase2() {
-        doPhase2 = true;
-    }
-
-    public void setWin() {
-        playerWin = true;
-    }
-
-    public void setLost() {
-        playerLost = true;
-    }
 }

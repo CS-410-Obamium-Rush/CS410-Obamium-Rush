@@ -44,25 +44,19 @@ public class EnemyDamageDetection : MonoBehaviour
         }
             
         else if ((this.gameObject.name == "ObamaCube" || this.gameObject.name == "obama_sphere")  && !phaseTransition) {
-            
             if (gm.handsDefeated()) {
                 doFlash = true;
                 gm.enemyTakeDamage(900,2);
-            }
-            else {
-                Debug.Log("Head still invincible");
             }
         }
         else if (this.transform.parent.gameObject.name == "RightHand2"  && !phaseTransition) {
             doFlash = true;
             gm.enemyTakeDamage(900,3);
         }
-
         else if (this.transform.parent.gameObject.name == "LeftHand2"  && !phaseTransition) {
             doFlash = true;
             gm.enemyTakeDamage(900,4);
         }
-
         if(isFlashing == false && doFlash == true) {
             StartCoroutine(flashDamageColor());
         }

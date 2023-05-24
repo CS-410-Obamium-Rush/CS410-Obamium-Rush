@@ -39,9 +39,15 @@ public class AttackPatterns : MonoBehaviour
     // Used to set how much damage is inflicted for an attack
     public DamageDealer dmg;
 
-    private bool phaseTransition = false;
+    // Used to determine how many body parts and attacks the enemy has at their disposal
     private int atkAmt;
     private int bodyAmt;
+
+    // Used to disable the attacks during phase transitions
+    private bool phaseTransition = false;
+    
+    /* Public functions used for the phase transitions */
+    // Determine new amount of body parts or attacks
     public void setAmt(int newAtkAmt, int newBodyAmt) {
         atkAmt = newAtkAmt;
         bodyAmt = newBodyAmt;
@@ -50,11 +56,10 @@ public class AttackPatterns : MonoBehaviour
     public void setPhaseTransition(bool val) {
         phaseTransition = val;
     }
-
+    // Replace the current HeadBehavior instance to the new head's HeadBehavior instance
     public void setHeadBehavior(HeadBehavior newHead) {
         head = newHead.GetComponent<HeadBehavior>();
     }
-
     public void activateAllHands() {
         headUse = true;
         rightUse1 = true;
@@ -94,12 +99,11 @@ public class AttackPatterns : MonoBehaviour
     // Use Update() to decrement time and initate an attack from HandBehavior
     void Update()
     {
-        //head.getName();
         // Decrement the time if it has not ran out yet
         if (rechargeTime > 0 && key && !phaseTransition) {
             rechargeTime = rechargeTime - Time.deltaTime;
             // Debug line to verify the countdown works or not
-            //Debug.Log("Countdown:" + rechargeTime);
+            // Debug.Log("Countdown:" + rechargeTime);
         }
         
         // If time is ran out, the enemy is able to perform an attack;
@@ -128,27 +132,27 @@ public class AttackPatterns : MonoBehaviour
             */
             int atkUse = Random.Range(0,atkAmt);
             int bodyUse = Random.Range(0,bodyAmt);
-            //Debug.Log("BodyAmt = " + bodyUse);
-            //Debug.Log("Calc: (" + atkUse + ", " + bodyUse + ")");
+
             // When a valid attack could not be used, release the key to allow another reroll for a valid attack
             if (! callAtk(atkUse, bodyUse)) {
-                //Debug.Log("Reroll: (" + atkUse + ", " + bodyUse + ")");
                 key = true;
             }
-            else {
-                //Debug.Log("Atk Used: (" + atkUse + ", " + bodyUse + ")");
-            }
+
                 
         }
     }
 
     /*
-        Format:
-            Check body
-                Check which attack
-                    Set damage amount
-                    Call the attack
-                    verify that a valid attack is used
+
+    callAtk: used to activate an attack based on which attack id and body part; returns a bool to determine if an attack was actually
+    pulled off or not.
+
+    Format:
+        Check body
+            Check which attack
+                Set damage amount
+                Call the attack
+                verify that a valid attack is used
     */
 
     private bool callAtk(int atkUse, int bodyInput) {
@@ -270,7 +274,6 @@ public class AttackPatterns : MonoBehaviour
             rh2.callPunch(target);
         else if (body == 4) 
             lh2.callPunch(target);
-
     }
 
 
@@ -312,7 +315,6 @@ public class AttackPatterns : MonoBehaviour
     void missle() {
         // Generate the amount of missles to fire (1-3)
         int scenarioNum = Random.Range(1,4);
-        //Debug.Log("Missle Amt = " + scenarioNum);
         head.callMissle(scenarioNum);
     }
 
@@ -387,8 +389,6 @@ public class AttackPatterns : MonoBehaviour
         return retArray;
     }
 
-
-
     /* 
     Functions used by the Game Monitor to disable hand use and let their HandBehavior know that
     the GameObject needs to indicate defeat
@@ -415,7 +415,5 @@ public class AttackPatterns : MonoBehaviour
             lh2.setDefeat();
         }
     }
-
-
 }
 

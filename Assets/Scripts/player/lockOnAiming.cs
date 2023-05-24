@@ -20,6 +20,17 @@ public class lockOnAiming : MonoBehaviour
     public int offsetY = 0;
     public int offsetZ = 0;
     private Transform target;
+
+    // Public Functions to manipulate all the targets to shift the crosshair to
+    public void addTargets(Transform newTarget) {
+        transforms.Add(newTarget);
+    }
+
+    public void changeTarget(Transform newTarget, int i) {
+        transforms[i] = newTarget;
+    }
+
+
     void Start() {
         transforms = new ArrayList();
         transforms.Add(target1);
@@ -43,13 +54,4 @@ public class lockOnAiming : MonoBehaviour
         crosshair.transform.position = target.position + new Vector3(offsetX, offsetY, offsetZ);
         transform.LookAt(target);
     }
-
-    public void addTargets(Transform newTarget) {
-        transforms.Add(newTarget);
-    }
-
-    public void changeTarget(Transform newTarget, int i) {
-        transforms[i] = newTarget;
-    }
-
 }
