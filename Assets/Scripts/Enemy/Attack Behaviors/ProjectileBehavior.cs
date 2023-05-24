@@ -13,6 +13,7 @@ public class ProjectileBehavior : MonoBehaviour
 
     // Gather the gameobjects and details needed to have the enemy interact with the player
     private HeadBehavior head;
+    private GameObject headObject;
     private Transform playerHitBox;
     private GameMonitor gm;
     private GameObject gmObject;
@@ -23,7 +24,12 @@ public class ProjectileBehavior : MonoBehaviour
         gmObject = GameObject.Find("GameSettings");
         playerHitBox = GameObject.Find("MovingPlayer").transform.GetChild(0).gameObject.transform;
         gm = gmObject.GetComponent<GameMonitor>();
-        head = GameObject.Find("Enemy").transform.GetChild(0).GetComponent<HeadBehavior>();
+        headObject = GameObject.Find("Enemy").transform.GetChild(0).transform.gameObject;
+        head = headObject.GetComponent<HeadBehavior>();
+        if(!headObject.activeSelf) {
+            headObject = GameObject.Find("Enemy").transform.GetChild(2).transform.gameObject;
+            head = headObject.GetComponent<HeadBehavior>();
+        }
         transform.localEulerAngles = new Vector3(0, 180, 0);
     }
 

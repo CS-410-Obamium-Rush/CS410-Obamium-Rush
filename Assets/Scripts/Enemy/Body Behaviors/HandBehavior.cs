@@ -359,7 +359,7 @@ public class HandBehavior : MonoBehaviour
     }
 
     public bool resetHand() {
-        transform.position = Vector3.MoveTowards(transform.position, initPos, 5 * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, initPos, 30 * Time.deltaTime);
         if (Vector3.Distance(transform.position, initPos) < 0.001f) {
             doRot(initRot.x, initRot.y, initRot.z);
             return true;

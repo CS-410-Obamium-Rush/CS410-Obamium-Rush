@@ -94,6 +94,7 @@ public class AttackPatterns : MonoBehaviour
     // Use Update() to decrement time and initate an attack from HandBehavior
     void Update()
     {
+        //head.getName();
         // Decrement the time if it has not ran out yet
         if (rechargeTime > 0 && key && !phaseTransition) {
             rechargeTime = rechargeTime - Time.deltaTime;
@@ -131,11 +132,11 @@ public class AttackPatterns : MonoBehaviour
             //Debug.Log("Calc: (" + atkUse + ", " + bodyUse + ")");
             // When a valid attack could not be used, release the key to allow another reroll for a valid attack
             if (! callAtk(atkUse, bodyUse)) {
-                Debug.Log("Reroll: (" + atkUse + ", " + bodyUse + ")");
+                //Debug.Log("Reroll: (" + atkUse + ", " + bodyUse + ")");
                 key = true;
             }
             else {
-                Debug.Log("Atk Used: (" + atkUse + ", " + bodyUse + ")");
+                //Debug.Log("Atk Used: (" + atkUse + ", " + bodyUse + ")");
             }
                 
         }
@@ -156,18 +157,18 @@ public class AttackPatterns : MonoBehaviour
         if (bodyInput == 2 && headUse) {
             if (atkUse == 0) {
                 dmg.setDmg(20);
-                Debug.Log("Punch");
+                //Debug.Log("Punch");
                 punch(bodyInput);
                 atkDone = true;
             }
             else if (atkUse == 1) {
-                Debug.Log("Missle");
+                //Debug.Log("Missle");
                 dmg.setDmg(10);
                 missle();
                 atkDone = true;
             }
             else if (atkUse == 2 || atkUse == 3){
-                Debug.Log("Laser");
+                //Debug.Log("Laser");
                 laser();
                 atkDone = true;
             }
@@ -311,10 +312,12 @@ public class AttackPatterns : MonoBehaviour
     void missle() {
         // Generate the amount of missles to fire (1-3)
         int scenarioNum = Random.Range(1,4);
+        //Debug.Log("Missle Amt = " + scenarioNum);
         head.callMissle(scenarioNum);
     }
 
     void laser() {
+        //Debug.Log("Fire Laser");
         head.callLaser();
     }
 

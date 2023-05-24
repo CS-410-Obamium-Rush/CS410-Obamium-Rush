@@ -11,10 +11,9 @@ GameObject:
   - component: {fileID: 692185003252172451}
   - component: {fileID: 839635950176169737}
   - component: {fileID: 7402489350622984562}
-  - component: {fileID: 7308292942636906724}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Projectile
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -84,22 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!54 &7308292942636906724
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3089049938443236579}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &8075107345226129200
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,7 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5226471818548892099}
   - component: {fileID: 8872398751898998021}
-  - component: {fileID: 1659604809525372434}
+  - component: {fileID: 1600349805922479756}
   m_Layer: 0
   m_Name: EnemyProjectile1
   m_TagString: Enemy
@@ -148,7 +131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 17
---- !u!136 &1659604809525372434
+--- !u!136 &1600349805922479756
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -159,7 +142,7 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 1
-  m_Height: 4
+  m_Height: 3.7
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8090980847454458901
@@ -173,10 +156,9 @@ GameObject:
   - component: {fileID: 3907846401437021270}
   - component: {fileID: 4976375809803924582}
   - component: {fileID: 3553214543883131958}
-  - component: {fileID: 3575615032646847368}
   m_Layer: 0
   m_Name: Cylinder
-  m_TagString: Projectile
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -246,19 +228,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!54 &3575615032646847368
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8090980847454458901}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0

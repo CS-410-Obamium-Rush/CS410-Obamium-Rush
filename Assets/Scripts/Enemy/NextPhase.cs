@@ -59,11 +59,11 @@ public class NextPhase : MonoBehaviour
             headSphere.transform.Rotate(new Vector3(0, 1000, 0) * Time.deltaTime);
             Vector3 updateScale = headSphere.transform.localScale;
             if (updateScale.x != 1f)
-                updateScale.x -= 4f * Time.deltaTime;
+                updateScale.x -= 10f * Time.deltaTime;
             if (updateScale.y != 1f)
-                updateScale.y -= 4f * Time.deltaTime;
+                updateScale.y -= 10f * Time.deltaTime;
             if (updateScale.z != 1f)
-                updateScale.z -= 4f * Time.deltaTime;
+                updateScale.z -= 10f * Time.deltaTime;
             headSphere.transform.localScale = updateScale;
             if (updateScale.x <= 1f && updateScale.y <= 1f && updateScale.z <= 1f) {
                 stepList[1] = false;
@@ -73,15 +73,17 @@ public class NextPhase : MonoBehaviour
         else if (stepList[2]) {
             headSphere.SetActive(false);
             headCube.SetActive(true);
+            headCube.transform.GetChild(0).gameObject.SetActive(true);
+
             hc.setIdle(false);
             Vector3 updateScale = headCube.transform.localScale;
             headCube.transform.Rotate(new Vector3(0, 100, 0) * Time.deltaTime);
             if (updateScale.x != 15f)
-                updateScale.x += 2f * Time.deltaTime;
+                updateScale.x += 10f * Time.deltaTime;
             if (updateScale.y != 15f)
-                updateScale.y += 2f * Time.deltaTime;
+                updateScale.y += 10f * Time.deltaTime;
             if (updateScale.z != 15f)
-                updateScale.z += 2f * Time.deltaTime;
+                updateScale.z += 10f * Time.deltaTime;
             headCube.transform.localScale = updateScale;
             if (updateScale.x >= 14f && updateScale.y >= 14f && updateScale.z >= 14f) {
                 headCube.transform.localEulerAngles = new Vector3(0, 90, 0);
@@ -152,22 +154,22 @@ public class NextPhase : MonoBehaviour
         if (Vector3.Distance(rightHand1.transform.position, rh1Pos) < 0.001f)
             rh1Set = true;
         else
-            rightHand1.transform.position = Vector3.MoveTowards(rightHand1.transform.position, rh1Pos, 1.5f * Time.deltaTime);
+            rightHand1.transform.position = Vector3.MoveTowards(rightHand1.transform.position, rh1Pos, 5f * Time.deltaTime);
 
         if (Vector3.Distance(rightHand2.transform.position, rh2Pos) < 0.001f)
             rh2Set = true;
         else
-            rightHand2.transform.position = Vector3.MoveTowards(rightHand2.transform.position, rh2Pos, 1.5f * Time.deltaTime);
+            rightHand2.transform.position = Vector3.MoveTowards(rightHand2.transform.position, rh2Pos, 5f * Time.deltaTime);
 
         if (Vector3.Distance(leftHand1.transform.position, lh1Pos) < 0.001f)
             lh1Set = true;
         else
-            leftHand1.transform.position = Vector3.MoveTowards(leftHand1.transform.position, lh1Pos, 1.5f * Time.deltaTime);
+            leftHand1.transform.position = Vector3.MoveTowards(leftHand1.transform.position, lh1Pos, 5f * Time.deltaTime);
 
         if (Vector3.Distance(leftHand2.transform.position, lh2Pos) < 0.001f)
             lh2Set = true;
         else
-            leftHand2.transform.position = Vector3.MoveTowards(leftHand2.transform.position, lh2Pos, 1.5f * Time.deltaTime);
+            leftHand2.transform.position = Vector3.MoveTowards(leftHand2.transform.position, lh2Pos, 5f * Time.deltaTime);
         return (rh1Set && rh2Set && lh1Set && lh2Set);
     }
 
@@ -178,9 +180,10 @@ public class NextPhase : MonoBehaviour
         for (int i = 0; healthRecord < maxHealth; i += step) {
             healthRecord += step;
             enemyBar.fillAmount = (float) healthRecord / maxHealth;
-            yield return new WaitForSeconds(0.001f);
+            //yield return new WaitForSeconds(0.001f);
         }
-        //yield return new WaitForSeconds(60.00f);
+        yield return new WaitForSeconds(0.01f);
+        //enemyBar.fillAmount = (float) healthRecord / maxHealth;
         stepList[6] = false;
         stepList[7] = true;
     }

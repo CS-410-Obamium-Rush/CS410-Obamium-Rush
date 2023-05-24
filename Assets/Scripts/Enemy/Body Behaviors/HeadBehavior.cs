@@ -122,6 +122,7 @@ public class HeadBehavior : MonoBehaviour
         }
         // Create the missle
         else if (startMissle) {
+            
             // Create the amount of missles only once
             if (doOnce) {
                 StartCoroutine(spawn(missleAmt));

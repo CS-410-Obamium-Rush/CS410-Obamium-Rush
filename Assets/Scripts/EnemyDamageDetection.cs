@@ -27,10 +27,10 @@ public class EnemyDamageDetection : MonoBehaviour
        //m_AudioSource = GetComponent<AudioSource>();
     }
 
+
     void OnParticleCollision(GameObject other) 
     {
         bool doFlash = false;
-
         //enemyAudioManager.instance.playHurt();  // plays the playerShooting sfx for now
 
         if (this.transform.parent.gameObject.name == "RightHand1" && !phaseTransition) {
@@ -43,10 +43,14 @@ public class EnemyDamageDetection : MonoBehaviour
             gm.enemyTakeDamage(900,1);
         }
             
-        else if ((this.gameObject.name == "obama_sphere" || this.gameObject.name == "Obama Cube")  && !phaseTransition) {
+        else if ((this.gameObject.name == "ObamaCube" || this.gameObject.name == "obama_sphere")  && !phaseTransition) {
+            
             if (gm.handsDefeated()) {
                 doFlash = true;
                 gm.enemyTakeDamage(900,2);
+            }
+            else {
+                Debug.Log("Head still invincible");
             }
         }
         else if (this.transform.parent.gameObject.name == "RightHand2"  && !phaseTransition) {
