@@ -15,6 +15,10 @@ public class lockOnAiming : MonoBehaviour
     public Transform target3;
 
     public int targetInd = 0;
+    public GameObject crosshair;
+    public int offsetX = 0;
+    public int offsetY = 0;
+    public int offsetZ = 0;
     private Transform target;
     void Start() {
         transforms = new ArrayList();
@@ -37,6 +41,7 @@ public class lockOnAiming : MonoBehaviour
             } 
         }
         target = (Transform)transforms[targetInd];
+        crosshair.transform.position = target.position + new Vector3(offsetX, offsetY, offsetZ);
         transform.LookAt(target);
     }
 
