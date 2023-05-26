@@ -1,6 +1,5 @@
 /*
-NextPhase: A script that performs the transition from phase 1 to phase 2 in the game; this occurs when the enemy's health has been depleted
-for the first time.
+ThreeTransition: A script that triggers the enemy's transition from the second phase to the third and final phase
 */
 
 using System.Collections;
@@ -8,13 +7,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-public class NextPhase : MonoBehaviour
+
+public class ThreeTransition : MonoBehaviour
 {
     // With performing the transition, this script needs control of all scripts and GameObjects associated with the enemy
     public AttackPatterns atkPat;           // Uses the AttackPatterm to disable the enemy from attacking the player
     public EnemyDamageDetection enDamDet;   // Uses EnemyDamageDetection to disable the enemy from taking damage
     public GameMonitor gm;                  // Uses GameMonitor to establish the health for phase 2
-    public lockOnAiming loa;                // Uses lockOnAiming to add the additional hands into the targeting system
     /* Hand GameObjects and Scripts are to position and activate the hands for this phase*/
     public GameObject rightHand1;   
     public GameObject leftHand1;
@@ -24,17 +23,13 @@ public class NextPhase : MonoBehaviour
     private HandBehavior rh1;
     private HandBehavior lh2;
     private HandBehavior rh2;
-    
-    /* Head GameObjects are used to animate the phase change and replace the HeadBehavior used in AttackPattern with the new head
-    (Goes from sphere to cube)
-    */
-    public GameObject headSphere;
-    public GameObject headCube;
-    private HeadBehavior hc; //Cube's head behavior script
 
-    //ethan's audio
-    public enemyNextPhaseAudioManager nextAudio;
-    AudioSource m_AudioSource;
+    /* Head GameObjects are used to animate the phase change and replace the HeadBehavior used in AttackPattern with the new head
+    (Goes from Cube to Triangle)
+    */
+    public GameObject headTriangle;
+    public GameObject headCube;
+    private HeadBehavior ht; //Triangle's head behavior script
 
     // Tools to perform the phase operation
     public TextMeshProUGUI enemyName; // Update the name of the enemy
@@ -47,18 +42,19 @@ public class NextPhase : MonoBehaviour
     private bool doOnce = true;     // A bool to have specific step parts occur only one time instead of repeatedly
 
     // Public variables for phase transition speeds
-    public int spinSpeedSphere = 1000;
-    public int spinSpeedCube = 100;
-    public float shrinkSpeed = 10f;
-    public float growSpeed = 5f;
+    //public int spinSpeedTriangle = 1000;
+    //public int spinSpeedCube = 100;
+    public float shrinkSpeed = 15f;
+    //public float growSpeed = 5f;
     public float shiftSpeed = 5f;
     public float resetSpeed = 5f;
 
-    // Start() establishes the amount of steps and gets all scripts associated from the relevant GameObjects
+
+    // Start is called before the first frame update
     void Start()
     {
-        stepList = new bool[10];
-        for (int i = 0; i < 10; i++) {
+        stepList = new bool[8];
+        for (int i = 0; i < 8; i++) {
             stepList[i] = false;
         }
         rh1 = rightHand1.GetComponent<HandBehavior>();
@@ -71,15 +67,8 @@ public class NextPhase : MonoBehaviour
         m_AudioSource = GetComponent<AudioSource>();
     }
 
-    /* 
-    Update performs the phase transition process
-    It uses StepList[] to perform the steps by starting at index 0 (step 1), perform all the parts, then moves on to the next step
-    by setting the current step to be false and the next step to be true. Update then reiterates with the next step only 
-    enabled until it is sets itself false and the next one to be true.
-    */
-    void Update()
-    {
-        // Step 1: Disable the ability to interact with enemy
+    void Update() {
+    // Step 1: Disable the ability to interact with enemy
         if (stepList[0]) {
             enemyNextPhaseAudioManager.instance.playDefeat();
             enDamDet.setPhaseTransition(true);
@@ -87,51 +76,32 @@ public class NextPhase : MonoBehaviour
             stepList[0] = false;
             stepList[1] = true;
         }
-        // Step 2: Have the Sphere head vanish by spinning and diminishing in size until it cannot be easily seen
+        // Step 2: Have the Cube head vanish by spinning and diminishing in size until it cannot be easily seen
         else if (stepList[1]) {
-            headSphere.transform.Rotate(new Vector3(0, spinSpeedSphere, 0) * Time.deltaTime);
-            Vector3 updateScale = headSphere.transform.localScale;
+            Vector3 updateScale = headCube.transform.localScale;
             if (updateScale.x != 1f)
                 updateScale.x -= shrinkSpeed * Time.deltaTime;
             if (updateScale.y != 1f)
                 updateScale.y -= shrinkSpeed * Time.deltaTime;
             if (updateScale.z != 1f)
                 updateScale.z -= shrinkSpeed * Time.deltaTime;
-            headSphere.transform.localScale = updateScale;
+            headCube.transform.localScale = updateScale;
             if (updateScale.x <= 1f && updateScale.y <= 1f && updateScale.z <= 1f) {
                 stepList[1] = false;
                 stepList[2] = true;
             }
         }
-        // Step 3: Put the cube into the scene and have it grow in size until it is slightly larger than the original head
+        // Step 3: Put the triangle instantly into the scene
         else if (stepList[2]) {
-            headSphere.SetActive(false);
-            headCube.SetActive(true);
+            headCube.SetActive(false);
+            headTriangle.SetActive(true);
             headCube.transform.GetChild(0).gameObject.SetActive(true);
-
-            hc.setIdle(false);
-            Vector3 updateScale = headCube.transform.localScale;
-            headCube.transform.Rotate(new Vector3(0, spinSpeedCube, 0) * Time.deltaTime);
-            if (updateScale.x != 15f)
-                updateScale.x += growSpeed * Time.deltaTime;
-            if (updateScale.y != 15f)
-                updateScale.y += growSpeed * Time.deltaTime;
-            if (updateScale.z != 15f)
-                updateScale.z += growSpeed * Time.deltaTime;
-            headCube.transform.localScale = updateScale;
-            if (updateScale.x >= 14f && updateScale.y >= 14f && updateScale.z >= 14f) {
-                headCube.transform.localEulerAngles = new Vector3(0, 180, 0);
-                rh1.setPause();
-                lh1.setPause();
-                rh2.setPause();
-                lh2.setPause();
-                stepList[2] = false;
-                stepList[3] = true;
-            }
+            stepList[2] = false;
+            stepList[3] = true;
         }
-        // Step 4: Have the first pair of hands get to their initial positions for when the game started
+        // Step 4: Have all pair of hands return to their initial spot
         else if (stepList[3]) {
-            if (rh1.resetHand(resetSpeed) && lh1.resetHand(resetSpeed)) {
+            if (rh1.resetHand(resetSpeed) && lh1.resetHand(resetSpeed) && rh2.resetHand(resetSpeed) && lh2.resetHand(resetSpeed)) {
                 stepList[3] = false;
                 stepList[4] = true;
             }
@@ -139,15 +109,10 @@ public class NextPhase : MonoBehaviour
         // Step 5: Have the second pair of hands appear from the first pair, establish each of their new locations (Pos variable), and
         // Update the target system to include the modification of the head and new hands
         else if (stepList[4]) {
-            rightHand2.SetActive(true);
-            leftHand2.SetActive(true);
             rh1Pos = new Vector3 (rightHand1.transform.position.x, rightHand1.transform.position.y + 8f, rightHand1.transform.position.z);
             rh2Pos = new Vector3 (rightHand2.transform.position.x, rightHand2.transform.position.y - 8f, rightHand2.transform.position.z);
             lh1Pos = new Vector3 (leftHand1.transform.position.x, leftHand1.transform.position.y + 8f, leftHand1.transform.position.z);
-            lh2Pos = new Vector3 (leftHand2.transform.position.x, leftHand2.transform.position.y - 8f, leftHand2.transform.position.z);
-            loa.changeTarget(headCube.transform, 1);
-            loa.addTargets(rightHand2.transform.GetChild(1).gameObject.transform);
-            loa.addTargets(leftHand2.transform.GetChild(1).gameObject.transform);           
+            lh2Pos = new Vector3 (leftHand2.transform.position.x, leftHand2.transform.position.y - 8f, leftHand2.transform.position.z);         
             stepList[4] = false;
             stepList[5] = true;
         }
@@ -215,10 +180,11 @@ public class NextPhase : MonoBehaviour
         return (rh1Set && rh2Set && lh1Set && lh2Set);
     }
 
-    // Function to allow the enemy's health to return
+    // Function to allow the enemy's health to return and change its name
     IEnumerator regenHealth() {
-        // Establish the new health for the enemy
+        // Set the name of the enemy
         enemyName.text = "Obama Phase 2: Electric Boogaloo";
+        // Establish the new health for the enemy
         int maxHealth = gm.setNewHealth(400, 400, 400, 400, 600);
         gm.setThreshold(0.75f, 0.50f, 0.25f);
         // Perform a loop that allows the health bar to heal incrementally to depict a health bar restoring all of its health
