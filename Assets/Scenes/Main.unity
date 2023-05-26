@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.5241349, g: 0.58830035, b: 0.66747725, a: 1}
+  m_IndirectSpecularColor: {r: 0.523994, g: 0.58812064, b: 0.667362, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1958,7 +1958,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2741628682957639215, guid: d9128c62538bc104baec6b93acf3820e, type: 3}
     - target: {fileID: 370153918, guid: 02fbd5d9ae2245c418dc69b36907b654, type: 3}
+      propertyPath: nonAtkSpeed
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 370153918, guid: 02fbd5d9ae2245c418dc69b36907b654, type: 3}
       propertyPath: missleSpawner
+      value: 
+      objectReference: {fileID: 1186849141}
+    - target: {fileID: 370153918, guid: 02fbd5d9ae2245c418dc69b36907b654, type: 3}
+      propertyPath: projectileSpawner
       value: 
       objectReference: {fileID: 1186849141}
     - target: {fileID: 1362286957, guid: 02fbd5d9ae2245c418dc69b36907b654, type: 3}
@@ -2121,7 +2129,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 445492956}
-  m_LocalRotation: {x: -0.069343105, y: 0.00000001716496, z: 0.0000000011931437, w: 0.99759287}
+  m_LocalRotation: {x: -0.069343105, y: -0.000000017164966, z: -0.0000000011931443, w: 0.99759287}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3463,7 +3471,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 697083761}
-  m_LocalRotation: {x: -0.04560729, y: -0.000000034577795, z: -0.0000000015786422, w: 0.9989595}
+  m_LocalRotation: {x: -0.04560729, y: 0.000000034577795, z: 0.0000000015786422, w: 0.9989595}
   m_LocalPosition: {x: 0, y: 4.4, z: -17.59}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3688,18 +3696,11 @@ MonoBehaviour:
   debugSys: {fileID: 17457384}
   enemysfx: {fileID: 0}
   rotSpeed: 3
+  nonAtkSpeed: 50
   punchLaunchSpeed: 25
-  punchRetractSpeed: 40
-  swipePosSpeed: 45
   swipeUseSpeed: 25
-  swipeRetSpeed: 45
-  clapPosSpeed: 45
   clapUseSpeed: 25
-  clapBackSpeed: 30
-  clapRetSpeed: 45
-  slamPosSpeed: 50
   slamUseSpeed: 25
-  slamRetSpeed: 30
   width: 4
   height: 2
   isRight: 0
@@ -3939,7 +3940,10 @@ MonoBehaviour:
   atkPat: {fileID: 17457383}
   headHealth: 1
   playerHealth: 100
-  enemyThreshold: 200
+  enemyThresholdPercent:
+  - 0.75
+  - 0.5
+  - 0.25
   end: {fileID: 859794059}
 --- !u!4 &859794058
 Transform:
@@ -3996,7 +4000,14 @@ MonoBehaviour:
   headSphere: {fileID: 1263741140}
   headCube: {fileID: 1408986852}
   nextAudio: {fileID: 0}
+  enemyName: {fileID: 952635625}
   enemyBar: {fileID: 1775641559}
+  spinSpeedSphere: 500
+  spinSpeedCube: 100
+  shrinkSpeed: 8
+  growSpeed: 3
+  shiftSpeed: 2
+  resetSpeed: 2
 --- !u!1 &914939508
 GameObject:
   m_ObjectHideFlags: 0
@@ -5237,7 +5248,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1236700145}
-  m_LocalRotation: {x: -0.045607287, y: -0.000000017188476, z: -7.847364e-10, w: 0.9989595}
+  m_LocalRotation: {x: -0.045607287, y: 0.000000017188476, z: 7.847364e-10, w: 0.9989595}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6881,18 +6892,11 @@ MonoBehaviour:
   debugSys: {fileID: 17457384}
   enemysfx: {fileID: 235749596}
   rotSpeed: 3
+  nonAtkSpeed: 50
   punchLaunchSpeed: 25
-  punchRetractSpeed: 40
-  swipePosSpeed: 45
   swipeUseSpeed: 25
-  swipeRetSpeed: 45
-  clapPosSpeed: 45
   clapUseSpeed: 25
-  clapBackSpeed: 30
-  clapRetSpeed: 45
-  slamPosSpeed: 50
   slamUseSpeed: 25
-  slamRetSpeed: 30
   width: 4
   height: 2
   isRight: 1
@@ -7440,18 +7444,11 @@ MonoBehaviour:
   debugSys: {fileID: 17457384}
   enemysfx: {fileID: 0}
   rotSpeed: 3
+  nonAtkSpeed: 50
   punchLaunchSpeed: 25
-  punchRetractSpeed: 40
-  swipePosSpeed: 45
   swipeUseSpeed: 25
-  swipeRetSpeed: 45
-  clapPosSpeed: 45
   clapUseSpeed: 25
-  clapBackSpeed: 30
-  clapRetSpeed: 45
-  slamPosSpeed: 50
   slamUseSpeed: 25
-  slamRetSpeed: 30
   width: 4
   height: 2
   isRight: 0
@@ -8091,18 +8088,11 @@ MonoBehaviour:
   debugSys: {fileID: 17457384}
   enemysfx: {fileID: 235749596}
   rotSpeed: 3
+  nonAtkSpeed: 50
   punchLaunchSpeed: 25
-  punchRetractSpeed: 40
-  swipePosSpeed: 45
   swipeUseSpeed: 25
-  swipeRetSpeed: 45
-  clapPosSpeed: 45
   clapUseSpeed: 25
-  clapBackSpeed: 30
-  clapRetSpeed: 45
-  slamPosSpeed: 50
   slamUseSpeed: 25
-  slamRetSpeed: 30
   width: 4
   height: 2
   isRight: 1
@@ -9018,7 +9008,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 235749596}
     - target: {fileID: 8923565961668339773, guid: 390fdd2f4b25dee43a0c12c98daf1854, type: 3}
+      propertyPath: nonAtkSpeed
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 8923565961668339773, guid: 390fdd2f4b25dee43a0c12c98daf1854, type: 3}
       propertyPath: missleSpawner
+      value: 
+      objectReference: {fileID: 274410985}
+    - target: {fileID: 8923565961668339773, guid: 390fdd2f4b25dee43a0c12c98daf1854, type: 3}
+      propertyPath: projectileSpawner
       value: 
       objectReference: {fileID: 274410985}
     - target: {fileID: 8923565961668339774, guid: 390fdd2f4b25dee43a0c12c98daf1854, type: 3}

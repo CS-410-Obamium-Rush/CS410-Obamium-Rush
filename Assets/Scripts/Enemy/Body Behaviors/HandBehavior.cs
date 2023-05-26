@@ -27,20 +27,11 @@ public class HandBehavior : MonoBehaviour
     // Speed Values
     private float deltaTimeCount = 0;
     public float rotSpeed = 0;
+    public float nonAtkSpeed = 0;
     public float punchLaunchSpeed = 0;
-    public float punchRetractSpeed = 0;
-    public float swipePosSpeed = 0;
     public float swipeUseSpeed = 0;
-    public float swipeRetSpeed = 0;
-
-    public float clapPosSpeed = 0;
     public float clapUseSpeed = 0;
-    public float clapBackSpeed = 0;
-    public float clapRetSpeed = 0;
-
-    public float slamPosSpeed = 0;
     public float slamUseSpeed = 0;
-    public float slamRetSpeed = 0;
 
     // Rotation Paramters
     public float width = 0;
@@ -101,8 +92,8 @@ public class HandBehavior : MonoBehaviour
 
     // Public Function to get the hands to their original positions during a phase change; returns a bool to indicate they reached
     // their location yet or not
-    public bool resetHand() {
-        transform.position = Vector3.MoveTowards(transform.position, initPos, 30 * Time.deltaTime);
+    public bool resetHand(float resetSpeed) {
+        transform.position = Vector3.MoveTowards(transform.position, initPos, resetSpeed * Time.deltaTime);
         if (Vector3.Distance(transform.position, initPos) < 0.001f) {
             doRot(initRot.x, initRot.y, initRot.z);
             return true;
@@ -186,7 +177,7 @@ public class HandBehavior : MonoBehaviour
         // Returning Hand State (Punch)
         else if (retractPunch) {
             animator.SetBool("punchState", false);
-            transform.position = Vector3.MoveTowards(transform.position, initPos, punchRetractSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, initPos, nonAtkSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, initPos) < 0.001f) {
                 retractPunch = false;
                 idle = true;
@@ -199,7 +190,7 @@ public class HandBehavior : MonoBehaviour
         else if (posSwipe) {
             animator.SetBool("flatState", true);
             doRot(initRot.x, -90 * dir, initRot.z);
-            transform.position = Vector3.MoveTowards(transform.position, targetSwipeStart.position, swipePosSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, targetSwipeStart.position, nonAtkSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, targetSwipeStart.position) < 0.001f) {
                 posSwipe = false;
                 useSwipe = true;
@@ -217,7 +208,7 @@ public class HandBehavior : MonoBehaviour
         else if (retSwipe) {
             animator.SetBool("flatState", false);
             doRot(initRot.x, initRot.y, initRot.z);
-            transform.position = Vector3.MoveTowards(transform.position, initPos, swipeRetSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, initPos, nonAtkSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, initPos) < 0.001f) {
                 retSwipe = false;
                 idle = true;
@@ -230,7 +221,7 @@ public class HandBehavior : MonoBehaviour
         else if (posClap) {
             animator.SetBool("flatState", true);
             doRot(initRot.x, -90 * dir, initRot.z);
-            transform.position = Vector3.MoveTowards(transform.position, targetClapStart.position, clapPosSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, targetClapStart.position, nonAtkSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, targetClapStart.position) < 0.001f) {
                 posClap= false;
                 useClap = true;
@@ -247,7 +238,7 @@ public class HandBehavior : MonoBehaviour
         }
         // Recoil the Hands after Clap
         else if (backClap) {
-            transform.position = Vector3.MoveTowards(transform.position, targetClapBack.position, clapBackSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, targetClapBack.position, nonAtkSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, targetClapBack.position) < 0.001f) {
                 backClap = false;
                 retClap = true;
@@ -257,7 +248,7 @@ public class HandBehavior : MonoBehaviour
         else if (retClap) {
             animator.SetBool("flatState", false);
             doRot(initRot.x, initRot.y, initRot.z);
-            transform.position = Vector3.MoveTowards(transform.position, initPos, clapRetSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, initPos, nonAtkSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, initPos) < 0.001f) {
                 retClap = false;
                 idle = true;
@@ -268,7 +259,7 @@ public class HandBehavior : MonoBehaviour
         else if (posSlam) {
             animator.SetBool("punchState", true);
             doRot(initRot.x, -90 * dir, 90 * dir);
-            transform.position = Vector3.MoveTowards(transform.position, targetSlamStart.position, slamPosSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, targetSlamStart.position, nonAtkSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, targetSlamStart.position) < 0.001f) {
                 shockwaveUse.setActive(true);
                 posSlam = false;
@@ -284,7 +275,7 @@ public class HandBehavior : MonoBehaviour
             }
         }
         else if (retSlam) {
-            transform.position = Vector3.MoveTowards(transform.position, initPos, slamRetSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, initPos, nonAtkSpeed * Time.deltaTime);
             animator.SetBool("punchState", false);
             if (Vector3.Distance(transform.position, initPos) < 0.001f) {
                 retSlam = false;

@@ -30,7 +30,10 @@ public class GameMonitor : MonoBehaviour
     public int playerHealth = 100; // Current health
     
     // For Powerups (to be implemented)
-    public int enemyThreshold;
+    // (ex. Percent = 0.45 means that enemy must have (0.45 * maxHealth) for Val or less to give the next power up)
+    public float[] enemyThresholdPercent; // Holds the percent of health needed to damage to drop powerup
+    private float[] enemyThresholdVal; // The value of the enemy health needs to be at or lower to drop the powerup
+    
     private bool powerUp1 = false;
 
     // To notify when the enemy has lost all of its health
@@ -53,6 +56,16 @@ public class GameMonitor : MonoBehaviour
     // Public function to let other scripts know whether all the hands have been defeated
     public bool handsDefeated() {
         return ((leftHandHealth1 <= 0) && (rightHandHealth1 <= 0) && (leftHandHealth2 <= 0) && (rightHandHealth2 <= 0));
+    }
+
+    // Public function to set enemy threshold for powerups, send the percents 
+    public void setThreshold(float percent1, float percent2, float percent3) {
+        enemyThresholdPercent[0] = percent1;
+        enemyThresholdPercent[1] = percent2;
+        enemyThresholdPercent[2] = percent3;
+        for (int i = 0; i < 3; i++) {
+            enemyThresholdVal[i] = maxEnemyHealth * enemyThresholdPercent[i];
+        }
     }
 
     /* Function for Enemy's health to be modified; used by EnemyDamageDedeuction scripts*/
@@ -148,6 +161,10 @@ public class GameMonitor : MonoBehaviour
     void Start() {
         maxPlayerHealth = playerHealth;
         maxEnemyHealth = headHealth + rightHandHealth1 + leftHandHealth1 + rightHandHealth2 + leftHandHealth2;
+        enemyThresholdVal = new float[3];
+        for (int i = 0; i < 3; i++) {
+            enemyThresholdVal[i] = maxEnemyHealth * enemyThresholdPercent[i];
+        }
     }
 
     // Update() manages the progress of game in terms of player and enemy health
@@ -175,7 +192,7 @@ public class GameMonitor : MonoBehaviour
         }
 
         // Release powerup when player reduces enough of enemy health; add more for additional powerups
-        if (enemyTotalHealth < enemyThreshold && powerUp1) {
+        if ((float)enemyTotalHealth < enemyThresholdVal[0] && powerUp1) {
             powerUp1 = false;
         }
     }

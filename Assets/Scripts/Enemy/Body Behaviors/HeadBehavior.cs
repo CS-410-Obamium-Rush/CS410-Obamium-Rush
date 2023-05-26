@@ -34,7 +34,7 @@ public class HeadBehavior : MonoBehaviour
     
     // Punch Attack Speeds
     public int punchLaunchSpeed;
-    public int punchRetractSpeed;
+    public int nonAtkSpeed;
     public int spinSpeed;
 
     // Target zones
@@ -43,7 +43,7 @@ public class HeadBehavior : MonoBehaviour
 
     // For performing the missle attack
     private int missleAmt;  // Amount of missles for the current attack
-    public Transform missleSpawner;
+    public Transform projectileSpawner;
     public GameObject misslePrefab;
     private int missleGone; // Amount of missles already used for the current attack
     private bool doOnce = false;
@@ -116,7 +116,7 @@ public class HeadBehavior : MonoBehaviour
         // Retracting the punch
         else if (retractPunch) {
             transform.Rotate(new Vector3(0, spinSpeed, 0) * Time.deltaTime);
-            transform.position = Vector3.MoveTowards(transform.position, initPos, punchRetractSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, initPos, nonAtkSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, initPos) < 0.001f) {
                 retractPunch = false;
                 idle = true;
@@ -138,7 +138,7 @@ public class HeadBehavior : MonoBehaviour
         }
         else if (startLaser) {
             if (doOnce) {
-                laser = Instantiate(laserPrefab, new Vector3(missleSpawner.position.x, missleSpawner.position.y, missleSpawner.position.z), Quaternion.identity);
+                laser = Instantiate(laserPrefab, new Vector3(projectileSpawner.position.x, projectileSpawner.position.y, projectileSpawner.position.z), Quaternion.identity);
                 laserCode = laser.GetComponent<LaserBehavior>();
                 StartCoroutine(fireLaser());
                 doOnce = false;
@@ -152,7 +152,7 @@ public class HeadBehavior : MonoBehaviour
     // spawn() creates the missles in the scene with a few second delay in between each creation
     IEnumerator spawn(int missleAmt) {
         for (int i = 0; i < missleAmt; i++) {
-            Instantiate(misslePrefab, new Vector3(missleSpawner.position.x, missleSpawner.position.y, missleSpawner.position.z), Quaternion.identity);
+            Instantiate(misslePrefab, new Vector3(projectileSpawner.position.x, projectileSpawner.position.y, projectileSpawner.position.z), Quaternion.identity);
             yield return new WaitForSeconds(1.75f);
         }
         
