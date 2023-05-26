@@ -30,6 +30,10 @@ public class NextPhase : MonoBehaviour
     public GameObject headCube;
     private HeadBehavior hc; //Cube's head behavior script
 
+    //ethan's audio
+    public enemyNextPhaseAudioManager nextAudio;
+    AudioSource m_AudioSource;
+
     // Tools to perform the phase operation
     public Image enemyBar;          // Update the enemy health to be at full health for the second phase
     private bool[] stepList;        // Provides a linear sequence for the operation to occur; i.e the phase transition occurs in steps
@@ -51,6 +55,9 @@ public class NextPhase : MonoBehaviour
         rh2 = rightHand2.GetComponent<HandBehavior>();
         lh2 = leftHand2.GetComponent<HandBehavior>();
         hc = headCube.GetComponent<HeadBehavior>();
+
+        // get audioSource -- EA
+        m_AudioSource = GetComponent<AudioSource>();
     }
 
     /* 
@@ -63,6 +70,8 @@ public class NextPhase : MonoBehaviour
     {
         // Step 1: Disable the ability to interact with enemy
         if (stepList[0]) {
+            enemyNextPhaseAudioManager.instance.playDefeat();
+
             enDamDet.setPhaseTransition(true);
             atkPat.setPhaseTransition(true);
             stepList[0] = false;
@@ -70,6 +79,8 @@ public class NextPhase : MonoBehaviour
         }
         // Step 2: Have the Sphere head vanish by spinning and diminishing in size until it cannot be easily seen
         else if (stepList[1]) {
+            
+
             headSphere.transform.Rotate(new Vector3(0, 1000, 0) * Time.deltaTime);
             Vector3 updateScale = headSphere.transform.localScale;
             if (updateScale.x != 1f)
