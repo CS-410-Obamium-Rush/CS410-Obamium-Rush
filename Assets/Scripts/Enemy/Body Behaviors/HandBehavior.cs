@@ -140,11 +140,12 @@ public class HandBehavior : MonoBehaviour
     {
         // Idle/rotate hands
         if (idle) {
-            animator.SetBool("idleState", true);
+            animator.SetBool("staticState", false);
             // Do not have the hand move around once it has lost all its health
-            if (defeated) 
+            if (defeated) {
+                animator.SetBool("staticState", true);
                 doRot(225, initRot.y, initRot.z);
-            else {
+            } else {
                 deltaTimeCount += Time.deltaTime * rotSpeed;
                 // Spin the hand in a circular motion; direction is dictated by hand so one goes clockwise while the other goes counterclockwise
                 float x = Mathf.Cos(deltaTimeCount) * width * dir;
@@ -313,7 +314,7 @@ public class HandBehavior : MonoBehaviour
         //enemysfx.playPunch();
         // enemyAudioManager.instance.playPrepunch();
         enemyAudioManager.instance.playPunch();
-        animator.SetBool("idleState", false);
+        animator.SetBool("staticState", true);
         debugSys.locker();
         targetPunch = target;
         idle = false;
@@ -330,7 +331,7 @@ public class HandBehavior : MonoBehaviour
         // currently breaks hand movement when I place this in bool statements -- EAVI
         //enemysfx.playWhoosh();
         enemyAudioManager.instance.playWhoosh();
-        animator.SetBool("idleState", false);
+        animator.SetBool("staticState", true);
         debugSys.locker();
         targetSwipeStart = targetStart;
         targetSwipeEnd = targetEnd;
@@ -341,7 +342,7 @@ public class HandBehavior : MonoBehaviour
     // Use callClap() by other script to do clap attack
     public void callClap(Transform targetStart, Transform targetEnd, Transform targetBack) {
         enemyAudioManager.instance.playClap();
-        animator.SetBool("idleState", false);
+        animator.SetBool("staticState", true);
         debugSys.locker();
         targetClapStart = targetStart;
         targetClapEnd = targetEnd;
@@ -351,7 +352,7 @@ public class HandBehavior : MonoBehaviour
     }
 
     public void callSlam(Transform targetStart, Transform targetEnd) {
-        animator.SetBool("idleState", false);
+        animator.SetBool("staticState", true);
         debugSys.locker();
         targetSlamStart = targetStart;
         targetSlamEnd = targetEnd;
