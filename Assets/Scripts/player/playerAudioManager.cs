@@ -39,7 +39,8 @@ public class playerAudioManager : MonoBehaviour{
     }
 
     // this should be one of the last sfx in the player sfx list
-    public void playHurt(){
+    public void playWalk(){
+        godSource.loop = true;
         godSource.clip = sfx[2];
         godSource.Play();
     }

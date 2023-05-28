@@ -32,6 +32,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void OnMove(InputValue movementValue)
     {
+        playersfx.playWalk();
         Vector2 movementVector = movementValue.Get<Vector2>();
         movementX = movementVector.x;
         movementY = movementVector.y;
