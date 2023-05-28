@@ -14,6 +14,10 @@ public class GameMonitor : MonoBehaviour
     public Image playerBar;
     public Image enemyBar;
 
+    // ethan's integration of audio
+    public battleMusicManager music;
+    AudioSource m_AudioSource;
+
     // For Enemy
     public int rightHandHealth1 = 300;
     public int leftHandHealth1 = 300;
@@ -165,6 +169,10 @@ public class GameMonitor : MonoBehaviour
         for (int i = 0; i < 3; i++) {
             enemyThresholdVal[i] = maxEnemyHealth * enemyThresholdPercent[i];
         }
+
+        // get audioSource -- EA
+        m_AudioSource = GetComponent<AudioSource>();
+        music.playP1();
     }
 
     // Update() manages the progress of game in terms of player and enemy health
@@ -180,6 +188,8 @@ public class GameMonitor : MonoBehaviour
         // If enemy loses all health, player wins and moves on to the next phase or game ends
         else if (enemyTotalHealth <= 0) {
             if (startPhase2 && atkPat.getKey()) {
+
+                music.playP2();
                 startPhase2 = false;
                 end.setPhase2();
                 phaseCount++;

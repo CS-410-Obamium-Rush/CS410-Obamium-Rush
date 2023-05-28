@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.523994, g: 0.58812064, b: 0.667362, a: 1}
+  m_IndirectSpecularColor: {r: 0.5241349, g: 0.58830035, b: 0.66747725, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3042,6 +3042,7 @@ GameObject:
   m_Component:
   - component: {fileID: 652778475}
   - component: {fileID: 652778476}
+  - component: {fileID: 652778477}
   m_Layer: 0
   m_Name: BattleTheme
   m_TagString: Untagged
@@ -3071,7 +3072,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 652778474}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 5d584b92ab36f8043b8892982c85b5c5, type: 3}
@@ -3160,6 +3161,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &652778477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 652778474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ab8b72c908769847b83e916cab81e19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  music:
+  - {fileID: 8300000, guid: 5d584b92ab36f8043b8892982c85b5c5, type: 3}
+  - {fileID: 8300000, guid: 09509f24324a83c4d96822b35223963e, type: 3}
+  - {fileID: 8300000, guid: 81b40f27cdc5c654e801d83dedbf0715, type: 3}
 --- !u!1 &659038110
 GameObject:
   m_ObjectHideFlags: 0
@@ -3933,6 +3950,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerBar: {fileID: 728045858}
   enemyBar: {fileID: 1775641559}
+  music: {fileID: 652778477}
   rightHandHealth1: 1
   leftHandHealth1: 1
   rightHandHealth2: 0
