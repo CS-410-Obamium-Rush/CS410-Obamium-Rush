@@ -50,9 +50,10 @@ public class HeadBehavior : MonoBehaviour
     public GameObject misslePrefab;
     private int missleGone; // Amount of missles already used for the current attack
     private bool doOnce = false;
+    public Transform playerHitBox;
 
     // For the laser attack
-    private LaserBehavior laserCode;
+    private LaserBehavior laserScript;
     public GameObject laserPrefab;
     GameObject laser;
 
@@ -68,7 +69,7 @@ public class HeadBehavior : MonoBehaviour
     public void setResume() {
         idle = true;
         defeated = false;
-        initRot = new Vector3(initRot.x, 90, initRot.z);
+        initRot = new Vector3(initRot.x, 0, initRot.z);
     }
 
     public void setDefeat() {
@@ -143,7 +144,9 @@ public class HeadBehavior : MonoBehaviour
         else if (startLaser) {
             if (doOnce) {
                 laser = Instantiate(laserPrefab, new Vector3(projectileSpawner.position.x, projectileSpawner.position.y, projectileSpawner.position.z), Quaternion.identity);
-                laserCode = laser.GetComponent<LaserBehavior>();
+                laserScript = laser.GetComponent<LaserBehavior>();
+                laserScript.playerHitBox = playerHitBox;
+                laserScript.gm = gm;
                 StartCoroutine(fireLaser());
                 doOnce = false;
             }
@@ -157,6 +160,11 @@ public class HeadBehavior : MonoBehaviour
     IEnumerator spawn(int missleAmt) {
         for (int i = 0; i < missleAmt; i++) {
             GameObject missile = Instantiate(misslePrefab, new Vector3(projectileSpawner.position.x, projectileSpawner.position.y, projectileSpawner.position.z), Quaternion.identity);
+            ProjectileBehavior missileScript = missile.GetComponent<ProjectileBehavior>();
+            missileScript.head = this;
+            missileScript.headObject = gameObject;
+            missileScript.playerHitBox = playerHitBox;
+            missileScript.gm = gm;
             yield return new WaitForSeconds(1.75f);
         }
         
@@ -164,7 +172,7 @@ public class HeadBehavior : MonoBehaviour
 
     IEnumerator fireLaser() {
         yield return new WaitForSeconds(laserTime);
-        laserCode.destroyLaser();
+        laserScript.destroyLaser();
         lockSys.unlocker();
         debugSys.unlocker();
         startLaser = false;

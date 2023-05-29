@@ -8,7 +8,7 @@ public class lockOnAiming : MonoBehaviour
     // Start is called before the first frame update
     //public Transform[] transforms;
 
-    private ArrayList transforms;
+    private static ArrayList transforms;
 
     public Transform target1;
     public Transform target2;

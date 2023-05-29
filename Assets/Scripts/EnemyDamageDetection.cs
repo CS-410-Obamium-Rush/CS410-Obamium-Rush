@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyDamageDetection : MonoBehaviour
 {
-    private Renderer enemyRenderer;
+    public Renderer enemyRenderer;
     public GameMonitor gm;
     private bool isFlashing = false;
     private static bool phaseTransition = false;
@@ -21,8 +21,7 @@ public class EnemyDamageDetection : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       enemyRenderer = GetComponent<Renderer>();
-       initColor = GetComponent<Renderer>().material.color;
+       initColor = enemyRenderer.material.color;
 
        //m_AudioSource = GetComponent<AudioSource>();
     }
@@ -30,30 +29,34 @@ public class EnemyDamageDetection : MonoBehaviour
 
     void OnParticleCollision(GameObject other) 
     {
+        if (phaseTransition) {
+            return;
+        }
+
         bool doFlash = false;
         //enemyAudioManager.instance.playHurt();  // plays the playerShooting sfx for now
 
-        if (this.transform.parent.gameObject.name == "RightHand1" && !phaseTransition) {
+        if (gameObject.name == "RightHand1") {
             doFlash = true;
             gm.enemyTakeDamage(5,0);
         }
             
-        else if (this.transform.parent.gameObject.name == "LeftHand1"  && !phaseTransition) {
+        else if (gameObject.name == "LeftHand1") {
             doFlash = true;
             gm.enemyTakeDamage(5,1);
         }
             
-        else if ((this.gameObject.name == "ObamaCube" || this.gameObject.name == "obama_sphere")  && !phaseTransition) {
+        else if ((gameObject.name == "ObamaCube" || gameObject.name == "ObamaSphere")) {
             if (gm.handsDefeated()) {
                 doFlash = true;
                 gm.enemyTakeDamage(5,2);
             }
         }
-        else if (this.transform.parent.gameObject.name == "RightHand2"  && !phaseTransition) {
+        else if (gameObject.name == "RightHand2") {
             doFlash = true;
             gm.enemyTakeDamage(5,3);
         }
-        else if (this.transform.parent.gameObject.name == "LeftHand2"  && !phaseTransition) {
+        else if (gameObject.name == "LeftHand2") {
             doFlash = true;
             gm.enemyTakeDamage(5,4);
         }

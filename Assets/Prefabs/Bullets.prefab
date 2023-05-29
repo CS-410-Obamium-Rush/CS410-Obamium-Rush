@@ -3618,7 +3618,7 @@ ParticleSystem:
     type: 1
     collisionMode: 0
     colliderForce: 0
-    multiplyColliderForceByParticleSize: 0
+    multiplyColliderForceByParticleSize: 1
     multiplyColliderForceByParticleSpeed: 0
     multiplyColliderForceByCollisionAngle: 1
     m_Planes: []
@@ -4825,9 +4825,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10e7f14408652604b847906e17544506, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transforms:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  target: {fileID: 0}
+  target1: {fileID: 0}
+  target2: {fileID: 0}
+  target3: {fileID: 0}
   targetInd: 0
+  crosshair: {fileID: 0}
+  offsetX: 1
+  offsetY: 2
+  offsetZ: 12

@@ -120,7 +120,7 @@ public class NextPhase : MonoBehaviour
                 updateScale.z += growSpeed * Time.deltaTime;
             headCube.transform.localScale = updateScale;
             if (updateScale.x >= 14f && updateScale.y >= 14f && updateScale.z >= 14f) {
-                headCube.transform.localEulerAngles = new Vector3(0, 180, 0);
+                headCube.transform.localEulerAngles = new Vector3(0, 0, 0);
                 rh1.setPause();
                 lh1.setPause();
                 rh2.setPause();
@@ -153,6 +153,8 @@ public class NextPhase : MonoBehaviour
         }
         // Step 6: Have the hands slowly shift vertically into their new positions
         else if (stepList[5]) {
+            lh1.animator.SetBool("staticState", false);
+            rh1.animator.SetBool("staticState", false);
             if (shiftHands()) {
                 stepList[5] = false;
                 stepList[6] = true;

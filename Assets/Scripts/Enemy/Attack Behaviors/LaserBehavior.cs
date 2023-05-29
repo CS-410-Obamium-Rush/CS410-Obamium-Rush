@@ -8,13 +8,10 @@ public class LaserBehavior : MonoBehaviour
     public float speed = 0.0f;
     public int time = 30;
     // Gather the gameobjects and details needed to have the enemy interact with the player
-    private HeadBehavior head;
-    private Transform playerHitBox;
-    private GameMonitor gm;
-    private GameObject gmObject;
+    public Transform playerHitBox;
+    public GameMonitor gm;
     private bool contact = false;
     private bool invincible = false;
-    private GameObject spawnPoint;
     private bool longEnough = false;
 
 
@@ -22,10 +19,6 @@ public class LaserBehavior : MonoBehaviour
     void Start()
     {
         transform.localEulerAngles = new Vector3(-69, 0, 0);
-        spawnPoint = GameObject.Find("ProjectileSpawner");
-        gmObject = GameObject.Find("GameSettings");
-        playerHitBox = GameObject.Find("MovingPlayer").transform.GetChild(0).gameObject.transform;
-        gm = gmObject.GetComponent<GameMonitor>();
         StartCoroutine(spawnLaser());
     }
 
@@ -48,10 +41,11 @@ public class LaserBehavior : MonoBehaviour
         float rotSpeed = Time.deltaTime * speed;
         Vector3 fromPlayer = transform.position - playerHitBox.transform.position;
         Vector3 newDirection = Vector3.RotateTowards(transform.forward, fromPlayer, rotSpeed, 0.0f);
-        if (longEnough)
+        if (longEnough) {
             newDirection = Vector3.RotateTowards(transform.forward, fromPlayer, rotSpeed, 0.0f);
-        else
+        } else {
             newDirection = Vector3.RotateTowards(transform.forward, fromPlayer, rotSpeed * 5, 0.0f);
+        }
         transform.rotation = Quaternion.LookRotation(newDirection);
         if (contact && !invincible) {
             gm.playerTakeDamage(5);
