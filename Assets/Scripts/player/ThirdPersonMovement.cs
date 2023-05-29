@@ -8,7 +8,8 @@ using UnityEngine.InputSystem;
 
 public class ThirdPersonMovement : MonoBehaviour
 {
-    public GameObject laser;
+    public GameObject bullet;
+    public GameObject shotgun;
     public float speed = 6f;
     public float jumpAmount = 10;
 
@@ -16,6 +17,9 @@ public class ThirdPersonMovement : MonoBehaviour
     public playerAudioManager playersfx; // need to figure out why the fuck this works
     AudioSource m_AudioSource;
 
+    public enum Weapon {Bullet, Shotgun};
+
+    private GameObject selected;
     private Rigidbody rb;
     private float movementX;
     private float movementY;
@@ -28,6 +32,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
         // get audioSource -- EA
         m_AudioSource = GetComponent<AudioSource>();
+        selected = bullet;
     }
 
     void OnMove(InputValue movementValue)
@@ -48,6 +53,26 @@ public class ThirdPersonMovement : MonoBehaviour
             //playerAudioManager.instance.playJump();
             jumpCount++;  
         }
+    }
+
+    public void setWeapon(Weapon newWeapon) {
+        var emissionModule = selected.GetComponent<ParticleSystem>().emission;
+        emissionModule.enabled = false;
+        switch (newWeapon) {
+            case Weapon.Shotgun:
+                selected = shotgun;
+                StartCoroutine(powerupTimer(5f));
+                break;
+            default:
+                break;
+        }
+    }
+
+    IEnumerator powerupTimer(float time) {
+        yield return new WaitForSeconds(time);
+        var emissionModule = selected.GetComponent<ParticleSystem>().emission;
+        emissionModule.enabled = false;
+        selected = bullet;
     }
 
     private bool isGrounded()
@@ -85,14 +110,14 @@ public class ThirdPersonMovement : MonoBehaviour
             //playersfx.playShoot();    //ethan wants to fix this since it overlaps with the jumping sfx
             //playerAudioManager.instance.playShoot();
 
-            var emissionModule = laser.GetComponent<ParticleSystem>().emission;
+            var emissionModule = selected.GetComponent<ParticleSystem>().emission;
             emissionModule.enabled = true;
         }
         // DO NOT REMOVE THIS ELSE
         // YOU WILL START AN INFINITE LOOP -- EAVI
         else
         {
-            var emissionModule = laser.GetComponent<ParticleSystem>().emission;
+            var emissionModule = selected.GetComponent<ParticleSystem>().emission;
             emissionModule.enabled = false;
         }
     }

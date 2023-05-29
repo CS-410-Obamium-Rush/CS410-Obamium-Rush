@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class Shotgun : MonoBehaviour
 {
+    public GameObject projectile;
+
     void OnCollisionEnter(Collision other) {
         // Pick up the powerup
         if (other.gameObject.CompareTag("Player")) {
             // Destroy the collected powerup
             Destroy(gameObject);
-            Transform transform = other.gameObject.transform;
-            transform.Find("Bullets").gameObject.SetActive(false);
-            transform.Find("Shotgun").gameObject.SetActive(true);
+            ThirdPersonMovement player = other.gameObject.GetComponent<ThirdPersonMovement>();
+            player.setWeapon(ThirdPersonMovement.Weapon.Shotgun);
         }
     }
 
