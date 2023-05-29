@@ -44,4 +44,9 @@ public class playerAudioManager : MonoBehaviour{
         godSource.clip = sfx[2];
         godSource.Play();
     }
+
+    public void playSwitchShoggun(){
+        godSource.clip = sfx[3];
+        godSource.Play();
+    }
 }

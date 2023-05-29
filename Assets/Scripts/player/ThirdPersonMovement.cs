@@ -61,6 +61,7 @@ public class ThirdPersonMovement : MonoBehaviour
         switch (newWeapon) {
             case Weapon.Shotgun:
                 selected = shotgun;
+                playersfx.playSwitchShoggun();
                 StartCoroutine(powerupTimer(5f));
                 break;
             default:
