@@ -164,7 +164,7 @@ public class GameMonitor : MonoBehaviour
 
     public void tryPowerup(Vector3 position) {
         // Random chance to drop a powerup
-        if (Random.value < 0.6) {
+        if (Random.value < 0.3) {
             // Instantiate a random powerup at the given position
             GameObject powerup = Instantiate(powerups[Random.Range(0, powerups.Count)], position, Quaternion.identity);
             // Create a force vector

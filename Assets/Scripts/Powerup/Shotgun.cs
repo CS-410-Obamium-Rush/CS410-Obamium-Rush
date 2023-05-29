@@ -9,9 +9,9 @@ public class Shotgun : MonoBehaviour
         if (other.gameObject.CompareTag("Player")) {
             // Destroy the collected powerup
             Destroy(gameObject);
-            //
-            // Shotgun powerup logic goes here
-            //
+            Transform transform = other.gameObject.transform;
+            transform.Find("Bullets").gameObject.SetActive(false);
+            transform.Find("Shotgun").gameObject.SetActive(true);
         }
     }
 
