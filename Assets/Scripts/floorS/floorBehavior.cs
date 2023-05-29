@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class basicFloorBehavior : MonoBehaviour
+public class floorBehavior : MonoBehaviour
 {
     // The speed at which the environment will move
     public float speed = 7.5f;

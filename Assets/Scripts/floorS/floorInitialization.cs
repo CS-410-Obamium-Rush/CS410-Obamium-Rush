@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class floorSpawner : MonoBehaviour {
+public class floorInitialization : MonoBehaviour {
     // The number of tiles to have loaded at any given time
     public int tileCount = 7;
     // The floor tile prefab to be used

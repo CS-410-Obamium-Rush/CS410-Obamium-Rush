@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4088022199182730350}
   - component: {fileID: 6881753508136427754}
   - component: {fileID: 6206558319612102984}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: NewGround
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -129,4 +129,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 7.5
-  floortile: {fileID: 2611961039799900645}

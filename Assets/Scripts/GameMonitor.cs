@@ -37,8 +37,10 @@ public class GameMonitor : MonoBehaviour
     // (ex. Percent = 0.45 means that enemy must have (0.45 * maxHealth) for Val or less to give the next power up)
     public float[] enemyThresholdPercent; // Holds the percent of health needed to damage to drop powerup
     private float[] enemyThresholdVal; // The value of the enemy health needs to be at or lower to drop the powerup
+
+    public List<GameObject> powerups;
     
-    private bool powerUp1 = false;
+    public bool powerup1 = false;
 
     // To notify when the enemy has lost all of its health
     public GameEnding end;              // Used to run code that will continue the game after the enemy loses all their health
@@ -160,6 +162,22 @@ public class GameMonitor : MonoBehaviour
         playerBar.fillAmount = (float) playerHealth / maxPlayerHealth;
     }
 
+    public void tryPowerup(Vector3 position) {
+        // Random chance to drop a powerup
+        if (Random.value < 0.6) {
+            // Instantiate a random powerup at the given position
+            GameObject powerup = Instantiate(powerups[Random.Range(0, powerups.Count)], position, Quaternion.identity);
+            // Create a force vector
+            Vector3 force = new Vector3(0, 20, 20);
+            // Adjust the force vector left or right so that it lands on the floor tiles
+            if (position.x < -10 || position.x > 10) {
+                force += new Vector3(position.x * -1, 0, 0);
+            }
+            // Get the rigidbody and apply the force vector as an Impulse
+            Rigidbody powerupRigidbody = powerup.GetComponent<Rigidbody>();
+            powerupRigidbody.AddForce(force, ForceMode.Impulse);
+        }
+    } 
 
     // Get the max amount of health that the player and enemy can have at a time
     void Start() {
@@ -202,8 +220,8 @@ public class GameMonitor : MonoBehaviour
         }
 
         // Release powerup when player reduces enough of enemy health; add more for additional powerups
-        if ((float)enemyTotalHealth < enemyThresholdVal[0] && powerUp1) {
-            powerUp1 = false;
+        if ((float)enemyTotalHealth < enemyThresholdVal[0] && powerup1) {
+            powerup1 = false;
         }
     }
 

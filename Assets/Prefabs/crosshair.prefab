@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4533355527812271768}
-  m_Layer: 10
+  m_Layer: 31
   m_Name: crosshair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 3864764104031704098}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3934319681443266496}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 3934319681443266496}
   - component: {fileID: 2183873890649032330}
   - component: {fileID: 3416850694777463326}
-  m_Layer: 10
+  m_Layer: 31
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}

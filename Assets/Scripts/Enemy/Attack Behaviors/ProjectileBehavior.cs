@@ -45,10 +45,12 @@ public class ProjectileBehavior : MonoBehaviour
         // Player takes damage when the missles contact their hitbox
         if (other.gameObject.CompareTag("Player")) {
             gm.playerTakeDamage(10);
+            gm.tryPowerup(transform.position);
             head.countMissle();
             Destroy(gameObject);
         }
         else if (other.gameObject.CompareTag("Ground")) {
+            gm.tryPowerup(transform.position);
             head.countMissle();
             Destroy(gameObject);
         }

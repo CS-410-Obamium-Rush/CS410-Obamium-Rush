@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3889881554953515468}
   - component: {fileID: 2513671784636982709}
   - component: {fileID: 7292357263883248240}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1400673920950132459}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Barriers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 1400673921740583895}
   - component: {fileID: 1400673921740583894}
   - component: {fileID: 1400673921740583889}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Barrier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -242,7 +242,7 @@ GameObject:
   - component: {fileID: 1400673921856388049}
   - component: {fileID: 1400673921856388048}
   - component: {fileID: 1400673921856388051}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Barrier (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -339,7 +339,7 @@ GameObject:
   - component: {fileID: 1400673922441223815}
   - component: {fileID: 1400673922441223814}
   - component: {fileID: 1400673922441223809}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Barrier (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -436,7 +436,7 @@ GameObject:
   - component: {fileID: 1400673922822006597}
   - component: {fileID: 1400673922822006596}
   - component: {fileID: 1400673922822006599}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Barrier (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

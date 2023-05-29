@@ -24,6 +24,9 @@ public class HeadBehavior : MonoBehaviour
     public enemyAudioManager enemysfx; // need to figure out why the fuck this doesn't work
     AudioSource m_AudioSource;
 
+    // Game monitor
+    public GameMonitor gm;
+
     // Different States
     private bool idle;
     private bool startPunch;
@@ -109,6 +112,7 @@ public class HeadBehavior : MonoBehaviour
             transform.Rotate(new Vector3(0, spinSpeed, 0) * Time.deltaTime);
             transform.position = Vector3.MoveTowards(transform.position, targetPunch.position, punchLaunchSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, targetPunch.position) < 0.001f) {
+                gm.tryPowerup(transform.position);
                 startPunch = false;
                 retractPunch = true;
             }
@@ -152,7 +156,7 @@ public class HeadBehavior : MonoBehaviour
     // spawn() creates the missles in the scene with a few second delay in between each creation
     IEnumerator spawn(int missleAmt) {
         for (int i = 0; i < missleAmt; i++) {
-            Instantiate(misslePrefab, new Vector3(projectileSpawner.position.x, projectileSpawner.position.y, projectileSpawner.position.z), Quaternion.identity);
+            GameObject missile = Instantiate(misslePrefab, new Vector3(projectileSpawner.position.x, projectileSpawner.position.y, projectileSpawner.position.z), Quaternion.identity);
             yield return new WaitForSeconds(1.75f);
         }
         

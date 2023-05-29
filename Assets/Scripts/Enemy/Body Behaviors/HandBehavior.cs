@@ -24,6 +24,9 @@ public class HandBehavior : MonoBehaviour
     public enemyAudioManager enemysfx; // need to figure out why the fuck this doesn't work
     AudioSource m_AudioSource;
 
+    // Game monitor
+    public GameMonitor gm;
+
     // Speed Values
     private float deltaTimeCount = 0;
     public float rotSpeed = 0;
@@ -170,6 +173,7 @@ public class HandBehavior : MonoBehaviour
             doRot(270f, initRot.y, initRot.z);
             transform.position = Vector3.MoveTowards(transform.position, targetPunch.position, punchLaunchSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, targetPunch.position) < 0.001f) {
+                gm.tryPowerup(transform.position);
                 startPunch = false;
                 retractPunch = true;
             }
@@ -201,6 +205,7 @@ public class HandBehavior : MonoBehaviour
         else if (useSwipe) {
             transform.position = Vector3.MoveTowards(transform.position, targetSwipeEnd.position, swipeUseSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, targetSwipeEnd.position) < 0.001f) {
+                gm.tryPowerup(transform.position);
                 useSwipe = false;
                 retSwipe = true;
             }
@@ -233,6 +238,7 @@ public class HandBehavior : MonoBehaviour
         else if (useClap) {
             transform.position = Vector3.MoveTowards(transform.position, targetClapEnd.position, clapUseSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, targetClapEnd.position) < 0.001f) {
+                gm.tryPowerup(transform.position);
                 useClap = false;
                 backClap = true;
             }
@@ -270,6 +276,7 @@ public class HandBehavior : MonoBehaviour
         else if (useSlam) {
             transform.position = Vector3.MoveTowards(transform.position, targetSlamEnd.position, slamUseSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, targetSlamEnd.position) < 0.001f) {
+                gm.tryPowerup(transform.position);
                 shockwaveUse.setActive(false);
                 useSlam = false;
                 retSlam = true;
