@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-public class NextPhase : MonoBehaviour
+public class TwoTransition : MonoBehaviour
 {
     // With performing the transition, this script needs control of all scripts and GameObjects associated with the enemy
     public AttackPatterns atkPat;           // Uses the AttackPatterm to disable the enemy from attacking the player

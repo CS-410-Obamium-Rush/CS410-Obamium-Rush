@@ -47,7 +47,7 @@ public class lockOnAiming : MonoBehaviour
     void Update()
     {
         Mouse mouse = Mouse.current;
-        if(mouse.rightButton.wasPressedThisFrame)
+        if(mouse.rightButton.wasPressedThisFrame || Input.GetButtonDown("Fire2"))
         {
             targetInd++;
             if(targetInd >= transforms.Count)

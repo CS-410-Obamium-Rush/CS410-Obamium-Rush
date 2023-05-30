@@ -27,7 +27,7 @@ public class GameEnding : MonoBehaviour
     public CanvasGroup loseCanvas;
 
     // Trigger the next phase with their public functions
-    public NextPhase np;
+    public TwoTransition twoTrans;
     public ThreeTransition threeTrans;
 
     /* Public Functions */
@@ -37,7 +37,7 @@ public class GameEnding : MonoBehaviour
         EndGame(winCanvas, true);
     }
 
-    // Used by the Game Monitor to next part of the game
+    // Used by the Game Monitor to start the next part of the game
     public void setPhase2() {
         doPhase2 = true;
     }
@@ -61,7 +61,7 @@ public class GameEnding : MonoBehaviour
             EndGame(winCanvas, false);
         // Trigger phase 2 if enemy has lost all their health once
         else if (doPhase2) {
-            np.phase2();
+            twoTrans.phase2();
             doPhase2 = false;
         }
         else if (doPhase3) {

@@ -1980,6 +1980,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3663431827853176931, guid: f9f6207879b0d044cb6afb5c6b4b0690, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ba5424022ae1d404dbc309206adb5e51, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9f6207879b0d044cb6afb5c6b4b0690, type: 3}
 --- !u!114 &7342908688312538315 stripped
@@ -2073,6 +2077,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3663431827853176931, guid: f9f6207879b0d044cb6afb5c6b4b0690, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ba5424022ae1d404dbc309206adb5e51, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9f6207879b0d044cb6afb5c6b4b0690, type: 3}
 --- !u!114 &7342908688394742309 stripped
@@ -2114,6 +2122,10 @@ PrefabInstance:
       propertyPath: shockwaveUse
       value: 
       objectReference: {fileID: 4669454863603335196}
+    - target: {fileID: 920128624715387615, guid: 2838dd6c1df3fb54e95c7df9bed9804c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ba5424022ae1d404dbc309206adb5e51, type: 2}
     - target: {fileID: 7443708399591947546, guid: 2838dd6c1df3fb54e95c7df9bed9804c, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -2299,6 +2311,10 @@ PrefabInstance:
       propertyPath: shockwaveUse
       value: 
       objectReference: {fileID: 4669454863603335196}
+    - target: {fileID: 920128624715387615, guid: 2838dd6c1df3fb54e95c7df9bed9804c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ba5424022ae1d404dbc309206adb5e51, type: 2}
     - target: {fileID: 7443708399591947546, guid: 2838dd6c1df3fb54e95c7df9bed9804c, type: 3}
       propertyPath: m_RootOrder
       value: 4
