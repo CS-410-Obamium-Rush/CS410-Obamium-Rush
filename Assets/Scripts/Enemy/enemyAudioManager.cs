@@ -65,9 +65,19 @@ public class enemyAudioManager : MonoBehaviour{
         godSource.Play();
     }
 
+    public void playSlam(){
+        godSource.clip = sfx[6];
+        godSource.Play();
+    }
+
+    public void playLazer(){
+        godSource.clip = sfx[7];
+        godSource.Play();
+    }
+
     // this sfx should be towards the end of the list
     public void playHurt(){
-        godSource.clip = sfx[6];
+        godSource.clip = sfx[8];
         godSource.Play();
     }
 }

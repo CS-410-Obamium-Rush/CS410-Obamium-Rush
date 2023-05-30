@@ -359,6 +359,7 @@ public class HandBehavior : MonoBehaviour
     }
 
     public void callSlam(Transform targetStart, Transform targetEnd) {
+        enemyAudioManager.instance.playSlam();
         animator.SetBool("staticState", true);
         debugSys.locker();
         targetSlamStart = targetStart;

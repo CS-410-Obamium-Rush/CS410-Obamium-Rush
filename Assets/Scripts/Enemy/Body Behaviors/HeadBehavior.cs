@@ -208,6 +208,7 @@ public class HeadBehavior : MonoBehaviour
     }
 
     public void callLaser() {
+        enemyAudioManager.instance.playLazer();
         debugSys.locker();
         doOnce = true;
         idle = false;
