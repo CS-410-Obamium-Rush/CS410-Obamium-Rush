@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5523774447379186240}
   - component: {fileID: 7292357263883248240}
+  - component: {fileID: 4553887306787470080}
   m_Layer: 7
   m_Name: Ground
   m_TagString: Untagged
@@ -25,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 907573074952822774}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.1, z: 1}
+  m_LocalPosition: {x: 0, y: -0.5, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -43,8 +44,24 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 26, y: 0.1, z: 13}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 40, y: 6, z: 20}
+  m_Center: {x: 0, y: -3, z: 0}
+--- !u!54 &4553887306787470080
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 907573074952822774}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 14
+  m_CollisionDetection: 0
 --- !u!1 &1400673920950132458
 GameObject:
   m_ObjectHideFlags: 0
@@ -91,6 +108,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1400673921740583892}
   - component: {fileID: 1400673921740583889}
+  - component: {fileID: 8590696791525299236}
   m_Layer: 7
   m_Name: WestBarrier
   m_TagString: Wall
@@ -106,8 +124,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1400673921740583888}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13, y: 40, z: 1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -14, y: 40, z: 1}
+  m_LocalScale: {x: 2, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1400673920950132459}
@@ -126,6 +144,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 100, z: 13}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &8590696791525299236
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1400673921740583888}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 14
+  m_CollisionDetection: 0
 --- !u!1 &1400673921856388050
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,6 +170,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1400673921856388054}
   - component: {fileID: 1400673921856388051}
+  - component: {fileID: 582609035483005690}
   m_Layer: 7
   m_Name: SouthBarrier
   m_TagString: Wall
@@ -151,7 +186,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1400673921856388050}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 40, z: -5}
+  m_LocalPosition: {x: 0, y: 40, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -169,8 +204,24 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 28, y: 100, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 28, y: 100, z: 10}
+  m_Center: {x: 0, y: 0, z: -5}
+--- !u!54 &582609035483005690
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1400673921856388050}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 14
+  m_CollisionDetection: 0
 --- !u!1 &1400673922441223808
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,6 +232,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1400673922441223812}
   - component: {fileID: 1400673922441223809}
+  - component: {fileID: 930713041871073249}
   m_Layer: 7
   m_Name: EastBarrier
   m_TagString: Wall
@@ -196,8 +248,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1400673922441223808}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 13, y: 40, z: 1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 14, y: 40, z: 1}
+  m_LocalScale: {x: 2, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1400673920950132459}
@@ -216,6 +268,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 100, z: 13}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &930713041871073249
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1400673922441223808}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 14
+  m_CollisionDetection: 0
 --- !u!1 &1400673922822006598
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,6 +294,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1400673922822006602}
   - component: {fileID: 1400673922822006599}
+  - component: {fileID: 2192732576578754427}
   m_Layer: 7
   m_Name: NorthBarrier
   m_TagString: Wall
@@ -241,8 +310,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1400673922822006598}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 40, z: 5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 40, z: 8}
+  m_LocalScale: {x: 1, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1400673920950132459}
@@ -259,5 +328,21 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 28, y: 100, z: 1}
+  m_Size: {x: 28, y: 100, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &2192732576578754427
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1400673922822006598}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 14
+  m_CollisionDetection: 0

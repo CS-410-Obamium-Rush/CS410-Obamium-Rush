@@ -4297,6 +4297,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Bullet
       objectReference: {fileID: 0}
+    - target: {fileID: 8879080919350134148, guid: 138b1fb074c8faf45878273bbef504af, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
     - target: {fileID: 8879080919350134149, guid: 138b1fb074c8faf45878273bbef504af, type: 3}
       propertyPath: m_Name
       value: Player
