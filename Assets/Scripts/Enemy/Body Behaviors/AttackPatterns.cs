@@ -53,6 +53,11 @@ public class AttackPatterns : MonoBehaviour
         bodyAmt = newBodyAmt;
     }
 
+    // Determine the recharge rate of attacks
+    public void setTimeInterval(float newTime) {
+        timeInterval = newTime;
+    }
+    // Used to disable or enable enemy attacks from occuring
     public void setPhaseTransition(bool val) {
         phaseTransition = val;
     }
@@ -60,6 +65,7 @@ public class AttackPatterns : MonoBehaviour
     public void setHeadBehavior(HeadBehavior newHead) {
         head = newHead.GetComponent<HeadBehavior>();
     }
+    // Enable all hand usage for the next phase
     public void activateAllHands() {
         headUse = true;
         rightUse1 = true;

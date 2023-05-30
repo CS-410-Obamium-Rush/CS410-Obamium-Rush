@@ -187,8 +187,8 @@ public class HandBehavior : MonoBehaviour
         */
         // Punching State
         else if (startPunch) {
-            animator.SetBool("punchState", true);
             doRot(270f, 0f, initRot.z);
+            animator.SetBool("punchState", true);
             transform.position = Vector3.MoveTowards(transform.position, targetPunch.position, punchLaunchSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, targetPunch.position) < 0.001f) {
                 gm.tryPowerup(transform.position);

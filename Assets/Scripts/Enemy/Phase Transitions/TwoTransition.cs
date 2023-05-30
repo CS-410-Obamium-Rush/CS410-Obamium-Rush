@@ -1,5 +1,5 @@
 /*
-NextPhase: A script that performs the transition from phase 1 to phase 2 in the game; this occurs when the enemy's health has been depleted
+TwoTransition: A script that performs the transition from phase 1 to phase 2 in the game; this occurs when the enemy's health has been depleted
 for the first time.
 */
 
@@ -112,14 +112,14 @@ public class TwoTransition : MonoBehaviour
             hc.setIdle(false);
             Vector3 updateScale = headCube.transform.localScale;
             headCube.transform.Rotate(new Vector3(0, spinSpeedCube, 0) * Time.deltaTime);
-            if (updateScale.x != 15f)
+            if (updateScale.x != 13f)
                 updateScale.x += growSpeed * Time.deltaTime;
-            if (updateScale.y != 15f)
+            if (updateScale.y != 13f)
                 updateScale.y += growSpeed * Time.deltaTime;
-            if (updateScale.z != 15f)
+            if (updateScale.z != 13f)
                 updateScale.z += growSpeed * Time.deltaTime;
             headCube.transform.localScale = updateScale;
-            if (updateScale.x >= 14f && updateScale.y >= 14f && updateScale.z >= 14f) {
+            if (updateScale.x >= 13f && updateScale.y >= 13f && updateScale.z >= 13f) {
                 headCube.transform.localEulerAngles = new Vector3(0, 0, 0);
                 rh1.setPause();
                 lh1.setPause();
@@ -181,6 +181,7 @@ public class TwoTransition : MonoBehaviour
         else if (stepList[7]) {
             enDamDet.setPhaseTransition(false);
             atkPat.activateAllHands();
+            atkPat.setTimeInterval(1.75f);
             atkPat.setPhaseTransition(false);
             gm.setAllowPhase3();
             stepList[7] = false;    

@@ -43,10 +43,7 @@ public class ThreeTransition : MonoBehaviour
     private bool doOnce = true;     // A bool to have specific step parts occur only one time instead of repeatedly
 
     // Public variables for phase transition speeds
-    //public int spinSpeedTriangle = 1000;
-    //public int spinSpeedCube = 100;
     public float shrinkSpeed = 15f;
-    //public float growSpeed = 5f;
     public float shiftSpeed = 5f;
     public float resetSpeed = 5f;
 
@@ -105,8 +102,7 @@ public class ThreeTransition : MonoBehaviour
                 stepList[4] = true;
             }
         }
-        // Step 5: Have the second pair of hands appear from the first pair, establish each of their new locations (Pos variable), and
-        // Update the target system to include the modification of the head and new hands
+        // Step 5: Establish the new location for each hand (Pos variable) and Update the target system to include the modification of the head
         else if (stepList[4]) {
             rh1Pos = new Vector3 (rightHand1.transform.position.x - 5f, rightHand1.transform.position.y - 2.5f, rightHand1.transform.position.z - 4f);
             rh2Pos = new Vector3 (rightHand2.transform.position.x - 5f, rightHand2.transform.position.y + 2.5f, rightHand2.transform.position.z - 4f);
@@ -156,6 +152,7 @@ public class ThreeTransition : MonoBehaviour
             lh2.setAtkSpeeds(35, 35, 35, 35);
             enDamDet.setPhaseTransition(false);
             atkPat.activateAllHands();
+            atkPat.setTimeInterval(1f);
             atkPat.setPhaseTransition(false);
             gm.setAllowWin();
             stepList[7] = false;    
