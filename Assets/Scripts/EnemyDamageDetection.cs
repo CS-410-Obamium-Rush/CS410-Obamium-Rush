@@ -8,7 +8,7 @@ public class EnemyDamageDetection : MonoBehaviour
     public GameMonitor gm;
     private bool isFlashing = false;
     private static bool phaseTransition = false;
-
+    private static int damageTake = 900;
     // ethan's audio stuff
     //public enemyAudioManager enemysfx; // need to figure out why the fuck this doesn't work
     //AudioSource m_AudioSource;
@@ -38,27 +38,27 @@ public class EnemyDamageDetection : MonoBehaviour
 
         if (gameObject.name == "RightHand1") {
             doFlash = true;
-            gm.enemyTakeDamage(5,0);
+            gm.enemyTakeDamage(damageTake,0);
         }
             
         else if (gameObject.name == "LeftHand1") {
             doFlash = true;
-            gm.enemyTakeDamage(5,1);
+            gm.enemyTakeDamage(damageTake,1);
         }
             
-        else if ((gameObject.name == "ObamaCube" || gameObject.name == "ObamaSphere")) {
+        else if ((gameObject.name == "ObamaCube" || gameObject.name == "ObamaSphere" || gameObject.name == "obama_pyramid")) {
             if (gm.handsDefeated()) {
                 doFlash = true;
-                gm.enemyTakeDamage(5,2);
+                gm.enemyTakeDamage(damageTake,2);
             }
         }
         else if (gameObject.name == "RightHand2") {
             doFlash = true;
-            gm.enemyTakeDamage(5,3);
+            gm.enemyTakeDamage(damageTake,3);
         }
         else if (gameObject.name == "LeftHand2") {
             doFlash = true;
-            gm.enemyTakeDamage(5,4);
+            gm.enemyTakeDamage(damageTake,4);
         }
         if(isFlashing == false && doFlash == true) {
             StartCoroutine(flashDamageColor());

@@ -105,6 +105,24 @@ public class HandBehavior : MonoBehaviour
             return false;
     }
 
+    // Public function to adjust attack speeds, rotation, and idle movement respectivelly for the third phase
+    public void setAtkSpeeds(int pSpd, int swSpd, int cSpd, int slSpd) {
+        punchLaunchSpeed = pSpd;
+        swipeUseSpeed = swSpd;
+        clapUseSpeed = cSpd;
+        slamUseSpeed = slSpd;
+    }
+    public void setRot(float x, float y, float z) {
+        doRot(x, y, z);
+        initRot = transform.localEulerAngles;
+    }
+    public void setMove(float w, float h) {
+        width = w;
+        height = h;
+    }
+    
+
+
     // Use Start() to initiate the states
     void Start()
     {
@@ -170,7 +188,7 @@ public class HandBehavior : MonoBehaviour
         // Punching State
         else if (startPunch) {
             animator.SetBool("punchState", true);
-            doRot(270f, initRot.y, initRot.z);
+            doRot(270f, 0f, initRot.z);
             transform.position = Vector3.MoveTowards(transform.position, targetPunch.position, punchLaunchSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, targetPunch.position) < 0.001f) {
                 gm.tryPowerup(transform.position);

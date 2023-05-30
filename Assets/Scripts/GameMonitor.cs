@@ -45,6 +45,9 @@ public class GameMonitor : MonoBehaviour
     // To notify when the enemy has lost all of its health
     public GameEnding end;              // Used to run code that will continue the game after the enemy loses all their health
     private bool startPhase2 = true;    // Used to trigger the second enemy phase once
+    private bool startPhase3 = true;    // Used to trigger the third enemy phase once
+    private bool allowPhase3 = false;
+    private bool allowWin = false;
     private int phaseCount = 0;         // Used to indicate how many phases that the player has defeated
 
     // Public Function used by NextPhase to establish the next phases' health; returns the maxium health for reference
@@ -72,6 +75,14 @@ public class GameMonitor : MonoBehaviour
         for (int i = 0; i < 3; i++) {
             enemyThresholdVal[i] = maxEnemyHealth * enemyThresholdPercent[i];
         }
+    }
+    // Public function to indicate that the player can win once phase 3's health has been depleted
+    public void setAllowWin() {
+        allowWin = true;
+    }
+
+    public void setAllowPhase3() {
+        allowPhase3 = true;
     }
 
     /* Function for Enemy's health to be modified; used by EnemyDamageDedeuction scripts*/
@@ -206,17 +217,24 @@ public class GameMonitor : MonoBehaviour
         // If enemy loses all health, player wins and moves on to the next phase or game ends
         else if (enemyTotalHealth <= 0) {
             if (startPhase2 && atkPat.getKey()) {
-
                 music.playP2();
                 startPhase2 = false;
                 end.setPhase2();
                 phaseCount++;
             }
-            else if (phaseCount == 3) {
-                Debug.Log("You Wind");
-                end.setWin();
+            else if (allowPhase3 && startPhase3 && atkPat.getKey()) {
+                //music.playP2();
+                startPhase3 = false;
+                end.setPhase3();
+                phaseCount++;
             }
-                
+            else if (allowWin) {
+                phaseCount++;
+            }
+        }
+        if (phaseCount >= 3) {
+            Debug.Log("You Win");
+            end.setWin();
         }
 
         // Release powerup when player reduces enough of enemy health; add more for additional powerups

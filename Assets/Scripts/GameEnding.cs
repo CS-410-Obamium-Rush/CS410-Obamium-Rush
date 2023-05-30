@@ -19,6 +19,8 @@ public class GameEnding : MonoBehaviour
     // Bools to determine if the player has won, needs to do the next phase, or hase lost
     private bool playerWin = false;
     private bool doPhase2 = false;
+    private bool doPhase3 = false;
+
     private bool playerLost = false;
     // Get the canvas containing the win and lost image
     public CanvasGroup winCanvas;
@@ -26,6 +28,7 @@ public class GameEnding : MonoBehaviour
 
     // Trigger the next phase with their public functions
     public NextPhase np;
+    public ThreeTransition threeTrans;
 
     /* Public Functions */
 
@@ -37,6 +40,9 @@ public class GameEnding : MonoBehaviour
     // Used by the Game Monitor to next part of the game
     public void setPhase2() {
         doPhase2 = true;
+    }
+    public void setPhase3() {
+        doPhase3 = true;
     }
     public void setWin() {
         playerWin = true;
@@ -58,6 +64,11 @@ public class GameEnding : MonoBehaviour
             np.phase2();
             doPhase2 = false;
         }
+        else if (doPhase3) {
+            threeTrans.phase3();
+            doPhase3 = false;
+        }
+
         // Put Defeat image is player loses all their health
         else if (playerLost)
             EndGame(loseCanvas, true);

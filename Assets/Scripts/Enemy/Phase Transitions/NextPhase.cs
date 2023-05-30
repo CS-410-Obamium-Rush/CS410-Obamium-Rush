@@ -182,6 +182,7 @@ public class NextPhase : MonoBehaviour
             enDamDet.setPhaseTransition(false);
             atkPat.activateAllHands();
             atkPat.setPhaseTransition(false);
+            gm.setAllowPhase3();
             stepList[7] = false;    
         }
 
