@@ -14,6 +14,9 @@ public class lockOnAiming : MonoBehaviour
     public Transform target2;
     public Transform target3;
 
+    // ethan's audio
+    public AudioSource m_AudioSource;
+
     public int targetInd = 0;
     public GameObject crosshair;
     public int offsetX = 0;
@@ -36,6 +39,8 @@ public class lockOnAiming : MonoBehaviour
         transforms.Add(target1);
         transforms.Add(target2);
         transforms.Add(target3);
+
+        m_AudioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
