@@ -34,12 +34,10 @@ public class ProjectileBehavior : MonoBehaviour
             gm.tryPowerup(transform.position);
             head.countMissle();
             Destroy(gameObject);
-        }
-        else if (other.gameObject.CompareTag("Ground")) {
+        } else if (other.gameObject.CompareTag("Ground")) {
             gm.tryPowerup(transform.position);
             head.countMissle();
             Destroy(gameObject);
         }
-
     }
 }

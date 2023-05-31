@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileCount: 7
-  floortile: {fileID: 2611961039799900645, guid: 95e18c6cce6323e4dbb00eaa2d185908, type: 3}
+  floortile: {fileID: 7665261604433479177, guid: eb19b03933560164080b89a63590d72d, type: 3}
 --- !u!1 &6401261878522357218
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,6 +16,7 @@ TagManager:
   - Wall
   - Bullet
   - pDestroy
+  - Obstacle
   layers:
   - Default
   - TransparentFX
