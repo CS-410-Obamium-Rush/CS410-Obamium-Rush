@@ -597,10 +597,10 @@ MonoBehaviour:
   speed: 30
   range: 40
   offset: 20
-  laserTime: 10
+  laserTime: 9
   enemysfx: {fileID: 0}
   gm: {fileID: 859794057}
-  punchLaunchSpeed: 35
+  punchLaunchSpeed: 30
   nonAtkSpeed: 80
   spinSpeed: 1000
   projectileSpawner: {fileID: 614359931}
@@ -1682,7 +1682,7 @@ MonoBehaviour:
   leftHandHealth2: 0
   atkPat: {fileID: 17457383}
   headHealth: 500
-  playerHealth: 100
+  playerHealth: 200
   enemyThresholdPercent:
   - 0.75
   - 0.5
@@ -2670,6 +2670,11 @@ RectTransform:
   m_AnchoredPosition: {x: 540, y: 300}
   m_SizeDelta: {x: 1080, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!4 &1203432974 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4669454863765761708, guid: 451d507deaf757c4397d6e5e2ab76d60, type: 3}
+  m_PrefabInstance: {fileID: 4669454863370661828}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1222284723
 GameObject:
   m_ObjectHideFlags: 0
@@ -3221,7 +3226,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Left click to shoot and press "space" to jump!
+  m_text: WASD to move, left click or  "o" to shoot, right click or "p" to switch
+    targets, and press "space" to jump!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3975,6 +3981,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3853763012173786646, guid: 451d507deaf757c4397d6e5e2ab76d60, type: 3}
   m_PrefabInstance: {fileID: 4669454863370661828}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &2080415371 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4669454863790130872, guid: 451d507deaf757c4397d6e5e2ab76d60, type: 3}
+  m_PrefabInstance: {fileID: 4669454863370661828}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4669454863370661828
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3984,15 +3995,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2483539937610161230, guid: 451d507deaf757c4397d6e5e2ab76d60, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2483539937610161230, guid: 451d507deaf757c4397d6e5e2ab76d60, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2483539937610161230, guid: 451d507deaf757c4397d6e5e2ab76d60, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3275428015520081292, guid: 451d507deaf757c4397d6e5e2ab76d60, type: 3}
       propertyPath: gm
@@ -4010,6 +4021,10 @@ PrefabInstance:
       propertyPath: enemysfx
       value: 
       objectReference: {fileID: 235749596}
+    - target: {fileID: 4669454862031175971, guid: 451d507deaf757c4397d6e5e2ab76d60, type: 3}
+      propertyPath: laserTime
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4669454862031175971, guid: 451d507deaf757c4397d6e5e2ab76d60, type: 3}
       propertyPath: playerHitBox
       value: 
@@ -4038,9 +4053,17 @@ PrefabInstance:
       propertyPath: playerHitBox
       value: 
       objectReference: {fileID: 1476573300}
+    - target: {fileID: 4669454863308669027, guid: 451d507deaf757c4397d6e5e2ab76d60, type: 3}
+      propertyPath: punchLaunchSpeed
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 4669454863353499426, guid: 451d507deaf757c4397d6e5e2ab76d60, type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 4669454863353499427, guid: 451d507deaf757c4397d6e5e2ab76d60, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4669454863353499427, guid: 451d507deaf757c4397d6e5e2ab76d60, type: 3}
       propertyPath: timeInterval
@@ -4050,6 +4073,22 @@ PrefabInstance:
       propertyPath: gm
       value: 
       objectReference: {fileID: 859794057}
+    - target: {fileID: 4669454863353499436, guid: 451d507deaf757c4397d6e5e2ab76d60, type: 3}
+      propertyPath: punchH
+      value: 
+      objectReference: {fileID: 1203432974}
+    - target: {fileID: 4669454863353499436, guid: 451d507deaf757c4397d6e5e2ab76d60, type: 3}
+      propertyPath: punchL
+      value: 
+      objectReference: {fileID: 1203432974}
+    - target: {fileID: 4669454863353499436, guid: 451d507deaf757c4397d6e5e2ab76d60, type: 3}
+      propertyPath: punchR
+      value: 
+      objectReference: {fileID: 2080415371}
+    - target: {fileID: 4669454863353499436, guid: 451d507deaf757c4397d6e5e2ab76d60, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4669454863353499437, guid: 451d507deaf757c4397d6e5e2ab76d60, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -4106,6 +4145,30 @@ PrefabInstance:
       propertyPath: gm
       value: 
       objectReference: {fileID: 859794057}
+    - target: {fileID: 4669454863460534017, guid: 451d507deaf757c4397d6e5e2ab76d60, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4669454863460534017, guid: 451d507deaf757c4397d6e5e2ab76d60, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4669454863765761708, guid: 451d507deaf757c4397d6e5e2ab76d60, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4669454863765761708, guid: 451d507deaf757c4397d6e5e2ab76d60, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4669454863790130872, guid: 451d507deaf757c4397d6e5e2ab76d60, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4669454863790130872, guid: 451d507deaf757c4397d6e5e2ab76d60, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3
+      objectReference: {fileID: 0}
     - target: {fileID: 5054323894177671151, guid: 451d507deaf757c4397d6e5e2ab76d60, type: 3}
       propertyPath: gm
       value: 
@@ -4116,15 +4179,15 @@ PrefabInstance:
       objectReference: {fileID: 859794057}
     - target: {fileID: 5124314333955927445, guid: 451d507deaf757c4397d6e5e2ab76d60, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.6
+      value: 1.35
       objectReference: {fileID: 0}
     - target: {fileID: 5124314333955927445, guid: 451d507deaf757c4397d6e5e2ab76d60, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.6
+      value: 1.35
       objectReference: {fileID: 0}
     - target: {fileID: 5124314333955927445, guid: 451d507deaf757c4397d6e5e2ab76d60, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.6
+      value: 1.35
       objectReference: {fileID: 0}
     - target: {fileID: 5384789848769641120, guid: 451d507deaf757c4397d6e5e2ab76d60, type: 3}
       propertyPath: gm

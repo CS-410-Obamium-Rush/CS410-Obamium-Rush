@@ -233,7 +233,6 @@ public class GameMonitor : MonoBehaviour
             }
         }
         if (phaseCount >= 3) {
-            Debug.Log("You Win");
             end.setWin();
         }
 

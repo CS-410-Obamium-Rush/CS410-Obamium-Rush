@@ -107,6 +107,7 @@ public class HeadBehavior : MonoBehaviour
                 transform.position = new Vector3(initPos.x, Mathf.Sin(Time.time * freq) * height + initPos.y, initPos.z);
                 transform.localEulerAngles = new Vector3(initRot.x, Mathf.PingPong(Time.time * speed, range) - offset + initRot.y, initRot.z);
             }
+            
         }
         // Using punch
         else if (startPunch) {

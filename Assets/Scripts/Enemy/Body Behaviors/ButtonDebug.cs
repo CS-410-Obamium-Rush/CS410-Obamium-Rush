@@ -65,7 +65,6 @@ public class ButtonDebug : MonoBehaviour
     
 
     void Update() {
-        head.setIdle(true);
         if (Input.GetKey("escape")) {
             Application.Quit();
             Debug.Log("Esc was pressed");

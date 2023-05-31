@@ -112,14 +112,14 @@ public class TwoTransition : MonoBehaviour
             hc.setIdle(false);
             Vector3 updateScale = headCube.transform.localScale;
             headCube.transform.Rotate(new Vector3(0, spinSpeedCube, 0) * Time.deltaTime);
-            if (updateScale.x != 13f)
+            if (updateScale.x != 11f)
                 updateScale.x += growSpeed * Time.deltaTime;
-            if (updateScale.y != 13f)
+            if (updateScale.y != 11f)
                 updateScale.y += growSpeed * Time.deltaTime;
-            if (updateScale.z != 13f)
+            if (updateScale.z != 11f)
                 updateScale.z += growSpeed * Time.deltaTime;
             headCube.transform.localScale = updateScale;
-            if (updateScale.x >= 13f && updateScale.y >= 13f && updateScale.z >= 13f) {
+            if (updateScale.x >= 11f && updateScale.y >= 11f && updateScale.z >= 11f) {
                 headCube.transform.localEulerAngles = new Vector3(0, 0, 0);
                 rh1.setPause();
                 lh1.setPause();
