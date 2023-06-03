@@ -25,7 +25,10 @@ public class GameMonitor : MonoBehaviour
     public int leftHandHealth2 = 0;
     public AttackPatterns atkPat;
     
-    public int headHealth = 300;
+    public int headHealth1 = 300;
+    public int headHealth2 = 0;
+    public int headHealth3 = 0;
+
     private int maxEnemyHealth;   // Max amount of health
     private int enemyTotalHealth; // Current health
 
@@ -51,13 +54,15 @@ public class GameMonitor : MonoBehaviour
     private int phaseCount = 0;         // Used to indicate how many phases that the player has defeated
 
     // Public Function used by NextPhase to establish the next phases' health; returns the maxium health for reference
-    public int setNewHealth(int r1, int l1, int r2, int l2, int head) {
+    public int setNewHealth(int r1, int l1, int r2, int l2, int head1, int head2, int head3) {
         rightHandHealth1 = r1;
         leftHandHealth1 = l1;
         rightHandHealth2 = r2;
         leftHandHealth2 = l2;
-        headHealth = head;
-        maxEnemyHealth = headHealth + rightHandHealth1 + leftHandHealth1 + rightHandHealth2 + leftHandHealth2;
+        headHealth1 = head1;
+        headHealth2 = head2;
+        headHealth3 = head3;
+        maxEnemyHealth = headHealth1 + rightHandHealth1 + leftHandHealth1 + rightHandHealth2 + leftHandHealth2 + headHealth2 + headHealth3;
         enemyTotalHealth = maxEnemyHealth;
         return maxEnemyHealth;
     }
@@ -146,12 +151,34 @@ public class GameMonitor : MonoBehaviour
             }
         }
         else if (body == 2) {
-            if (leftHandHealth1 <= 0 && rightHandHealth1 <= 0 && leftHandHealth2 <= 0 && rightHandHealth2 <= 0 && headHealth > 0) {
-                headHealth -= amt;
+            if (leftHandHealth1 <= 0 && rightHandHealth1 <= 0 && leftHandHealth2 <= 0 && rightHandHealth2 <= 0 && headHealth1 > 0) {
+                headHealth1 -= amt;
                 calcEnemyHealth();
                 enemyBar.fillAmount = (float) enemyTotalHealth / maxEnemyHealth;
-                if (headHealth <= 0) {
-                    headHealth = 0;
+                if (headHealth1 <= 0) {
+                    headHealth1 = 0;
+                    atkPat.disableBody(body);
+                }
+            }
+        }
+        else if (body == 5) {
+            if (leftHandHealth1 <= 0 && rightHandHealth1 <= 0 && leftHandHealth2 <= 0 && rightHandHealth2 <= 0 && headHealth2 > 0) {
+                headHealth2 -= amt;
+                calcEnemyHealth();
+                enemyBar.fillAmount = (float) enemyTotalHealth / maxEnemyHealth;
+                if (headHealth2 <= 0) {
+                    headHealth2 = 0;
+                    atkPat.disableBody(body);
+                }
+            }
+        }
+        else if (body == 6) {
+            if (leftHandHealth1 <= 0 && rightHandHealth1 <= 0 && leftHandHealth2 <= 0 && rightHandHealth2 <= 0 && headHealth3 > 0) {
+                headHealth3 -= amt;
+                calcEnemyHealth();
+                enemyBar.fillAmount = (float) enemyTotalHealth / maxEnemyHealth;
+                if (headHealth3 <= 0) {
+                    headHealth3 = 0;
                     atkPat.disableBody(body);
                 }
             }
@@ -193,7 +220,7 @@ public class GameMonitor : MonoBehaviour
     // Get the max amount of health that the player and enemy can have at a time
     void Start() {
         maxPlayerHealth = playerHealth;
-        maxEnemyHealth = headHealth + rightHandHealth1 + leftHandHealth1 + rightHandHealth2 + leftHandHealth2;
+        maxEnemyHealth = headHealth1 + rightHandHealth1 + leftHandHealth1 + rightHandHealth2 + leftHandHealth2 + headHealth2 + headHealth3;
         enemyThresholdVal = new float[3];
         for (int i = 0; i < 3; i++) {
             enemyThresholdVal[i] = maxEnemyHealth * enemyThresholdPercent[i];
@@ -250,7 +277,9 @@ public class GameMonitor : MonoBehaviour
         int healthL1 = leftHandHealth1;
         int healthR2 = rightHandHealth2;
         int healthL2 = leftHandHealth2;
-        int healthH = headHealth;
+        int healthH1 = headHealth1;
+        int healthH2 = headHealth2;
+        int healthH3 = headHealth3;
 
         if (rightHandHealth1 < 0)
             healthR1 = 0;
@@ -260,9 +289,13 @@ public class GameMonitor : MonoBehaviour
             healthR2 = 0;
         if (leftHandHealth2 < 0)
             healthL2 = 0;
-        if (headHealth < 0)
-            healthH = 0;
-        enemyTotalHealth = healthR1 + healthL1 + healthR2 + healthL2 + healthH;
+        if (headHealth1 < 0)
+            healthH1 = 0;
+        if (headHealth2 < 0)
+            healthH2 = 0;
+        if (headHealth3 < 0)
+            healthH3 = 0;
+        enemyTotalHealth = healthR1 + healthL1 + healthR2 + healthL2 + healthH1 + healthH2 + healthH3;
     }
 
     

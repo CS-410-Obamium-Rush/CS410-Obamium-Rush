@@ -9,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameEnding : MonoBehaviour
 {
@@ -25,6 +26,9 @@ public class GameEnding : MonoBehaviour
     // Get the canvas containing the win and lost image
     public CanvasGroup winCanvas;
     public CanvasGroup loseCanvas;
+
+    // Get the images associated to each health bar
+    public Canvas allHealth;
 
     // Trigger the next phase with their public functions
     public TwoTransition twoTrans;
@@ -77,6 +81,8 @@ public class GameEnding : MonoBehaviour
     // Displays the victory or game over image for a certain amount of time before either quitting the app (when player wins)
     // or restarting the level (when the player loses)
     void EndGame (CanvasGroup imageCanvas, bool doRestart) {
+        allHealth.enabled = false;
+
         m_Timer += Time.deltaTime;
         imageCanvas.alpha = m_Timer / fadeDuration;
         if(m_Timer > fadeDuration + displayImageDuration) {

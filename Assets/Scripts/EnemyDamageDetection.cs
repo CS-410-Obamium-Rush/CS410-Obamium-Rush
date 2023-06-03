@@ -46,10 +46,15 @@ public class EnemyDamageDetection : MonoBehaviour
             gm.enemyTakeDamage(damageTake,1);
         }
             
-        else if ((gameObject.name == "ObamaCube" || gameObject.name == "ObamaSphere" || gameObject.name == "obama_pyramid")) {
+        else if ((gameObject.name == "ObamaCube" || gameObject.name == "ObamaSphere" || gameObject.name == "ObamaPyramid1" || gameObject.name == "ObamaPyramid2" || gameObject.name == "ObamaPyramid3")) {
             if (gm.handsDefeated()) {
                 doFlash = true;
-                gm.enemyTakeDamage(damageTake,2);
+                if (gameObject.name == "ObamaPyramid2")
+                    gm.enemyTakeDamage(damageTake, 5);
+                else if (gameObject.name == "ObamaPyramid3")
+                    gm.enemyTakeDamage(damageTake, 6);
+                else
+                    gm.enemyTakeDamage(damageTake, 2);
             }
         }
         else if (gameObject.name == "RightHand2") {

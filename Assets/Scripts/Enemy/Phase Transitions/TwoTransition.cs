@@ -180,7 +180,7 @@ public class TwoTransition : MonoBehaviour
         // Step 8: Enable the enemy to take and receive damage to interact with the player again
         else if (stepList[7]) {
             enDamDet.setPhaseTransition(false);
-            atkPat.activateAllHands();
+            atkPat.activateAllHands(false);
             atkPat.setTimeInterval(1.75f);
             atkPat.setPhaseTransition(false);
             gm.setAllowPhase3();
@@ -224,7 +224,7 @@ public class TwoTransition : MonoBehaviour
         // Set the name of the enemy
         enemyName.text = "Obama Phase 2: Electric Boogaloo";
         // Establish the new health for the enemy
-        int maxHealth = gm.setNewHealth(400, 400, 400, 400, 600);
+        int maxHealth = gm.setNewHealth(500, 500, 500, 500, 650, 0, 0);
         gm.setThreshold(0.75f, 0.50f, 0.25f);
         // Perform a loop that allows the health bar to heal incrementally to depict a health bar restoring all of its health
         int healthRecord = 0;

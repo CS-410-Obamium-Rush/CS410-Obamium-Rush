@@ -29,14 +29,18 @@ public class AttackPatterns : MonoBehaviour
     public HandBehavior rh1;
     public HandBehavior lh2;
     public HandBehavior rh2;
-    public HeadBehavior head;
+    public HeadBehavior head1;
+    public HeadBehavior head2;
+    public HeadBehavior head3;
 
     // Decide if hands are allowed to use (i.e have been defeated yet)
     private bool leftUse1;
     private bool rightUse1;
     private bool leftUse2;
     private bool rightUse2;
-    private bool headUse;
+    private bool headUse1;
+    private bool headUse2;
+    private bool headUse3;
 
     // Used to set how much damage is inflicted for an attack
     public DamageDealer dmg;
@@ -65,15 +69,19 @@ public class AttackPatterns : MonoBehaviour
     }
     // Replace the current HeadBehavior instance to the new head's HeadBehavior instance
     public void setHeadBehavior(HeadBehavior newHead) {
-        head = newHead.GetComponent<HeadBehavior>();
+        head1 = newHead.GetComponent<HeadBehavior>();
     }
     // Enable all hand usage for the next phase
-    public void activateAllHands() {
-        headUse = true;
+    public void activateAllHands(bool phase3) {
+        headUse1 = true;
         rightUse1 = true;
         rightUse2 = true;
         leftUse1 = true;
         leftUse2 = true;
+        if (phase3) {
+            headUse2 = true;
+            headUse3 = true;
+        }
     }
     /* 
     Using a lock system to prevent multiple attacks occuring at once; only one attack at a time
@@ -98,7 +106,7 @@ public class AttackPatterns : MonoBehaviour
     void Start() {
         rightUse1 = true;
         leftUse1 = true;
-        headUse = true;
+        headUse1 = true;
         atkAmt = 2;
         bodyAmt = 3;
         rechargeTime = timeInterval;
@@ -125,9 +133,12 @@ public class AttackPatterns : MonoBehaviour
             Body
                 0 = Right (Phase 1)
                 1 = Left (Phase 1)
-                2 = Head
+                2 = Head (Phase 1)
                 3 = Right (Phase 2)
                 4 = Left (Phase 2)
+                5 = Head (Phase 3)
+                6 = Head (Phase 3)
+
             Attack (Hand)
                 0 = Punch
                 1 = Swipe/Sweep
@@ -167,25 +178,74 @@ public class AttackPatterns : MonoBehaviour
     private bool callAtk(int atkUse, int bodyInput) {
         // Use atkDone to indicate
         bool atkDone = false;
-        if (bodyInput == 2 && headUse) {
+        if ((bodyInput == 2 || bodyInput == 5 || bodyInput == 6)) {
             if (atkUse == 0) {
-                dmg.setDmg(15);
-                expand();
-                atkDone = true;
+                if (bodyInput == 2 && headUse1) {
+                    dmg.setDmg(15);
+                    expand(bodyInput);
+                    atkDone = true;
+                }
+                else if (bodyInput == 5 && headUse2) {
+                    dmg.setDmg(15);
+                    expand(bodyInput);
+                    atkDone = true;
+                }
+                else if (bodyInput == 6 && headUse3) {
+                    dmg.setDmg(15);
+                    expand(bodyInput);
+                    atkDone = true;
+                }
             }
             else if (atkUse == 1) {
-                dmg.setDmg(10);
-                missle();
-                atkDone = true;
+                if (bodyInput == 2 && headUse1) {
+                    dmg.setDmg(15);
+                    missle(bodyInput);
+                    atkDone = true;
+                }
+                else if (bodyInput == 5 && headUse2) {
+                    dmg.setDmg(15);
+                    missle(bodyInput);
+                    atkDone = true;
+                }
+                else if (bodyInput == 6 && headUse3) {
+                    dmg.setDmg(15);
+                    missle(bodyInput);
+                    atkDone = true;
+                }
             }
             else if (atkUse == 2){
-                laser();
-                atkDone = true;
+                if (bodyInput == 2 && headUse1) {
+                    dmg.setDmg(15);
+                    laser(bodyInput);
+                    atkDone = true;
+                }
+                else if (bodyInput == 5 && headUse2) {
+                    dmg.setDmg(15);
+                    laser(bodyInput);
+                    atkDone = true;
+                }
+                else if (bodyInput == 6 && headUse3) {
+                    dmg.setDmg(15);
+                    laser(bodyInput);
+                    atkDone = true;
+                }
             }
             else if (atkUse == 3){
-                dmg.setDmg(20);
-                punch(bodyInput);
-                atkDone = true;
+                if (bodyInput == 2 && headUse1) {
+                    dmg.setDmg(15);
+                    punch(bodyInput);
+                    atkDone = true;
+                }
+                else if (bodyInput == 5 && headUse2) {
+                    dmg.setDmg(15);
+                    punch(bodyInput);
+                    atkDone = true;
+                }
+                else if (bodyInput == 6 && headUse3) {
+                    dmg.setDmg(15);
+                    punch(bodyInput);
+                    atkDone = true;
+                }
             }
         }
         else {
@@ -280,11 +340,15 @@ public class AttackPatterns : MonoBehaviour
         else if (body == 1) 
             lh1.callPunch(target);
         else if (body == 2)
-            head.callPunch(target);
+            head1.callPunch(target);
         else if (body == 3) 
             rh2.callPunch(target);
         else if (body == 4) 
             lh2.callPunch(target);
+        else if (body == 5) 
+            head2.callPunch(target);
+        else if (body == 6)
+            head3.callPunch(target);
     }
 
 
@@ -323,15 +387,25 @@ public class AttackPatterns : MonoBehaviour
 
     // missle() calls the missle attack where the enemy fires off a few projectiles that track the player and vanish when
     // they either hit the player or ground
-    void missle() {
+    void missle(int head) {
         // Generate the amount of missles to fire (1-3)
         int scenarioNum = Random.Range(1,4);
-        head.callMissle(scenarioNum);
+        if (head == 2)
+            head1.callMissle(scenarioNum);
+        else if (head == 5)
+            head2.callMissle(scenarioNum);
+        else if (head == 6)
+            head3.callMissle(scenarioNum);
     }
 
     // laser() calls the laser attack where the enemy fires off a beam that follows the player for a few seconds before disappearing
-    void laser() {
-        head.callLaser();
+    void laser(int head) {
+        if (head == 2)
+            head1.callLaser();
+        else if (head == 5)
+            head2.callLaser();
+        else if (head == 6)
+            head3.callLaser();
     }
 
     // slam() calls the slam shockwave attack where the hand slams the floor with a fist, causing a red shockwave to emerge that can damage
@@ -350,14 +424,19 @@ public class AttackPatterns : MonoBehaviour
 
     // expand() calls the expand attack where the hand reduces in size (sometimes hard to see) and goes to a designated location
     // from there, the head expands to its normal size, which can deal damage to the player if they contact it.
-    void expand() {
+    void expand(int head) {
         // Generate the level to use;
         int levelNum = Random.Range(0, 2);
         // Generate whether to attack respective side for the hand or the center within the selected level
         int scenarioNum = Random.Range(0, 3);
         Transform expandLevel = expandZones.transform.GetChild(levelNum).gameObject.transform;
         Transform target = expandLevel.GetChild(scenarioNum).gameObject.transform;
-        head.callExpand(target);
+        if (head == 2)
+            head1.callExpand(target);
+        else if (head == 5)
+            head2.callExpand(target);
+        else if (head == 6)
+            head3.callExpand(target);
     }
 
 
@@ -377,13 +456,13 @@ public class AttackPatterns : MonoBehaviour
             Head: dictate whether to attack the left (== 0), right (== 1), or center (== 2) of the screen
         */
 
-        if (scenarioNum == 0 && body != 2) {
+        if (scenarioNum == 0 && (body != 2 && body != 5 && body != 6)) {
             if (body > 2)
                 return punchLevel.transform.GetChild(body - 3).gameObject.transform;
             else
                 return punchLevel.transform.GetChild(body).gameObject.transform;
         }
-        else if (scenarioNum == 1 && body != 2) {
+        else if (scenarioNum == 1 && (body != 2 && body != 5 && body != 6)) {
             return punchLevel.transform.GetChild(2).gameObject.transform;
         }
         // Body is the head, so a reroll is needed to decide which zone to attack at
@@ -430,8 +509,8 @@ public class AttackPatterns : MonoBehaviour
             lh1.setDefeat();
         }
         else if (body == 2) {
-            headUse = false;
-            head.setDefeat();
+            headUse1 = false;
+            head1.setDefeat();
         }
         else if (body == 3) {
             rightUse2 = false;
@@ -441,6 +520,17 @@ public class AttackPatterns : MonoBehaviour
             leftUse2 = false;
             lh2.setDefeat();
         }
+        else if (body == 5) {
+            headUse2 = false;
+            head2.setDefeat();
+        }
+        else if (body == 6) {
+            headUse3 = false;
+            head3.setDefeat();
+        }
+
+
+
     }
 }
 

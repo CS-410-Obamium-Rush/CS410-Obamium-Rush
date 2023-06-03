@@ -82,7 +82,9 @@ public class HeadBehavior : MonoBehaviour
         idle = true;
         defeated = false;
         initRot = new Vector3(initRot.x, 0, initRot.z);
+        initPos = transform.position;
     }
+
 
     public void setDefeat() {
         defeated = true;
