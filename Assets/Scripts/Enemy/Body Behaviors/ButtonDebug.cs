@@ -24,6 +24,7 @@ public class ButtonDebug : MonoBehaviour
     public Transform clapLevel;
     public Transform slamSideL;
     public Transform slamSideR;
+    public Transform expandH;
 
 
 
@@ -126,6 +127,11 @@ public class ButtonDebug : MonoBehaviour
             dmg.setDmg(10);
             rh.callSlam(slamSideR.transform.GetChild(0).gameObject.transform, slamSideR.transform.GetChild(1).gameObject.transform);
             Debug.Log("F2 was pressed");
+        }
+        if (Input.GetKey(KeyCode.F3) && key) {
+            dmg.setDmg(10);
+            head.callExpand(expandH);
+            Debug.Log("F3 was pressed");
         }
 
     }

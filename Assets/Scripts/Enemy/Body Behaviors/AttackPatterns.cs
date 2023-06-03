@@ -21,6 +21,8 @@ public class AttackPatterns : MonoBehaviour
     public GameObject swipeZones;
     public GameObject clapZones;
     public GameObject slamZones;
+    public GameObject expandZones;
+
 
     // Get the left and right hand and head's behavior to call attacks
     public HandBehavior lh1;
@@ -135,6 +137,7 @@ public class AttackPatterns : MonoBehaviour
                 0 = Punch
                 1 = Missle
                 2 = Laser
+                3 = Expand
             */
             int atkUse = Random.Range(0,atkAmt);
             int bodyUse = Random.Range(0,bodyAmt);
@@ -167,19 +170,21 @@ public class AttackPatterns : MonoBehaviour
         if (bodyInput == 2 && headUse) {
             if (atkUse == 0) {
                 dmg.setDmg(20);
-                //Debug.Log("Punch");
                 punch(bodyInput);
                 atkDone = true;
             }
             else if (atkUse == 1) {
-                //Debug.Log("Missle");
                 dmg.setDmg(10);
                 missle();
                 atkDone = true;
             }
-            else if (atkUse == 2 || atkUse == 3){
-                //Debug.Log("Laser");
+            else if (atkUse == 2){
                 laser();
+                atkDone = true;
+            }
+            else if (atkUse == 2){
+                dmg.setDmg(15);
+                expand();
                 atkDone = true;
             }
         }
@@ -324,11 +329,13 @@ public class AttackPatterns : MonoBehaviour
         head.callMissle(scenarioNum);
     }
 
+    // laser() calls the laser attack where the enemy fires off a beam that follows the player for a few seconds before disappearing
     void laser() {
-        //Debug.Log("Fire Laser");
         head.callLaser();
     }
 
+    // slam() calls the slam shockwave attack where the hand slams the floor with a fist, causing a red shockwave to emerge that can damage
+    // the player
     void slam(int hand) {
         Transform[] slamTargets = getSlamTarget();
         if (hand == 0) 
@@ -340,6 +347,19 @@ public class AttackPatterns : MonoBehaviour
         else if (hand == 4) 
             lh2.callSlam(slamTargets[0], slamTargets[1]);
     }
+
+    // expand() calls the expand attack where the hand reduces in size (sometimes hard to see) and goes to a designated location
+    // from there, the head expands to its normal size, which can deal damage to the player if they contact it.
+    void expand() {
+        // Generate the level to use;
+        int levelNum = Random.Range(0, 2);
+        // Generate whether to attack respective side for the hand or the center within the selected level
+        int scenarioNum = Random.Range(0, 3);
+        Transform expandLevel = expandZones.transform.GetChild(levelNum).gameObject.transform;
+        Transform target = expandLevel.GetChild(scenarioNum).gameObject.transform;
+        head.callExpand(target);
+    }
+
 
     // getPunchTarget() is a helper function to generate a random area to launch the punch towards
     Transform getPunchTarget(int body) {
@@ -394,6 +414,7 @@ public class AttackPatterns : MonoBehaviour
         retArray[1] = slamSide.transform.GetChild(1).gameObject.transform;
         return retArray;
     }
+
 
     /* 
     Functions used by the Game Monitor to disable hand use and let their HandBehavior know that

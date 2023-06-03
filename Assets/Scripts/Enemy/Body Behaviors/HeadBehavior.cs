@@ -33,16 +33,20 @@ public class HeadBehavior : MonoBehaviour
     private bool retractPunch;
     private bool startMissle;
     private bool startLaser;
+    private bool startExpand;
+    private bool retExpand;
     private bool defeated;
     
     // Punch Attack Speeds
     public int punchLaunchSpeed;
     public int nonAtkSpeed;
     public int spinSpeed;
+    public float shrinkSpeed;
+    public float expandSpeed;
 
     // Target zones
     private Transform targetPunch;
-
+    private Transform targetExpand;
 
     // For performing the missle attack
     private int missleAmt;  // Amount of missles for the current attack
@@ -56,6 +60,9 @@ public class HeadBehavior : MonoBehaviour
     private LaserBehavior laserScript;
     public GameObject laserPrefab;
     GameObject laser;
+
+    // For the expand attack
+    private Vector3 initScale;
 
     // Files that call the attacks and use their lock systems
     public AttackPatterns lockSys;
@@ -85,6 +92,11 @@ public class HeadBehavior : MonoBehaviour
         initPos = transform.position;
         startPunch = false;
         retractPunch = false;
+        startMissle = false;
+        startLaser = false;
+        startExpand = false;
+        retExpand = false;
+
         missleGone = 0;
         // get audiosource
         m_AudioSource = GetComponent<AudioSource>();
@@ -101,13 +113,14 @@ public class HeadBehavior : MonoBehaviour
                 Disable its current state and move to the next one
     */
     void Update() {
+        Vector3 newPos = new Vector3(initPos.x, Mathf.Sin(Time.time * freq) * height + initPos.y, initPos.z);
+        Vector3 newAngle = new Vector3(initRot.x, Mathf.PingPong(Time.time * speed, range) - offset + initRot.y, initRot.z);
         // Idle
         if (idle) {
             if (!defeated) {
-                transform.position = new Vector3(initPos.x, Mathf.Sin(Time.time * freq) * height + initPos.y, initPos.z);
-                transform.localEulerAngles = new Vector3(initRot.x, Mathf.PingPong(Time.time * speed, range) - offset + initRot.y, initRot.z);
+                transform.position = newPos;
+                transform.localEulerAngles = newAngle;
             }
-            
         }
         // Using punch
         else if (startPunch) {
@@ -152,9 +165,54 @@ public class HeadBehavior : MonoBehaviour
                 doOnce = false;
             }
         }
-
-
-
+        // Initiate the expand attack
+        else if (startExpand) {
+            float smallSize = 0f;
+            // Need a one-time calculation of how small the shrink should be and what the initial scale is
+            if (doOnce) {
+                initScale = transform.localScale;
+                smallSize = initScale.x / 5f;
+                doOnce = false;
+            }
+            // Then shrink the head to prepare for the attack
+            if (transform.localScale.x > smallSize || transform.localScale.y > smallSize || transform.localScale.z > smallSize) {
+                Vector3 updateScale = transform.localScale;
+                updateScale.x -= shrinkSpeed * Time.deltaTime;
+                updateScale.y -= shrinkSpeed * Time.deltaTime;
+                updateScale.z -= shrinkSpeed * Time.deltaTime;
+                transform.localScale = updateScale;
+            }
+            // Once the shrink is complete, have the head move to the desired expand zone to initiate the next state
+            else {
+                transform.position = Vector3.MoveTowards(transform.position, targetExpand.position, punchLaunchSpeed * Time.deltaTime);
+                if (Vector3.Distance(transform.position, targetExpand.position) < 0.001f) {
+                    gm.tryPowerup(transform.position);
+                    startExpand = false;
+                    retExpand = true;
+                }
+            }
+        }
+        // Initiate the state where the head expands to attack then retracts back
+        else if (retExpand) {
+            // Have the head expand first, dealing damage when it touches the player
+            if (transform.localScale.x < initScale.x || transform.localScale.y < initScale.y || transform.localScale.z < initScale.z) {
+                Vector3 updateScale = transform.localScale;
+                updateScale.x += expandSpeed * Time.deltaTime;
+                updateScale.y += expandSpeed * Time.deltaTime;
+                updateScale.z += expandSpeed * Time.deltaTime;
+                transform.localScale = updateScale;
+            }
+            // Once the head expands back to its normal size, have it return to go back into the idle state
+            else {
+                transform.position = Vector3.MoveTowards(transform.position, initPos, nonAtkSpeed * Time.deltaTime);
+                if (Vector3.Distance(transform.position, initPos) < 0.001f) {
+                    retExpand = false;
+                    idle = true;
+                    lockSys.unlocker();
+                    debugSys.unlocker();
+                }
+            }
+        }
     }
 
     // spawn() creates the missles in the scene with a few second delay in between each creation
@@ -214,6 +272,13 @@ public class HeadBehavior : MonoBehaviour
         doOnce = true;
         idle = false;
         startLaser = true;
+    }
+    public void callExpand(Transform target) {
+        debugSys.locker();
+        targetExpand = target;
+        doOnce = true;
+        idle = false;
+        startExpand = true;
     }
 
 
