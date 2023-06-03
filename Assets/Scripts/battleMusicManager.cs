@@ -36,17 +36,21 @@ public class battleMusicManager : MonoBehaviour {
         godSource.Play();
     }
 
-    public void playP3(){   // stick of truth naiz thing
+    public void playP3(){   // KaTaMaRi DaMaShi
         godSource.Stop();
         godSource.clip = music[2];
         godSource.Play();
     }
 
-    public void playWin(){
-
+    public void playWin(){  //Final Fantasy Tactics Win
+        godSource.Stop();
+        godSource.clip = music[3];
+        godSource.Play();
     }
 
     public void playLoss(){
-
+        godSource.Stop();
+        godSource.clip = music[4];
+        godSource.Play();
     }
 }

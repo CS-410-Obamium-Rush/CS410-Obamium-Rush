@@ -239,6 +239,7 @@ public class GameMonitor : MonoBehaviour
 
         // If player loses all health, player loses and restarts level
         if (playerHealth <= 0) {
+            music.playLoss();
             end.setLost();
         }
         // If enemy loses all health, player wins and moves on to the next phase or game ends
@@ -250,7 +251,7 @@ public class GameMonitor : MonoBehaviour
                 phaseCount++;
             }
             else if (allowPhase3 && startPhase3 && atkPat.getKey()) {
-                //music.playP2();
+                music.playP3();
                 startPhase3 = false;
                 end.setPhase3();
                 phaseCount++;
@@ -260,6 +261,7 @@ public class GameMonitor : MonoBehaviour
             }
         }
         if (phaseCount >= 3) {
+            music.playWin();
             end.setWin();
         }
 

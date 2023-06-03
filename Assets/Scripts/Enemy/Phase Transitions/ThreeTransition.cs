@@ -11,7 +11,7 @@ using TMPro;
 public class ThreeTransition : MonoBehaviour
 {
     // With performing the transition, this script needs control of all scripts and GameObjects associated with the enemy
-    public AttackPatterns atkPat;           // Uses the AttackPatterm to disable the enemy from attacking the player
+    public AttackPatterns atkPat;           // Uses the AttackPattern to disable the enemy from attacking the player
     public EnemyDamageDetection enDamDet;   // Uses EnemyDamageDetection to disable the enemy from taking damage
     public GameMonitor gm;                  // Uses GameMonitor to establish the health for phase 2
     public lockOnAiming loa;                // Uses lockOnAiming to add the additional hands into the targeting system

@@ -60,7 +60,7 @@ public class GameEnding : MonoBehaviour
     // Update() displays canvas for when player wins or lost
     void Update()
     {
-        // Put Victory image if all phasesa are defeated
+        // Put Victory image if all phases are defeated
         if (playerWin) 
             EndGame(winCanvas, false);
         // Trigger phase 2 if enemy has lost all their health once

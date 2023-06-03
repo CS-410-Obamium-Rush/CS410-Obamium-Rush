@@ -1304,7 +1304,7 @@ MonoBehaviour:
   music:
   - {fileID: 8300000, guid: 5d584b92ab36f8043b8892982c85b5c5, type: 3}
   - {fileID: 8300000, guid: 09509f24324a83c4d96822b35223963e, type: 3}
-  - {fileID: 8300000, guid: 81b40f27cdc5c654e801d83dedbf0715, type: 3}
+  - {fileID: 8300000, guid: 70ddba4efd332d24abb6d74b12bbc3b9, type: 3}
 --- !u!1 &659038110
 GameObject:
   m_ObjectHideFlags: 0
