@@ -63,6 +63,11 @@ public class HeadBehavior : MonoBehaviour
 
     // For the expand attack
     private Vector3 initScale;
+    // The cube head is scaled significantly different than the other types of head, so needs an additional value to factor in when scaling
+    public bool cubeScale;
+    private float cubeFactor;
+    public float reduceScaleVal;
+    private float smallSize = 0f;
 
     // Files that call the attacks and use their lock systems
     public AttackPatterns lockSys;
@@ -96,6 +101,11 @@ public class HeadBehavior : MonoBehaviour
         startLaser = false;
         startExpand = false;
         retExpand = false;
+        laser = null;
+        if (cubeScale) 
+            cubeFactor = 11f;
+        else
+            cubeFactor = 1f;
 
         missleGone = 0;
         // get audiosource
@@ -157,6 +167,8 @@ public class HeadBehavior : MonoBehaviour
         }
         else if (startLaser) {
             if (doOnce) {
+                /*if (laser != null)
+                    laserScript.destroyLaser(); */
                 laser = Instantiate(laserPrefab, new Vector3(projectileSpawner.position.x, projectileSpawner.position.y, projectileSpawner.position.z), Quaternion.identity);
                 laserScript = laser.GetComponent<LaserBehavior>();
                 laserScript.playerHitBox = playerHitBox;
@@ -167,19 +179,24 @@ public class HeadBehavior : MonoBehaviour
         }
         // Initiate the expand attack
         else if (startExpand) {
-            float smallSize = 0f;
             // Need a one-time calculation of how small the shrink should be and what the initial scale is
             if (doOnce) {
                 initScale = transform.localScale;
-                smallSize = initScale.x / 5f;
+                smallSize = initScale.x / reduceScaleVal;
                 doOnce = false;
             }
             // Then shrink the head to prepare for the attack
             if (transform.localScale.x > smallSize || transform.localScale.y > smallSize || transform.localScale.z > smallSize) {
                 Vector3 updateScale = transform.localScale;
-                updateScale.x -= shrinkSpeed * Time.deltaTime;
-                updateScale.y -= shrinkSpeed * Time.deltaTime;
-                updateScale.z -= shrinkSpeed * Time.deltaTime;
+                updateScale.x -= cubeFactor * shrinkSpeed * Time.deltaTime;
+                updateScale.y -= cubeFactor * shrinkSpeed * Time.deltaTime;
+                updateScale.z -= cubeFactor * shrinkSpeed * Time.deltaTime;
+                // if the shrink causes a negative, then have the scale be extremely small to prevent a warning message
+                if (updateScale.x <= 0.0f || updateScale.y <= 0.0f || updateScale.z <= 0.0f) {
+                    updateScale.x = 0.01f;
+                    updateScale.y = 0.01f;
+                    updateScale.z = 0.01f;
+                }
                 transform.localScale = updateScale;
             }
             // Once the shrink is complete, have the head move to the desired expand zone to initiate the next state
@@ -197,9 +214,9 @@ public class HeadBehavior : MonoBehaviour
             // Have the head expand first, dealing damage when it touches the player
             if (transform.localScale.x < initScale.x || transform.localScale.y < initScale.y || transform.localScale.z < initScale.z) {
                 Vector3 updateScale = transform.localScale;
-                updateScale.x += expandSpeed * Time.deltaTime;
-                updateScale.y += expandSpeed * Time.deltaTime;
-                updateScale.z += expandSpeed * Time.deltaTime;
+                updateScale.x += cubeFactor * expandSpeed * Time.deltaTime;
+                updateScale.y += cubeFactor * expandSpeed * Time.deltaTime;
+                updateScale.z += cubeFactor * expandSpeed * Time.deltaTime;
                 transform.localScale = updateScale;
             }
             // Once the head expands back to its normal size, have it return to go back into the idle state
@@ -232,6 +249,7 @@ public class HeadBehavior : MonoBehaviour
     IEnumerator fireLaser() {
         yield return new WaitForSeconds(laserTime);
         laserScript.destroyLaser();
+        laser = null;
         lockSys.unlocker();
         debugSys.unlocker();
         startLaser = false;

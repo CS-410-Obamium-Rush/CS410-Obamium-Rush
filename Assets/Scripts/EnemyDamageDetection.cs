@@ -8,7 +8,7 @@ public class EnemyDamageDetection : MonoBehaviour
     public GameMonitor gm;
     private bool isFlashing = false;
     private static bool phaseTransition = false;
-    private static int damageTake = 5;
+    private static int damageTake = 900;
     // ethan's audio stuff
     //public enemyAudioManager enemysfx; // need to figure out why the fuck this doesn't work
     //AudioSource m_AudioSource;

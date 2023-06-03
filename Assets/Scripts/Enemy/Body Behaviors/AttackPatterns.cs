@@ -169,8 +169,8 @@ public class AttackPatterns : MonoBehaviour
         bool atkDone = false;
         if (bodyInput == 2 && headUse) {
             if (atkUse == 0) {
-                dmg.setDmg(20);
-                punch(bodyInput);
+                dmg.setDmg(15);
+                expand();
                 atkDone = true;
             }
             else if (atkUse == 1) {
@@ -182,9 +182,9 @@ public class AttackPatterns : MonoBehaviour
                 laser();
                 atkDone = true;
             }
-            else if (atkUse == 2){
-                dmg.setDmg(15);
-                expand();
+            else if (atkUse == 3){
+                dmg.setDmg(20);
+                punch(bodyInput);
                 atkDone = true;
             }
         }
