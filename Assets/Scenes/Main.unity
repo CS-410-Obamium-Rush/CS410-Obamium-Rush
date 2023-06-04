@@ -1655,8 +1655,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -350, y: 225}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -200, y: 225}
+  m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &711082041
 CanvasRenderer:
@@ -1876,11 +1876,13 @@ MonoBehaviour:
   leftHandHealth1: 300
   rightHandHealth2: 0
   leftHandHealth2: 0
-  atkPat: {fileID: 17457383}
   headHealth1: 300
   headHealth2: 0
   headHealth3: 0
+  atkPat: {fileID: 17457383}
+  loa: {fileID: 1645732939}
   playerHealth: 200
+  scoreKeep: {fileID: 859794062}
   enemyThresholdPercent:
   - 0.75
   - 0.5
@@ -1889,8 +1891,6 @@ MonoBehaviour:
   - {fileID: 8489969442495834751, guid: d1055359410e37d409c18844d60193af, type: 3}
   powerup1: 1
   end: {fileID: 859794059}
-  loa: {fileID: 1645732939}
-  scoreKeep: {fileID: 859794062}
 --- !u!4 &859794058
 Transform:
   m_ObjectHideFlags: 0
@@ -3696,8 +3696,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 325, y: 225}
-  m_SizeDelta: {x: 400, y: 50}
+  m_AnchoredPosition: {x: 370, y: 225}
+  m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!4 &1581841024 stripped
 Transform:
@@ -3914,8 +3914,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -20, y: 50}
-  m_SizeDelta: {x: 400, y: 50}
+  m_AnchoredPosition: {x: 40, y: 50}
+  m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1603536733
 GameObject:
@@ -4311,8 +4311,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -20, y: 0}
-  m_SizeDelta: {x: 400, y: 50}
+  m_AnchoredPosition: {x: 20, y: 0}
+  m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1718148151
 CanvasRenderer:
