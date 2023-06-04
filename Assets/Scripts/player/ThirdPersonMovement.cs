@@ -102,7 +102,6 @@ public class ThirdPersonMovement : MonoBehaviour
         }
       
     }
-
     void Update()
     {
         // EA QoL would like to make this while for the sfx

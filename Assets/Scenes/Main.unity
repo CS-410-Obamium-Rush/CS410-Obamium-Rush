@@ -178,6 +178,10 @@ PrefabInstance:
       propertyPath: gm
       value: 
       objectReference: {fileID: 859794057}
+    - target: {fileID: 7655203424562538849, guid: f6f23c69ed203aa409b92ce13e5c91b1, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8947280329894870259, guid: f6f23c69ed203aa409b92ce13e5c91b1, type: 3}
       propertyPath: m_Name
       value: Environment
