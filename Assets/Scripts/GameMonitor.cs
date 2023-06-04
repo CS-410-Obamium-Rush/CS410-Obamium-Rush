@@ -54,6 +54,9 @@ public class GameMonitor : MonoBehaviour
     // For adjusting the lock on aiming with hands that are still active
     public lockOnAiming loa;
 
+    // For updating increase in player score
+    public ScoreKeeper scoreKeep;
+
     // Public Function used by NextPhase to establish the next phases' health; returns the maxium health for reference
     public int setNewHealth(int r1, int l1, int r2, int l2, int head1, int head2, int head3) {
         rightHandHealth1 = r1;
@@ -122,7 +125,6 @@ public class GameMonitor : MonoBehaviour
             if (rightHandHealth1 <= 0) {
                 rightHandHealth1 = 0;
                 atkPat.disableBody(body);
-                Debug.Log("Hello World");
                 loa.removeTarget("RH1");
             }
         }
@@ -248,6 +250,7 @@ public class GameMonitor : MonoBehaviour
 
         // If player loses all health, player loses and restarts level
         if (playerHealth <= 0) {
+            scoreKeep.setStopTimer();
             music.playLoss();
             end.setLost();
         }
@@ -270,6 +273,7 @@ public class GameMonitor : MonoBehaviour
             }
         }
         if (phaseCount >= 3) {
+            scoreKeep.setStopTimer();
             music.playWin();
             end.setWin();
         }
