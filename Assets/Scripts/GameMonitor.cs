@@ -40,9 +40,7 @@ public class GameMonitor : MonoBehaviour
     // (ex. Percent = 0.45 means that enemy must have (0.45 * maxHealth) for Val or less to give the next power up)
     public float[] enemyThresholdPercent; // Holds the percent of health needed to damage to drop powerup
     private float[] enemyThresholdVal; // The value of the enemy health needs to be at or lower to drop the powerup
-
     public List<GameObject> powerups;
-    
     public bool powerup1 = false;
 
     // To notify when the enemy has lost all of its health
@@ -52,6 +50,9 @@ public class GameMonitor : MonoBehaviour
     private bool allowPhase3 = false;
     private bool allowWin = false;
     private int phaseCount = 0;         // Used to indicate how many phases that the player has defeated
+
+    // For adjusting the lock on aiming with hands that are still active
+    public lockOnAiming loa;
 
     // Public Function used by NextPhase to establish the next phases' health; returns the maxium health for reference
     public int setNewHealth(int r1, int l1, int r2, int l2, int head1, int head2, int head3) {
@@ -121,6 +122,8 @@ public class GameMonitor : MonoBehaviour
             if (rightHandHealth1 <= 0) {
                 rightHandHealth1 = 0;
                 atkPat.disableBody(body);
+                Debug.Log("Hello World");
+                loa.removeTarget("RH1");
             }
         }
         else if (body == 1 && leftHandHealth1 > 0) {
@@ -130,6 +133,7 @@ public class GameMonitor : MonoBehaviour
             if (leftHandHealth1 <= 0) {
                 leftHandHealth1 = 0;
                 atkPat.disableBody(body);
+                loa.removeTarget("LH1");
             }
         }
         else if (body == 3 && rightHandHealth2 > 0) {
@@ -139,6 +143,7 @@ public class GameMonitor : MonoBehaviour
             if (rightHandHealth2 <= 0) {
                 rightHandHealth2 = 0;
                 atkPat.disableBody(body);
+                loa.removeTarget("RH2");
             }
         }
         else if (body == 4 && leftHandHealth2 > 0) {
@@ -148,6 +153,7 @@ public class GameMonitor : MonoBehaviour
             if (leftHandHealth2 <= 0) {
                 leftHandHealth2 = 0;
                 atkPat.disableBody(body);
+                loa.removeTarget("LH2");
             }
         }
         else if (body == 2) {
@@ -158,6 +164,7 @@ public class GameMonitor : MonoBehaviour
                 if (headHealth1 <= 0) {
                     headHealth1 = 0;
                     atkPat.disableBody(body);
+                    loa.removeTarget("Head1");
                 }
             }
         }
@@ -169,6 +176,7 @@ public class GameMonitor : MonoBehaviour
                 if (headHealth2 <= 0) {
                     headHealth2 = 0;
                     atkPat.disableBody(body);
+                    loa.removeTarget("Head2");
                 }
             }
         }
@@ -180,6 +188,7 @@ public class GameMonitor : MonoBehaviour
                 if (headHealth3 <= 0) {
                     headHealth3 = 0;
                     atkPat.disableBody(body);
+                    loa.removeTarget("Head3");
                 }
             }
         }

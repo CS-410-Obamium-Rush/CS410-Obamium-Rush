@@ -99,7 +99,7 @@ public class ThreeTransition : MonoBehaviour
                 stepList[2] = true;
             }
         }
-        // Step 3: Put the pyramids instantly into the scene and establish their new locations
+        // Step 3: Put the pyramids instantly into the scene
         else if (stepList[2]) {
             headCube.SetActive(false);
             headPyramid1.SetActive(true);
@@ -108,11 +108,6 @@ public class ThreeTransition : MonoBehaviour
             hp1.setDefeat();
             hp2.setDefeat();
             hp3.setDefeat();
-            loa.addTargets(headPyramid2.transform);
-            loa.addTargets(headPyramid3.transform);
-            loa.changeTarget(headPyramid1.transform, 1);
-            
-            //headCube.transform.GetChild(0).gameObject.SetActive(true);
             stepList[2] = false;
             stepList[3] = true;
         }
@@ -131,14 +126,15 @@ public class ThreeTransition : MonoBehaviour
             head1Pos = new Vector3(headPyramid1.transform.position.x, headPyramid1.transform.position.y + 4.5f, headPyramid1.transform.position.z);
             head2Pos = new Vector3(headPyramid2.transform.position.x - 4.5f, headPyramid2.transform.position.y - 4.5f, headPyramid2.transform.position.z);
             head3Pos = new Vector3(headPyramid3.transform.position.x + 4.5f, headPyramid3.transform.position.y - 4.5f, headPyramid3.transform.position.z);
-            rh1Pos = new Vector3 (rightHand1.transform.position.x - 5f, rightHand1.transform.position.y - 2.5f, rightHand1.transform.position.z - 4f);
-            rh2Pos = new Vector3 (rightHand2.transform.position.x - 5f, rightHand2.transform.position.y + 2.5f, rightHand2.transform.position.z - 4f);
-            lh1Pos = new Vector3 (leftHand1.transform.position.x + 5f, leftHand1.transform.position.y - 2.5f, leftHand1.transform.position.z - 4f);
-            lh2Pos = new Vector3 (leftHand2.transform.position.x + 5f, leftHand2.transform.position.y + 2.5f, leftHand2.transform.position.z - 4f);         
+            rh1Pos = new Vector3 (rightHand1.transform.position.x - 4f, rightHand1.transform.position.y - 2.5f, rightHand1.transform.position.z - 6f);
+            rh2Pos = new Vector3 (rightHand2.transform.position.x - 4f, rightHand2.transform.position.y + 2.5f, rightHand2.transform.position.z - 6f);
+            lh1Pos = new Vector3 (leftHand1.transform.position.x + 4f, leftHand1.transform.position.y - 2.5f, leftHand1.transform.position.z - 6f);
+            lh2Pos = new Vector3 (leftHand2.transform.position.x + 4f, leftHand2.transform.position.y + 2.5f, leftHand2.transform.position.z - 6f);         
+            addTargets();
             stepList[4] = false;
             stepList[5] = true;
         }
-        // Step 6: Have the hands slowly shift into their new positions
+        // Step 6: Have the hands and heads slowly shift into their new positions
         else if (stepList[5]) {
             if (shiftHands() && shiftHeads()) {
                 stepList[5] = false;
@@ -186,6 +182,17 @@ public class ThreeTransition : MonoBehaviour
             stepList[7] = false;    
         }
     }
+    private void addTargets() {
+        loa.addTarget(rightHand1.transform.GetChild(1).gameObject.transform, "RH1");
+        loa.addTarget(leftHand1.transform.GetChild(1).gameObject.transform, "LH1");
+        loa.addTarget(headPyramid1.transform, "Head1");
+        loa.addTarget(headPyramid2.transform, "Head2");
+        loa.addTarget(headPyramid3.transform, "Head3");
+        loa.addTarget(rightHand2.transform.GetChild(1).gameObject.transform, "RH2");
+        loa.addTarget(leftHand2.transform.GetChild(1).gameObject.transform, "LH2");
+    }
+
+
     // A helper function to position each hand into their new location; returns a bool to indicate that all hands
     // have reached their designated location
 
