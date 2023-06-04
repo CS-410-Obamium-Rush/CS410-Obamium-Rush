@@ -137,7 +137,7 @@ public class TwoTransition : MonoBehaviour
             }
         }
         // Step 5: Have the second pair of hands appear from the first pair, establish each of their new locations (Pos variable), and
-        // Update the target system to include the modification of the head and new hands
+        // Update the target system to reestablish all targets
         else if (stepList[4]) {
             rightHand2.SetActive(true);
             leftHand2.SetActive(true);
@@ -145,9 +145,7 @@ public class TwoTransition : MonoBehaviour
             rh2Pos = new Vector3 (rightHand2.transform.position.x, rightHand2.transform.position.y - 8f, rightHand2.transform.position.z);
             lh1Pos = new Vector3 (leftHand1.transform.position.x, leftHand1.transform.position.y + 8f, leftHand1.transform.position.z);
             lh2Pos = new Vector3 (leftHand2.transform.position.x, leftHand2.transform.position.y - 8f, leftHand2.transform.position.z);
-            loa.changeTarget(headCube.transform, 1);
-            loa.addTargets(rightHand2.transform.GetChild(1).gameObject.transform);
-            loa.addTargets(leftHand2.transform.GetChild(1).gameObject.transform);           
+            addTargets();         
             stepList[4] = false;
             stepList[5] = true;
         }
@@ -217,6 +215,15 @@ public class TwoTransition : MonoBehaviour
             leftHand2.transform.position = Vector3.MoveTowards(leftHand2.transform.position, lh2Pos, shiftSpeed * Time.deltaTime);
         // Return an expression on whether all the hands are at the correct spot
         return (rh1Set && rh2Set && lh1Set && lh2Set);
+    }
+
+    // Helper function for adding in all the targets for this phase
+    private void addTargets() {
+        loa.addTarget(rightHand1.transform.GetChild(1).gameObject.transform, "RH1");
+        loa.addTarget(leftHand1.transform.GetChild(1).gameObject.transform, "LH1");
+        loa.addTarget(headCube.transform, "Head1");
+        loa.addTarget(rightHand2.transform.GetChild(1).gameObject.transform, "RH2");
+        loa.addTarget(leftHand2.transform.GetChild(1).gameObject.transform, "LH2");
     }
 
     // Function to allow the enemy's health to return and change its name
