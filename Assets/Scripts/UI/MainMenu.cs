@@ -20,4 +20,9 @@ public class MainMenu : MonoBehaviour
     public void setVolume(float volume) {
         AudioListener.volume = volume;
     }
+
+    public void returnToMainMenu()
+    {
+        SceneManager.LoadScene("Main Menu");
+    }
 }
