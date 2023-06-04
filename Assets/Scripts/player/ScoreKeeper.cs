@@ -11,6 +11,10 @@ public class ScoreKeeper : MonoBehaviour
 {
     public TMP_Text scoreText;
     public TMP_Text timeText;
+    public TMP_Text scoreTextEnd;
+    public TMP_Text timeTextEnd;
+
+
     private float totalTime = 0f;
     public int scoreVal = 0;
     private int minute = 0;
@@ -36,5 +40,21 @@ public class ScoreKeeper : MonoBehaviour
             totalTime = 0f;
         }
         timeText.text = "Time: " + minute.ToString("00") + ":" + totalTime.ToString("00.00");
+        timeTextEnd.text = "Time: " + minute.ToString("00") + ":" + totalTime.ToString("00.00");
+    }
+
+    public void gameDone() {
+        timeText.enabled = false;
+        scoreText.enabled = false;
+        timeTextEnd.enabled = true;
+        scoreTextEnd.enabled = true;
+    }
+
+    public void addScore(int val) {
+        scoreVal += val;
+    }
+
+    public void removeScore(int val) {
+        scoreVal -= val;
     }
 }

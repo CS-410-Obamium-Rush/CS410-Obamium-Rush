@@ -35,6 +35,7 @@ public class GameMonitor : MonoBehaviour
     // For Player
     private int maxPlayerHealth; // Max amount of health
     public int playerHealth = 100; // Current health
+    private bool gameOver = false;
     
     // For Powerups (to be implemented)
     // (ex. Percent = 0.45 means that enemy must have (0.45 * maxHealth) for Val or less to give the next power up)
@@ -117,6 +118,9 @@ public class GameMonitor : MonoBehaviour
     */
 
     public void enemyTakeDamage(int amt, int body) {
+        // If the game is over, make sure the enemy cannot recieve damage
+        if (gameOver)
+            return;
         // Check if right hand is active
         if (body == 0 && rightHandHealth1 > 0) {
             rightHandHealth1 -= amt;
@@ -200,8 +204,10 @@ public class GameMonitor : MonoBehaviour
     Public Functions for player's health; these are used by enemy attacks and attack behaviors
     */
     public void playerTakeDamage(int amt) {
-        playerHealth -= amt;
-        playerBar.fillAmount = (float) playerHealth / maxPlayerHealth;
+        if (!gameOver) {
+            playerHealth -= amt;
+            playerBar.fillAmount = (float) playerHealth / maxPlayerHealth;
+        }
     }
     public void playerAddHealth(int amt) {
         if (playerHealth + amt > maxPlayerHealth)
@@ -251,7 +257,7 @@ public class GameMonitor : MonoBehaviour
         // If player loses all health, player loses and restarts level
         if (playerHealth <= 0) {
             scoreKeep.setStopTimer();
-            music.playLoss();
+            //music.playLoss();
             end.setLost();
         }
         // If enemy loses all health, player wins and moves on to the next phase or game ends
@@ -273,6 +279,7 @@ public class GameMonitor : MonoBehaviour
             }
         }
         if (phaseCount >= 3) {
+            gameOver = true;
             scoreKeep.setStopTimer();
             music.playWin();
             end.setWin();
