@@ -10,9 +10,36 @@ public class floorBehavior : MonoBehaviour
     public float speed = 7.5f;
 
     public List<GameObject> obstaclePrefabs;
+    public List<GameObject> obstacleReserves;
 
     // This object's rigidbody component
     private Rigidbody rb;
+
+    /* Public functions for the phase transitition of tiles */
+    // Have the current tiles start to fall off the map
+    public void stopActivity() {
+        if (rb.useGravity == false) {
+            rb.isKinematic = false;
+            rb.useGravity = true;
+        }
+        if (rb.useGravity == true)
+            rb.AddForce(Physics.gravity * (rb.mass * rb.mass));
+    
+    }
+
+    // Adjust the current obstaclesPrefabs list
+    public void resetObstacles(int phase) {
+        for (int i = obstaclePrefabs.Count - 1; i >= 0; i--)
+            obstaclePrefabs.RemoveAt(i);
+        if (phase == 2) {
+            obstaclePrefabs.Add(obstacleReserves[0]);
+            obstaclePrefabs.Add(obstacleReserves[1]);
+        }
+        else if (phase == 3) {
+            obstaclePrefabs.Add(obstacleReserves[2]);
+            obstaclePrefabs.Add(obstacleReserves[3]);
+        }
+    }
 
     void Start() {
         // Store Rigidbody component
@@ -56,6 +83,8 @@ public class floorBehavior : MonoBehaviour
         // Calculate velocity of the tile
         Vector3 constForward = Vector3.back * speed * Time.deltaTime;
         // Move the tile using the velocity
-        rb.MovePosition(rb.position + constForward);
+        // Added line for gravity
+        if (rb.useGravity == false)
+            rb.MovePosition(rb.position + constForward);
     }
 }

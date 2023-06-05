@@ -43,7 +43,7 @@ public class lockOnAiming : MonoBehaviour
     private Transform target;
     // Used for when all the targets are currently down; gets replaced once the next phase's targets are established
     public Transform placeHolder;
-
+    public string name;
 
     // Public Functions to manipulate all the targets to shift the crosshair to
 
@@ -103,6 +103,7 @@ public class lockOnAiming : MonoBehaviour
             targetInd++;
             if(targetInd >= transforms.Count)
                 targetInd = 0;
+            Debug.Log(name + ": " + targetInd);
         }
         // Make sure the target doesn't go out-of-bounds
         if(targetInd >= transforms.Count) {
