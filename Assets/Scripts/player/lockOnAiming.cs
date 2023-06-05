@@ -43,7 +43,7 @@ public class lockOnAiming : MonoBehaviour
     private Transform target;
     // Used for when all the targets are currently down; gets replaced once the next phase's targets are established
     public Transform placeHolder;
-    public string name;
+  
 
     // Public Functions to manipulate all the targets to shift the crosshair to
 
@@ -53,10 +53,7 @@ public class lockOnAiming : MonoBehaviour
         targetDict.Add(name, newTarget);
         if ((Transform) transforms[0] == placeHolder) {
             transforms.RemoveAt(0);
-        }
-        if (transforms.Count == 2) {
-            targetInd = 2;
-            crosshair.SetActive(true); 
+            crosshair.SetActive(true);
         }
     }
     // removeTarget() removes the specified target based on its key name (see dictionary declearion above) from both the arraylist and dictionary
@@ -103,7 +100,6 @@ public class lockOnAiming : MonoBehaviour
             targetInd++;
             if(targetInd >= transforms.Count)
                 targetInd = 0;
-            Debug.Log(name + ": " + targetInd);
         }
         // Make sure the target doesn't go out-of-bounds
         if(targetInd >= transforms.Count) {
