@@ -9,8 +9,10 @@ public class floorBehavior : MonoBehaviour
     // The speed at which the environment will move
     public float speed = 7.5f;
 
-    public List<GameObject> obstaclePrefabs;
-    public List<GameObject> obstacleReserves;
+    private GameObject[] obstacles;
+    public GameObject[] obstaclePrefabsPhase1 = new GameObject[2];
+    public GameObject[] obstaclePrefabsPhase2 = new GameObject[2];
+    public GameObject[] obstaclePrefabsPhase3 = new GameObject[2];
 
     // This object's rigidbody component
     private Rigidbody rb;
@@ -22,28 +24,23 @@ public class floorBehavior : MonoBehaviour
             rb.isKinematic = false;
             rb.useGravity = true;
         }
-        if (rb.useGravity == true)
-            rb.AddForce(Physics.gravity * (rb.mass * rb.mass));
-    
     }
 
     // Adjust the current obstaclesPrefabs list
     public void resetObstacles(int phase) {
-        for (int i = obstaclePrefabs.Count - 1; i >= 0; i--)
-            obstaclePrefabs.RemoveAt(i);
         if (phase == 2) {
-            obstaclePrefabs.Add(obstacleReserves[0]);
-            obstaclePrefabs.Add(obstacleReserves[1]);
-        }
-        else if (phase == 3) {
-            obstaclePrefabs.Add(obstacleReserves[2]);
-            obstaclePrefabs.Add(obstacleReserves[3]);
+            obstacles = obstaclePrefabsPhase2;
+        } else if (phase == 3) {
+            obstacles = obstaclePrefabsPhase3;
         }
     }
 
     void Start() {
         // Store Rigidbody component
         rb = GetComponent<Rigidbody>();
+
+        // Set obstacles to first phase
+        obstacles = obstaclePrefabsPhase1;
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -54,16 +51,18 @@ public class floorBehavior : MonoBehaviour
             // Reset name (to get rid of "(clone)" ending)
             newTile.name = gameObject.name;
 
+            // Reset tile children (obstacles)
             foreach (Transform child in newTile.transform) {
                 if (child.gameObject.name != "Road") {
                     Destroy(child.gameObject);
                 }
             }
 
+            // Place obstacles randomly
             if (Random.value < 0.4) {
                 for (int i = 0; i < 4; ++i) {
                     if (Random.value < 0.4) {
-                        GameObject obstacle = obstaclePrefabs[i != 1 && i != 2 ? Random.Range(0, obstaclePrefabs.Count) : 0];
+                        GameObject obstacle = obstacles[i != 1 && i != 2 ? Random.Range(0, 2) : 0];
                         GameObject temp = Instantiate(obstacle);
                         temp.transform.SetParent(newTile.transform, false);
                         temp.transform.Translate(new Vector3((i * 6) - 9, 0, 0), Space.Self);
