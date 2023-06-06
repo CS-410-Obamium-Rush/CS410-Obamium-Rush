@@ -30,12 +30,13 @@ public class floorBehavior : MonoBehaviour
         if (rb.useGravity == false) {
             rb.isKinematic = false;
             rb.useGravity = true;
-            cl.enabled = false;
+            cl.isTrigger = true;
         }
     }
 
     // Adjust the current obstaclesPrefabs list
     public static void resetObstacles(int phase) {
+        doReset = true;
         if (phase == 2) {
             obstacles = obstaclePrefabsPhase2;
         } else if (phase == 3) {
@@ -60,7 +61,6 @@ public class floorBehavior : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         // Filter for destroyer tag
         if(other.gameObject.tag == "gDestroy") {
-            doReset = true;
             // Instantiate new floor tile some distance away
             GameObject newTile = Instantiate(gameObject, gameObject.transform.position + new Vector3(0, 0, 70), Quaternion.identity);
             // Reset name (to get rid of "(clone)" ending)
@@ -89,6 +89,9 @@ public class floorBehavior : MonoBehaviour
             }
 
             // Destroy this object
+            Destroy(gameObject);
+        }
+        else if (other.gameObject.tag == "gDestroyBelow") {
             Destroy(gameObject);
         }
     }

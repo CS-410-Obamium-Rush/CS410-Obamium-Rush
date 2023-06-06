@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileCount: 7
   floortile: {fileID: 7665261604433479177, guid: eb19b03933560164080b89a63590d72d, type: 3}
+  gm: {fileID: 0}
 --- !u!1 &6401261878522357218
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,6 +137,51 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 30, y: 1, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &7543925743529002951
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4140093037397690728}
+  - component: {fileID: 5528509852947666564}
+  m_Layer: 3
+  m_Name: GroundDestroyerBelow
+  m_TagString: gDestroy
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4140093037397690728
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7543925743529002951}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -30, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 414788060090261897}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5528509852947666564
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7543925743529002951}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 30, y: 1, z: 200}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8947280329894870259
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,6 +214,7 @@ Transform:
   - {fileID: 8084494750623392669}
   - {fileID: 4756676526218641312}
   - {fileID: 2288214279324197117}
+  - {fileID: 4140093037397690728}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -225,6 +272,10 @@ PrefabInstance:
     - target: {fileID: 1400673920950132459, guid: 6dd49d382b1da8540ae35ff63c6d68ee, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4553887306787470080, guid: 6dd49d382b1da8540ae35ff63c6d68ee, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6dd49d382b1da8540ae35ff63c6d68ee, type: 3}
