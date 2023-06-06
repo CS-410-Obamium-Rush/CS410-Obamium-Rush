@@ -25,6 +25,10 @@ public class ThirdPersonMovement : MonoBehaviour
     private float movementY;
     private int jumpCount = 0;
 
+    public EnemyDamageDetection enDamDet;
+    public int damageBullet = 5;
+    public int damageShotgun = 1;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -70,8 +74,10 @@ public class ThirdPersonMovement : MonoBehaviour
     }
 
     IEnumerator powerupTimer(float time) {
+        enDamDet.setDamage(damageShotgun);
         yield return new WaitForSeconds(time);
         var emissionModule = selected.GetComponent<ParticleSystem>().emission;
+        enDamDet.setDamage(damageBullet);
         emissionModule.enabled = false;
         selected = bullet;
     }
@@ -102,7 +108,6 @@ public class ThirdPersonMovement : MonoBehaviour
         }
       
     }
-
     void Update()
     {
         // EA QoL would like to make this while for the sfx

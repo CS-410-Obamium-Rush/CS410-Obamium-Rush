@@ -54,6 +54,7 @@ public class TwoTransition : MonoBehaviour
     public float shiftSpeed = 5f;
     public float resetSpeed = 5f;
 
+
     // Start() establishes the amount of steps and gets all scripts associated from the relevant GameObjects
     void Start()
     {
@@ -79,8 +80,13 @@ public class TwoTransition : MonoBehaviour
     */
     void Update()
     {
+        /*
+        if (changeFloors) {
+            accessTile();
+        }*/
         // Step 1: Disable the ability to interact with enemy
         if (stepList[0]) {
+            floorBehavior.resetObstacles(2);
             enemyNextPhaseAudioManager.instance.playDefeat();
             enDamDet.setPhaseTransition(true);
             atkPat.setPhaseTransition(true);
@@ -177,6 +183,7 @@ public class TwoTransition : MonoBehaviour
         }
         // Step 8: Enable the enemy to take and receive damage to interact with the player again
         else if (stepList[7]) {
+            floorBehavior.doReset = false;
             enDamDet.setPhaseTransition(false);
             atkPat.activateAllHands(false);
             atkPat.setTimeInterval(1.75f);
@@ -184,9 +191,8 @@ public class TwoTransition : MonoBehaviour
             gm.setAllowPhase3();
             stepList[7] = false;    
         }
-
-             
     }
+
     // A helper function to position each hand into their new location; returns a bool to indicate that all hands
     // have reached their designated location
 

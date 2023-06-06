@@ -23,18 +23,23 @@ public class GameMonitor : MonoBehaviour
     public int leftHandHealth1 = 300;
     public int rightHandHealth2 = 0;
     public int leftHandHealth2 = 0;
-    public AttackPatterns atkPat;
-    
     public int headHealth1 = 300;
     public int headHealth2 = 0;
     public int headHealth3 = 0;
-
     private int maxEnemyHealth;   // Max amount of health
     private int enemyTotalHealth; // Current health
+    public AttackPatterns atkPat;
+
+    // For adjusting the lock on aiming with hands that are still active
+    public lockOnAiming loa;
 
     // For Player
     private int maxPlayerHealth; // Max amount of health
     public int playerHealth = 100; // Current health
+    private bool gameOver = false; // This is used to preven the player taking damage after the win/loss canvas starts to appear
+
+    // For updating increase in player score
+    public ScoreKeeper scoreKeep;
     
     // For Powerups (to be implemented)
     // (ex. Percent = 0.45 means that enemy must have (0.45 * maxHealth) for Val or less to give the next power up)
@@ -50,9 +55,6 @@ public class GameMonitor : MonoBehaviour
     private bool allowPhase3 = false;
     private bool allowWin = false;
     private int phaseCount = 0;         // Used to indicate how many phases that the player has defeated
-
-    // For adjusting the lock on aiming with hands that are still active
-    public lockOnAiming loa;
 
     // Public Function used by NextPhase to establish the next phases' health; returns the maxium health for reference
     public int setNewHealth(int r1, int l1, int r2, int l2, int head1, int head2, int head3) {
@@ -98,11 +100,15 @@ public class GameMonitor : MonoBehaviour
     2 == Head
     3 == Right Hand (Phase 2)
     4 == Left Hand (Phase 2)
+    5 == Head 2 (Phase 3)
+    6 == Head 3 (Phase 3)
+
     Hand Structure:
         Check if damage can still be taken
         Reduce health for the hand
         Update on the total amount of health
         Update the enemy health bar
+        Increase the player's score
         If the hand lost all of its health
             Disable the hand and it can no longer attack
     
@@ -111,18 +117,22 @@ public class GameMonitor : MonoBehaviour
             Reduce health for the head
             Update on the total amount of health
             Update the enemy health bar
+            Increase the player's score
     */
 
     public void enemyTakeDamage(int amt, int body) {
+        // If the game is over, make sure the enemy cannot recieve damage
+        if (gameOver)
+            return;
         // Check if right hand is active
         if (body == 0 && rightHandHealth1 > 0) {
             rightHandHealth1 -= amt;
             calcEnemyHealth();
             enemyBar.fillAmount = (float) enemyTotalHealth / maxEnemyHealth;
+            scoreKeep.addScore(amt * 10);
             if (rightHandHealth1 <= 0) {
                 rightHandHealth1 = 0;
                 atkPat.disableBody(body);
-                Debug.Log("Hello World");
                 loa.removeTarget("RH1");
             }
         }
@@ -130,6 +140,7 @@ public class GameMonitor : MonoBehaviour
             leftHandHealth1 -= amt;
             calcEnemyHealth();
             enemyBar.fillAmount = (float) enemyTotalHealth / maxEnemyHealth;
+            scoreKeep.addScore(amt * 10);
             if (leftHandHealth1 <= 0) {
                 leftHandHealth1 = 0;
                 atkPat.disableBody(body);
@@ -140,6 +151,7 @@ public class GameMonitor : MonoBehaviour
             rightHandHealth2 -= amt;
             calcEnemyHealth();
             enemyBar.fillAmount = (float) enemyTotalHealth / maxEnemyHealth;
+            scoreKeep.addScore(amt * 10);
             if (rightHandHealth2 <= 0) {
                 rightHandHealth2 = 0;
                 atkPat.disableBody(body);
@@ -150,6 +162,7 @@ public class GameMonitor : MonoBehaviour
             leftHandHealth2 -= amt;
             calcEnemyHealth();
             enemyBar.fillAmount = (float) enemyTotalHealth / maxEnemyHealth;
+            scoreKeep.addScore(amt * 10);
             if (leftHandHealth2 <= 0) {
                 leftHandHealth2 = 0;
                 atkPat.disableBody(body);
@@ -161,6 +174,7 @@ public class GameMonitor : MonoBehaviour
                 headHealth1 -= amt;
                 calcEnemyHealth();
                 enemyBar.fillAmount = (float) enemyTotalHealth / maxEnemyHealth;
+                scoreKeep.addScore(amt * 10);
                 if (headHealth1 <= 0) {
                     headHealth1 = 0;
                     atkPat.disableBody(body);
@@ -173,6 +187,7 @@ public class GameMonitor : MonoBehaviour
                 headHealth2 -= amt;
                 calcEnemyHealth();
                 enemyBar.fillAmount = (float) enemyTotalHealth / maxEnemyHealth;
+                scoreKeep.addScore(amt * 10);
                 if (headHealth2 <= 0) {
                     headHealth2 = 0;
                     atkPat.disableBody(body);
@@ -185,6 +200,7 @@ public class GameMonitor : MonoBehaviour
                 headHealth3 -= amt;
                 calcEnemyHealth();
                 enemyBar.fillAmount = (float) enemyTotalHealth / maxEnemyHealth;
+                scoreKeep.addScore(amt * 10);
                 if (headHealth3 <= 0) {
                     headHealth3 = 0;
                     atkPat.disableBody(body);
@@ -198,8 +214,11 @@ public class GameMonitor : MonoBehaviour
     Public Functions for player's health; these are used by enemy attacks and attack behaviors
     */
     public void playerTakeDamage(int amt) {
-        playerHealth -= amt;
-        playerBar.fillAmount = (float) playerHealth / maxPlayerHealth;
+        if (!gameOver) {
+            playerHealth -= amt;
+            playerBar.fillAmount = (float) playerHealth / maxPlayerHealth;
+            scoreKeep.removeScore(amt * 10);
+        }
     }
     public void playerAddHealth(int amt) {
         if (playerHealth + amt > maxPlayerHealth)
@@ -226,7 +245,7 @@ public class GameMonitor : MonoBehaviour
         }
     } 
 
-    // Get the max amount of health that the player and enemy can have at a time
+    // Get the max amount of health that the player and enemy can have at a time (for phase 1)
     void Start() {
         maxPlayerHealth = playerHealth;
         maxEnemyHealth = headHealth1 + rightHandHealth1 + leftHandHealth1 + rightHandHealth2 + leftHandHealth2 + headHealth2 + headHealth3;
@@ -248,7 +267,8 @@ public class GameMonitor : MonoBehaviour
 
         // If player loses all health, player loses and restarts level
         if (playerHealth <= 0) {
-            music.playLoss();
+            scoreKeep.setStopTimer();
+            //music.playLoss();
             end.setLost();
         }
         // If enemy loses all health, player wins and moves on to the next phase or game ends
@@ -270,6 +290,8 @@ public class GameMonitor : MonoBehaviour
             }
         }
         if (phaseCount >= 3) {
+            gameOver = true;
+            scoreKeep.setStopTimer();
             music.playWin();
             end.setWin();
         }

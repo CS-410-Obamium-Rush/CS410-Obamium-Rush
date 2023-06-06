@@ -26,9 +26,12 @@ public class GameEnding : MonoBehaviour
     // Get the canvas containing the win and lost image
     public CanvasGroup winCanvas;
     public CanvasGroup loseCanvas;
+    public ScoreKeeper scoreKeep;
 
     // Get the images associated to each health bar
-    public Canvas allHealth;
+    public Canvas playerHealth;
+    public Canvas enemyHealth;
+    public GameObject mainMenuButton;
 
     // Trigger the next phase with their public functions
     public TwoTransition twoTrans;
@@ -81,17 +84,14 @@ public class GameEnding : MonoBehaviour
     // Displays the victory or game over image for a certain amount of time before either quitting the app (when player wins)
     // or restarting the level (when the player loses)
     void EndGame (CanvasGroup imageCanvas, bool doRestart) {
-        allHealth.enabled = false;
-
+        enemyHealth.enabled = false;
+        playerHealth.enabled = false;
+        
         m_Timer += Time.deltaTime;
         imageCanvas.alpha = m_Timer / fadeDuration;
-        if(m_Timer > fadeDuration + displayImageDuration) {
-            if (doRestart) {
-                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-            }
-            else {
-                Application.Quit();
-            }
+        if (m_Timer >= fadeDuration) {
+            scoreKeep.gameDone();
+            mainMenuButton.SetActive(true);
         }
     }
 

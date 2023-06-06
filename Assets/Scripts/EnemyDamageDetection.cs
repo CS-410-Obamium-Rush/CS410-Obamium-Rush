@@ -22,11 +22,12 @@ public class EnemyDamageDetection : MonoBehaviour
     void Start()
     {
        initColor = enemyRenderer.material.color;
-
        //m_AudioSource = GetComponent<AudioSource>();
     }
 
-
+    public void setDamage(int val) {
+        damageTake = val;
+    }
     void OnParticleCollision(GameObject other) 
     {
         if (phaseTransition) {

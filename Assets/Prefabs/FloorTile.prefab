@@ -78,8 +78,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gm: {fileID: 0}
   baseTile: {fileID: 7665261604433479177}
-  speed: 14
-  obstaclePrefabs:
+  baseObstaclePrefabsPhase1:
+  - {fileID: 751414215263961238, guid: 73355a78cc3fb394cbbf6408ac194293, type: 3}
+  - {fileID: 4876025551836720274, guid: 01cbf5dc2fc473e4f857f2893104dcd1, type: 3}
+  baseObstaclePrefabsPhase2:
+  - {fileID: 751414215263961238, guid: 73355a78cc3fb394cbbf6408ac194293, type: 3}
+  - {fileID: 4876025551836720274, guid: 01cbf5dc2fc473e4f857f2893104dcd1, type: 3}
+  baseObstaclePrefabsPhase3:
   - {fileID: 751414215263961238, guid: 73355a78cc3fb394cbbf6408ac194293, type: 3}
   - {fileID: 4876025551836720274, guid: 01cbf5dc2fc473e4f857f2893104dcd1, type: 3}
 --- !u!1001 &1376128781501800117
