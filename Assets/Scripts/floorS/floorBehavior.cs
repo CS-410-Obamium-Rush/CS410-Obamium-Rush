@@ -7,15 +7,22 @@ public class floorBehavior : MonoBehaviour
     public GameMonitor gm;
     public GameObject baseTile;
     // The speed at which the environment will move
-    public float speed = 7.5f;
+    public static float speed = 7.5f;
 
-    private GameObject[] obstacles;
-    public GameObject[] obstaclePrefabsPhase1 = new GameObject[2];
-    public GameObject[] obstaclePrefabsPhase2 = new GameObject[2];
-    public GameObject[] obstaclePrefabsPhase3 = new GameObject[2];
+    public GameObject[] baseObstaclePrefabsPhase1 = new GameObject[2];
+    public GameObject[] baseObstaclePrefabsPhase2 = new GameObject[2];
+    public GameObject[] baseObstaclePrefabsPhase3 = new GameObject[2];
+
+    private static GameObject[] obstacles;
+    private static GameObject[] obstaclePrefabsPhase1 = new GameObject[2];
+    private static GameObject[] obstaclePrefabsPhase2 = new GameObject[2];
+    private static GameObject[] obstaclePrefabsPhase3 = new GameObject[2];
 
     // This object's rigidbody component
     private Rigidbody rb;
+    private Collider cl;
+
+    public static bool doReset = false; 
 
     /* Public functions for the phase transitition of tiles */
     // Have the current tiles start to fall off the map
@@ -23,11 +30,12 @@ public class floorBehavior : MonoBehaviour
         if (rb.useGravity == false) {
             rb.isKinematic = false;
             rb.useGravity = true;
+            cl.enabled = false;
         }
     }
 
     // Adjust the current obstaclesPrefabs list
-    public void resetObstacles(int phase) {
+    public static void resetObstacles(int phase) {
         if (phase == 2) {
             obstacles = obstaclePrefabsPhase2;
         } else if (phase == 3) {
@@ -38,14 +46,21 @@ public class floorBehavior : MonoBehaviour
     void Start() {
         // Store Rigidbody component
         rb = GetComponent<Rigidbody>();
+        cl = GetComponent<Collider>();
 
-        // Set obstacles to first phase
+        // Initialize static fields
+        obstaclePrefabsPhase1 = baseObstaclePrefabsPhase1;
+        obstaclePrefabsPhase2 = baseObstaclePrefabsPhase2;
+        obstaclePrefabsPhase3 = baseObstaclePrefabsPhase3;
+
+        // Set current obstacle set to first phase
         obstacles = obstaclePrefabsPhase1;
     }
 
     private void OnTriggerEnter(Collider other) {
         // Filter for destroyer tag
         if(other.gameObject.tag == "gDestroy") {
+            doReset = true;
             // Instantiate new floor tile some distance away
             GameObject newTile = Instantiate(gameObject, gameObject.transform.position + new Vector3(0, 0, 70), Quaternion.identity);
             // Reset name (to get rid of "(clone)" ending)
@@ -85,5 +100,9 @@ public class floorBehavior : MonoBehaviour
         // Added line for gravity
         if (rb.useGravity == false)
             rb.MovePosition(rb.position + constForward);
+
+        if (doReset) {
+            stopActivity();
+        }
     }
 }
