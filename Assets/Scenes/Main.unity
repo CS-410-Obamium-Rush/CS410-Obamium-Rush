@@ -8518,9 +8518,15 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b562a80435dda5543983bc315216c869, type: 3}
   - {fileID: 8300000, guid: 89f838850f9e6d345a4acf96911d067e, type: 3}
   - {fileID: 8300000, guid: 62b502df88f552649abefdb2381c3a0e, type: 3}
+  - {fileID: 8300000, guid: 103ead327be97634a8470dd69d9dca4e, type: 3}
+  - {fileID: 8300000, guid: 535d54a073d9849408acaca9d959da48, type: 3}
+  - {fileID: 8300000, guid: 05d79cf62ff9bcd48a4daf916dab3686, type: 3}
+  - {fileID: 8300000, guid: 8244833f5bfff154a950b99e619af1f1, type: 3}
+  - {fileID: 8300000, guid: 3f786cfba68f7d54489022eb80a74de5, type: 3}
+  - {fileID: 8300000, guid: d16b50e0d0c0f3b4eb75004c81f1c737, type: 3}
   currentClip: {fileID: 0}
   source: {fileID: 1327632984}
-  minWaitBetweenPlays: 1
+  minWaitBetweenPlays: 2
   maxWaitBetweenPlays: 5
   waitTimeCountdown: -1
 --- !u!82 &1327632984
