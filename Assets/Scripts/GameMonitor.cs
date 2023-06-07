@@ -45,6 +45,8 @@ public class GameMonitor : MonoBehaviour
     // (ex. Percent = 0.45 means that enemy must have (0.45 * maxHealth) for Val or less to give the next power up)
     public float[] enemyThresholdPercent; // Holds the percent of health needed to damage to drop powerup
     private float[] enemyThresholdVal; // The value of the enemy health needs to be at or lower to drop the powerup
+
+    public ParticleSystem[] handParticles;
     public List<GameObject> powerups;
     public bool powerup1 = false;
 
@@ -133,6 +135,7 @@ public class GameMonitor : MonoBehaviour
             if (rightHandHealth1 <= 0) {
                 rightHandHealth1 = 0;
                 atkPat.disableBody(body);
+                handParticles[0].Play();
                 loa.removeTarget("RH1");
             }
         }
@@ -144,6 +147,7 @@ public class GameMonitor : MonoBehaviour
             if (leftHandHealth1 <= 0) {
                 leftHandHealth1 = 0;
                 atkPat.disableBody(body);
+                handParticles[1].Play();
                 loa.removeTarget("LH1");
             }
         }
@@ -155,6 +159,7 @@ public class GameMonitor : MonoBehaviour
             if (rightHandHealth2 <= 0) {
                 rightHandHealth2 = 0;
                 atkPat.disableBody(body);
+                handParticles[2].Play();
                 loa.removeTarget("RH2");
             }
         }
@@ -166,6 +171,7 @@ public class GameMonitor : MonoBehaviour
             if (leftHandHealth2 <= 0) {
                 leftHandHealth2 = 0;
                 atkPat.disableBody(body);
+                handParticles[3].Play();
                 loa.removeTarget("LH2");
             }
         }
@@ -318,7 +324,7 @@ public class GameMonitor : MonoBehaviour
             healthR1 = 0;
         if (leftHandHealth1 < 0)
             healthL1 = 0;
-        if (rightHandHealth2 < 0)
+        if (rightHandHealth2 < 0) 
             healthR2 = 0;
         if (leftHandHealth2 < 0)
             healthL2 = 0;
