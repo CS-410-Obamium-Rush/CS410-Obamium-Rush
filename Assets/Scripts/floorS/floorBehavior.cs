@@ -6,17 +6,16 @@ public class floorBehavior : MonoBehaviour
 {
     public GameMonitor gm;
     public GameObject baseTile;
+
     // The speed at which the environment will move
-    public static float speed = 7.5f;
+    public float speed = 7.5f;
 
-    public GameObject[] baseObstaclePrefabsPhase1 = new GameObject[2];
-    public GameObject[] baseObstaclePrefabsPhase2 = new GameObject[2];
-    public GameObject[] baseObstaclePrefabsPhase3 = new GameObject[2];
+    // Long obstacles only spawn and the edges
+    public GameObject[] shortObstacles;
+    public GameObject[] longObstacles;
 
-    private static GameObject[] obstacles;
-    private static GameObject[] obstaclePrefabsPhase1 = new GameObject[2];
-    private static GameObject[] obstaclePrefabsPhase2 = new GameObject[2];
-    private static GameObject[] obstaclePrefabsPhase3 = new GameObject[2];
+    // The total number of obstacles that can be selected from
+    private int totalObstacles = 0;
 
     // This object's rigidbody component
     private Rigidbody rb;
@@ -36,12 +35,7 @@ public class floorBehavior : MonoBehaviour
 
     // Adjust the current obstaclesPrefabs list
     public static void resetObstacles(int phase) {
-        doReset = true;
-        if (phase == 2) {
-            obstacles = obstaclePrefabsPhase2;
-        } else if (phase == 3) {
-            obstacles = obstaclePrefabsPhase3;
-        }
+        doReset = false;
     }
 
     void Start() {
@@ -49,13 +43,8 @@ public class floorBehavior : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         cl = GetComponent<Collider>();
 
-        // Initialize static fields
-        obstaclePrefabsPhase1 = baseObstaclePrefabsPhase1;
-        obstaclePrefabsPhase2 = baseObstaclePrefabsPhase2;
-        obstaclePrefabsPhase3 = baseObstaclePrefabsPhase3;
-
-        // Set current obstacle set to first phase
-        obstacles = obstaclePrefabsPhase1;
+        // Inititialize totalObstacles to the total number of possible obstacles
+        totalObstacles = shortObstacles.Length + longObstacles.Length;
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -77,13 +66,28 @@ public class floorBehavior : MonoBehaviour
             if (Random.value < 0.4) {
                 for (int i = 0; i < 4; ++i) {
                     if (Random.value < 0.4) {
-                        GameObject obstacle = obstacles[i != 1 && i != 2 ? Random.Range(0, 2) : 0];
-                        GameObject temp = Instantiate(obstacle);
-                        temp.transform.SetParent(newTile.transform, false);
-                        temp.transform.Translate(new Vector3((i * 6) - 9, 0, 0), Space.Self);
+                        // Select a new obstacle, making sure to avoid placing long obstacles in the middle
+                        GameObject obstacle;
+                        if (i == 1 || i == 2) {
+                            int obstacleIndex = Random.Range(0, shortObstacles.Length);
+                            obstacle = shortObstacles[obstacleIndex];
+                        } else {
+                            int obstacleIndex = Random.Range(0, totalObstacles);
+                            // Index into shortObstacles or longObstacles as if they were a single combined array
+                            if (obstacleIndex >= shortObstacles.Length)
+                                obstacle = longObstacles[obstacleIndex % shortObstacles.Length];
+                            else
+                                obstacle = shortObstacles[obstacleIndex];
+                        }
+
+                        // Instantiate and initialize the selected obstacle
+                        GameObject newObstacle = Instantiate(obstacle);
+                        newObstacle.transform.SetParent(newTile.transform, false);
+                        newObstacle.transform.Translate(new Vector3((i * 6) - 9, 0, 0), Space.Self);
                         
-                        ObstacleDamageDealer tempScript = temp.GetComponent<ObstacleDamageDealer>();
-                        tempScript.gm = gm;
+                        // Initialize the new obstacle's script
+                        ObstacleDamageDealer obstacleScript = newObstacle.GetComponent<ObstacleDamageDealer>();
+                        obstacleScript.gm = gm;
                     }
                 }
             }
@@ -104,6 +108,7 @@ public class floorBehavior : MonoBehaviour
         if (rb.useGravity == false)
             rb.MovePosition(rb.position + constForward);
 
+        // Apply the doReset request
         if (doReset) {
             stopActivity();
         }

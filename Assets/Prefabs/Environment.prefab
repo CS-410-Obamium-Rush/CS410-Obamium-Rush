@@ -45,7 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileCount: 7
-  floortile: {fileID: 7665261604433479177, guid: eb19b03933560164080b89a63590d72d, type: 3}
+  floortilePhase1: {fileID: 8007099078780533686, guid: f1fffb5e51679d84380474afa606e04c, type: 3}
+  floortilePhase2: {fileID: 2336425708694988098, guid: 1dab0c2004e43ac4b967d0f400a73453, type: 3}
+  floortilePhase3: {fileID: 1110948787477611901, guid: 9b99b4a9e4747f444bee84b7c6bb4fae, type: 3}
   gm: {fileID: 0}
 --- !u!1 &6401261878522357218
 GameObject:
@@ -149,7 +151,7 @@ GameObject:
   - component: {fileID: 5528509852947666564}
   m_Layer: 3
   m_Name: GroundDestroyerBelow
-  m_TagString: gDestroy
+  m_TagString: gDestroyBelow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

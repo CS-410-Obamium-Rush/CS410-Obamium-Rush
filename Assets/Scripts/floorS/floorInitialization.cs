@@ -7,14 +7,25 @@ public class floorInitialization : MonoBehaviour {
     public int tileCount = 7;
     
     // The floor tile prefab to be used
-    public GameObject floortile;
+    private GameObject floortile;
+    public GameObject floortilePhase1;
+    public GameObject floortilePhase2;
+    public GameObject floortilePhase3;
 
     public GameMonitor gm;
 
-    void Start(){
-
+    public void placeNewTiles(int phase) {
+        floorBehavior.resetObstacles(phase);
         for (int i = 0; i < tileCount; ++i) {
             // Create the floor tiles at increments of 10 meters
+            GameObject floortile;
+            if (phase == 2)
+                floortile = floortilePhase2;
+            else if (phase == 3)
+                floortile = floortilePhase3;
+            else // phase == 1
+                floortile = floortilePhase1;
+
             GameObject tile = Instantiate(floortile, Vector3.forward * (i * 10 - 10), Quaternion.identity);
             // Reset name (to get rid of "(clone)" ending)
             tile.name = floortile.name;
@@ -22,5 +33,9 @@ public class floorInitialization : MonoBehaviour {
             floorBehavior tileScript = tile.GetComponent<floorBehavior>();
             tileScript.gm = gm;
         }
+    }
+
+    void Start() {
+        placeNewTiles(1);
     }
 }
