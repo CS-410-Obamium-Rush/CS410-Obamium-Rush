@@ -15,22 +15,23 @@ public class ObstacleDamageDealer : MonoBehaviour
             // Apply damage
             gm.playerTakeDamage(10);
             // Place explosion
-            GameObject explosion = Instantiate(explosionPrefab, other.gameObject.transform.position, Quaternion.identity);
+            GameObject explosionInstance = Instantiate(explosionPrefab, other.gameObject.transform.position, Quaternion.identity);
             // Launch player
             other.gameObject.GetComponent<ThirdPersonMovement>().OnJump(null);
             // Make sure this object doesn't apply damage for some time
             invincible = true;
             // Start co-routine to disable invincibility after some time
-            StartCoroutine(flashDamageColor());
+            StartCoroutine(flashDamageColor(explosionInstance));
         }
     }
 
     // Used for a cooldown when the player takes damage
-    IEnumerator flashDamageColor()
+    IEnumerator flashDamageColor(GameObject explosionInstance)
     {
         // Wait 1 second before the player can take damage again;
         // Planning to have the player sprite flashing in the near future
         yield return new WaitForSeconds(1f);
+        Destroy(explosionInstance);
         invincible = false;
     }
 }
