@@ -313,6 +313,10 @@ PrefabInstance:
       propertyPath: gm
       value: 
       objectReference: {fileID: 859794057}
+    - target: {fileID: 891194126293329915, guid: f6f23c69ed203aa409b92ce13e5c91b1, type: 3}
+      propertyPath: tileCount
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6455433373121301911, guid: f6f23c69ed203aa409b92ce13e5c91b1, type: 3}
       propertyPath: m_TagString
       value: Ground

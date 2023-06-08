@@ -26,12 +26,14 @@ public class floorInitialization : MonoBehaviour {
             else // phase == 1
                 floortile = floortilePhase1;
 
-            GameObject tile = Instantiate(floortile, Vector3.forward * (i * 10 - 10), Quaternion.identity);
+            GameObject tile = Instantiate(floortile, new Vector3(0, 0, (i * 10)), Quaternion.identity);
             // Reset name (to get rid of "(clone)" ending)
             tile.name = floortile.name;
 
             floorBehavior tileScript = tile.GetComponent<floorBehavior>();
             tileScript.gm = gm;
+            // Set the spawn distance according to the number of tiles
+            tileScript.spawnDistance = tileCount * 10;
         }
     }
 

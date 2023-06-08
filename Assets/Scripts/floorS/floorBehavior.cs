@@ -10,6 +10,15 @@ public class floorBehavior : MonoBehaviour
     // The speed at which the environment will move
     public float speed = 7.5f;
 
+    // The chance that a tile will have any obstacles on it
+    public float chanceTileObstacle = 0.4f;
+    // The chance that an obstacle will spawn in each lane
+    public float chanceObstacle = 0.4f;
+
+    // The distance at which the new tile will be spawned
+    [HideInInspector]
+    public float spawnDistance = 70f;
+
     // Long obstacles only spawn and the edges
     public GameObject[] shortObstacles;
     public GameObject[] longObstacles;
@@ -21,6 +30,7 @@ public class floorBehavior : MonoBehaviour
     private Rigidbody rb;
     private Collider cl;
 
+    // Set to true to start the removal of the current phase's floor tiles
     public static bool doReset = false; 
 
     /* Public functions for the phase transitition of tiles */
@@ -38,7 +48,7 @@ public class floorBehavior : MonoBehaviour
         doReset = false;
     }
 
-    void Start() {
+    void Awake() {
         // Store Rigidbody component
         rb = GetComponent<Rigidbody>();
         cl = GetComponent<Collider>();
@@ -47,13 +57,31 @@ public class floorBehavior : MonoBehaviour
         totalObstacles = shortObstacles.Length + longObstacles.Length;
     }
 
+    private GameObject getObstacle(int index) {
+        GameObject obstacle;
+        if (index >= shortObstacles.Length) {
+            obstacle = longObstacles[index % shortObstacles.Length];
+        } else {
+            obstacle = shortObstacles[index];
+        }
+        return obstacle;
+    }
+
     private void OnTriggerEnter(Collider other) {
         // Filter for destroyer tag
         if(other.gameObject.tag == "gDestroy") {
             // Instantiate new floor tile some distance away
-            GameObject newTile = Instantiate(gameObject, gameObject.transform.position + new Vector3(0, 0, 70), Quaternion.identity);
+            GameObject newTile = Instantiate(gameObject, gameObject.transform.position + new Vector3(0, 0, spawnDistance), Quaternion.identity);
             // Reset name (to get rid of "(clone)" ending)
             newTile.name = gameObject.name;
+
+            // Fixes lingering tile bug
+            floorBehavior tileScript = newTile.GetComponent<floorBehavior>();
+            if (tileScript.enabled == false) {
+                Destroy(newTile);
+                Destroy(gameObject);
+                return;
+            } 
 
             // Reset tile children (obstacles)
             foreach (Transform child in newTile.transform) {
@@ -63,22 +91,13 @@ public class floorBehavior : MonoBehaviour
             }
 
             // Place obstacles randomly
-            if (Random.value < 0.4) {
+            if (Random.value < chanceTileObstacle) {
+                // Split play area into four lanes
                 for (int i = 0; i < 4; ++i) {
-                    if (Random.value < 0.4) {
+                    if (Random.value < chanceObstacle) {
                         // Select a new obstacle, making sure to avoid placing long obstacles in the middle
-                        GameObject obstacle;
-                        if (i == 1 || i == 2) {
-                            int obstacleIndex = Random.Range(0, shortObstacles.Length);
-                            obstacle = shortObstacles[obstacleIndex];
-                        } else {
-                            int obstacleIndex = Random.Range(0, totalObstacles);
-                            // Index into shortObstacles or longObstacles as if they were a single combined array
-                            if (obstacleIndex >= shortObstacles.Length)
-                                obstacle = longObstacles[obstacleIndex % shortObstacles.Length];
-                            else
-                                obstacle = shortObstacles[obstacleIndex];
-                        }
+                        int obstacleIndex = Random.Range(0, i == 1 || i == 2 ? shortObstacles.Length : totalObstacles);
+                        GameObject obstacle = getObstacle(obstacleIndex);
 
                         // Instantiate and initialize the selected obstacle
                         GameObject newObstacle = Instantiate(obstacle);
@@ -94,8 +113,7 @@ public class floorBehavior : MonoBehaviour
 
             // Destroy this object
             Destroy(gameObject);
-        }
-        else if (other.gameObject.tag == "gDestroyBelow") {
+        } else if (other.gameObject.tag == "gDestroyBelow") {
             Destroy(gameObject);
         }
     }
