@@ -7086,6 +7086,7 @@ MonoBehaviour:
   gm: {fileID: 859794057}
   loa: {fileID: 1645732939}
   fi: {fileID: 15253634}
+  sr: {fileID: 1756177041}
   rightHand1: {fileID: 1976517822}
   leftHand1: {fileID: 1830027174}
   rightHand2: {fileID: 1644185840}
@@ -10178,7 +10179,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c5b6a8509115de47b0a3fcf0da589e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.1
+  phase1Skybox: {fileID: 2100000, guid: 68f094fe1ddf66a4285f3e63c14edb4f, type: 2}
+  phase3Skybox: {fileID: 2100000, guid: 4e8eca624ec4afe44855a04fb4ef088c, type: 2}
 --- !u!1 &1775641557
 GameObject:
   m_ObjectHideFlags: 0
