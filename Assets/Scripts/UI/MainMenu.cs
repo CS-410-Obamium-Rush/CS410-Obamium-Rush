@@ -14,15 +14,11 @@ public class MainMenu : MonoBehaviour
 
     public void startGame()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(_newGameLevel);
     }
 
     public void setVolume(float volume) {
         AudioListener.volume = volume;
-    }
-
-    public void returnToMainMenu()
-    {
-        SceneManager.LoadScene("Main Menu");
     }
 }

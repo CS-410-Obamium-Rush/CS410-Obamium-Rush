@@ -49,10 +49,28 @@ public class ScoreKeeper : MonoBehaviour
     }
 
     /*
-    Public functions to adjust the score value and display information
+    Public functions to adjust the score value and display information;
+    Will include a bonus to the score based on the time as well
+        < 1 minutes = +50
+        < 2 minutes = +40
+        < 3 minutes = +30
+        < 4 minutes = +20
+        < 5 minutes = +10
+        > 5 minutes = 0
     */
     public void addScore(int val) {
         scoreVal += val;
+        // Include the time bonus
+        if (minute < 1)
+            scoreVal += 50;
+        else if (minute < 2)
+            scoreVal += 40;
+        else if (minute < 3)
+            scoreVal += 30;
+        else if (minute < 4)
+            scoreVal += 20;
+        else if (minute < 5)
+            scoreVal += 10;
         scoreText.text = "Score: " + scoreVal.ToString();
         scoreTextEnd.text = "Score: " + scoreVal.ToString();
     }

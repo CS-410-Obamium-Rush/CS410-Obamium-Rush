@@ -230,9 +230,9 @@ public class TwoTransition : MonoBehaviour
     private void addTargets() {
         loa.addTarget(rightHand1.transform.GetChild(1).gameObject.transform, "RH1");
         loa.addTarget(leftHand1.transform.GetChild(1).gameObject.transform, "LH1");
-        loa.addTarget(headCube.transform, "Head1");
         loa.addTarget(rightHand2.transform.GetChild(1).gameObject.transform, "RH2");
         loa.addTarget(leftHand2.transform.GetChild(1).gameObject.transform, "LH2");
+        loa.addTarget(headCube.transform, "Head1");
     }
 
     // Function to allow the enemy's health to return and change its name

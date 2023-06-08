@@ -27,9 +27,11 @@ public class ThirdPersonMovement : MonoBehaviour
     private int jumpCount = 0;
 
     public EnemyDamageDetection enDamDet;
-    public int damageBullet = 5;
-    public int damageShotgun = 1;
+    public int damageBullet = 4;
+    public int damageFlamethrower = 2;
+    public int damageShotgun = 25;
 
+    public ScoreKeeper scoreKeep;
     // Start is called before the first frame update
     void Start()
     {
@@ -67,20 +69,21 @@ public class ThirdPersonMovement : MonoBehaviour
             case Weapon.Shotgun:
                 selected = shotgun;
                 playersfx.playSwitchShoggun();
-                StartCoroutine(powerupTimer(5f));
+                StartCoroutine(powerupTimer(5f, damageShotgun));
                 break;
             case Weapon.Flamethrower:
                 selected = flamethrower;
                 // playersfx.playSwitchFlamethrower();
-                StartCoroutine(powerupTimer(5f));
+                StartCoroutine(powerupTimer(5f, damageFlamethrower));
                 break;
             default:
                 break;
         }
     }
 
-    IEnumerator powerupTimer(float time) {
-        enDamDet.setDamage(damageShotgun);
+    IEnumerator powerupTimer(float time, int damageAmt) {
+        enDamDet.setDamage(damageAmt);
+        scoreKeep.addScore(1500);
         yield return new WaitForSeconds(time);
         var emissionModule = selected.GetComponent<ParticleSystem>().emission;
         enDamDet.setDamage(damageBullet);

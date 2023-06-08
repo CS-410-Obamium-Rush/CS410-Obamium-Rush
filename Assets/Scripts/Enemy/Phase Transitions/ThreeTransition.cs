@@ -188,11 +188,11 @@ public class ThreeTransition : MonoBehaviour
     private void addTargets() {
         loa.addTarget(rightHand1.transform.GetChild(1).gameObject.transform, "RH1");
         loa.addTarget(leftHand1.transform.GetChild(1).gameObject.transform, "LH1");
+        loa.addTarget(rightHand2.transform.GetChild(1).gameObject.transform, "RH2");
+        loa.addTarget(leftHand2.transform.GetChild(1).gameObject.transform, "LH2");
         loa.addTarget(headPyramid1.transform, "Head1");
         loa.addTarget(headPyramid2.transform, "Head2");
         loa.addTarget(headPyramid3.transform, "Head3");
-        loa.addTarget(rightHand2.transform.GetChild(1).gameObject.transform, "RH2");
-        loa.addTarget(leftHand2.transform.GetChild(1).gameObject.transform, "LH2");
     }
 
 

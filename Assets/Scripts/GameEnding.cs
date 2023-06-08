@@ -15,7 +15,6 @@ public class GameEnding : MonoBehaviour
 {
     // For the length of the ending screen
     public float fadeDuration = 1f;
-    public float displayImageDuration = 1f;
     float m_Timer;
     // Bools to determine if the player has won, needs to do the next phase, or hase lost
     private bool playerWin = false;
@@ -41,7 +40,7 @@ public class GameEnding : MonoBehaviour
 
     // Used for debugging phase changing scripts
     public void callEndWin() {
-        EndGame(winCanvas, true);
+        EndGame(winCanvas);
     }
 
     // Used by the Game Monitor to start the next part of the game
@@ -65,7 +64,7 @@ public class GameEnding : MonoBehaviour
     {
         // Put Victory image if all phases are defeated
         if (playerWin) 
-            EndGame(winCanvas, false);
+            EndGame(winCanvas);
         // Trigger phase 2 if enemy has lost all their health once
         else if (doPhase2) {
             twoTrans.phase2();
@@ -78,20 +77,20 @@ public class GameEnding : MonoBehaviour
 
         // Put Defeat image is player loses all their health
         else if (playerLost)
-            EndGame(loseCanvas, true);
+            EndGame(loseCanvas);
     }
 
     // Displays the victory or game over image for a certain amount of time before either quitting the app (when player wins)
     // or restarting the level (when the player loses)
-    void EndGame (CanvasGroup imageCanvas, bool doRestart) {
+    void EndGame (CanvasGroup imageCanvas) {
         enemyHealth.enabled = false;
         playerHealth.enabled = false;
-        
         m_Timer += Time.deltaTime;
         imageCanvas.alpha = m_Timer / fadeDuration;
         if (m_Timer >= fadeDuration) {
             scoreKeep.gameDone();
             mainMenuButton.SetActive(true);
+            Time.timeScale = 0f;
         }
     }
 
