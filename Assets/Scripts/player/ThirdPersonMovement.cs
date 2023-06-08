@@ -10,6 +10,7 @@ public class ThirdPersonMovement : MonoBehaviour
 {
     public GameObject bullet;
     public GameObject shotgun;
+    public GameObject flamethrower;
     public float speed = 6f;
     public float jumpAmount = 10;
 
@@ -17,7 +18,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public playerAudioManager playersfx; // need to figure out why the fuck this works
     AudioSource m_AudioSource;
 
-    public enum Weapon {Bullet, Shotgun};
+    public enum Weapon {Bullet, Shotgun, Flamethrower};
 
     private GameObject selected;
     private Rigidbody rb;
@@ -47,7 +48,7 @@ public class ThirdPersonMovement : MonoBehaviour
         movementY = movementVector.y;
     }
 
-    void OnJump(InputValue movementValue)
+    public void OnJump(InputValue movementValue)
     {
         if(jumpCount < 1) 
         {
@@ -66,6 +67,11 @@ public class ThirdPersonMovement : MonoBehaviour
             case Weapon.Shotgun:
                 selected = shotgun;
                 playersfx.playSwitchShoggun();
+                StartCoroutine(powerupTimer(5f));
+                break;
+            case Weapon.Flamethrower:
+                selected = flamethrower;
+                // playersfx.playSwitchFlamethrower();
                 StartCoroutine(powerupTimer(5f));
                 break;
             default:

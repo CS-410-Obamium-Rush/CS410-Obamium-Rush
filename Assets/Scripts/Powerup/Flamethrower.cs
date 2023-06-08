@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shotgun : MonoBehaviour
+public class Flamethrower : MonoBehaviour
 {
     void OnCollisionEnter(Collision other) {
         // Pick up the powerup
@@ -10,7 +10,7 @@ public class Shotgun : MonoBehaviour
             // Destroy the collected powerup
             Destroy(gameObject);
             ThirdPersonMovement player = other.gameObject.GetComponent<ThirdPersonMovement>();
-            player.setWeapon(ThirdPersonMovement.Weapon.Shotgun);
+            player.setWeapon(ThirdPersonMovement.Weapon.Flamethrower);
         }
     }
 

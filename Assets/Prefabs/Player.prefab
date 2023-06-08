@@ -9,14 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 50831985}
-  - component: {fileID: 5908840730420098419}
   m_Layer: 6
   m_Name: HitBox
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &50831985
 Transform:
   m_ObjectHideFlags: 0
@@ -32,19 +31,6 @@ Transform:
   m_Father: {fileID: 8879080919350134170}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &5908840730420098419
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 50831984}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8879080919350134149
 GameObject:
   m_ObjectHideFlags: 0
@@ -57,6 +43,7 @@ GameObject:
   - component: {fileID: 8809475543019540147}
   - component: {fileID: 8879080919350134151}
   - component: {fileID: 8879080919350134171}
+  - component: {fileID: 3363744861218544160}
   - component: {fileID: 8879080919350134169}
   - component: {fileID: 8879080919350134148}
   - component: {fileID: 2014114004}
@@ -112,9 +99,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 5951266761611912552}
   shotgun: {fileID: 1241891269597959543}
+  flamethrower: {fileID: 0}
   speed: 20
   jumpAmount: 200
   playersfx: {fileID: 0}
+  enDamDet: {fileID: 0}
+  damageBullet: 5
+  damageShotgun: 1
 --- !u!33 &8879080919350134171
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -123,6 +114,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8879080919350134149}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!135 &3363744861218544160
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8879080919350134149}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.9
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!135 &8879080919350134169
 SphereCollider:
   m_ObjectHideFlags: 0
