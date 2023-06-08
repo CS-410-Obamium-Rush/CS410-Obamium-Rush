@@ -89,7 +89,7 @@ public class TwoTransition : MonoBehaviour
         // Step 1: Disable the ability to interact with enemy
         if (stepList[0]) {
             floorBehavior.doReset = true;
-            sr.rotate();
+            sr.phase2();
             enemyNextPhaseAudioManager.instance.playDefeat();
             enDamDet.setPhaseTransition(true);
             atkPat.setPhaseTransition(true);

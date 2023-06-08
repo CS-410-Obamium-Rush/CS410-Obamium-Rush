@@ -16,6 +16,7 @@ public class ThreeTransition : MonoBehaviour
     public GameMonitor gm;                  // Uses GameMonitor to establish the health for phase 2
     public lockOnAiming loa;                // Uses lockOnAiming to add the additional hands into the targeting system
     public floorInitialization fi;            // Used to initialize the new floor tiles
+    public SkyboxRotator sr;                // Used to rotate the skybox, transitioning to new environment
     /* Hand GameObjects and Scripts are to position and activate the hands for this phase*/
     public GameObject rightHand1;   
     public GameObject leftHand1;
@@ -80,6 +81,7 @@ public class ThreeTransition : MonoBehaviour
     // Step 1: Disable the ability to interact with enemy
         if (stepList[0]) {
             floorBehavior.doReset = true;
+            sr.phase3();
             enemyNextPhaseAudioManager.instance.playDefeat();
             enDamDet.setPhaseTransition(true);
             atkPat.setPhaseTransition(true);
