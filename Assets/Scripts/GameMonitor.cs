@@ -60,6 +60,10 @@ public class GameMonitor : MonoBehaviour
     private bool allowWin = false;
     private int phaseCount = 0;         // Used to indicate how many phases that the player has defeated
 
+    [HideInInspector]
+    public float screenShake = 0f;
+    private float screenShakeDecay = 0.8f;
+
     // Public Function used by NextPhase to establish the next phases' health; returns the maxium health for reference
     public int setNewHealth(int r1, int l1, int r2, int l2, int head1, int head2, int head3) {
         rightHandHealth1 = r1;
@@ -225,6 +229,7 @@ public class GameMonitor : MonoBehaviour
     */
     public void playerTakeDamage(int amt) {
         if (!gameOver) {
+            addScreenShake(0.1f);
             playerHealth -= amt;
             playerBar.fillAmount = (float) playerHealth / maxPlayerHealth;
             scoreKeep.removeScore(amt * 10);
@@ -273,6 +278,18 @@ public class GameMonitor : MonoBehaviour
         }
     }
 
+    public void addScreenShake(float amount) {
+        screenShake += amount;
+        if (screenShake > 1)
+            screenShake = 1;
+    }
+
+    public void setScreenShake(float amount) {
+        screenShake = amount;
+        if (screenShake > 1)
+            screenShake = 1; 
+    }
+
     // Get the max amount of health that the player and enemy can have at a time (for phase 1)
     void Start() {
         maxPlayerHealth = playerHealth;
@@ -293,6 +310,13 @@ public class GameMonitor : MonoBehaviour
         if (gameOver) {
             return;
         }
+
+        // Update screenShake
+        if (screenShake > 0)
+            screenShake -= screenShakeDecay * Time.deltaTime;
+        else
+            screenShake = 0;
+
         // Update the overall remaining enemy health
         calcEnemyHealth();
 

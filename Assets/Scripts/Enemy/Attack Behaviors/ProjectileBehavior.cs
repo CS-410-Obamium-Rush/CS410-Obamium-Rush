@@ -16,6 +16,7 @@ public class ProjectileBehavior : MonoBehaviour
     public GameObject headObject;
     public Transform playerHitBox;
     public GameMonitor gm;
+    public GameObject explosionPrefab;
     //public GameObject gmObject;
 
     // use Update() for missles to approach the player
@@ -30,11 +31,15 @@ public class ProjectileBehavior : MonoBehaviour
     void OnTriggerEnter(Collider other) {
         // Player takes damage when the missles contact their hitbox
         if (other.gameObject.CompareTag("Player")) {
+            Instantiate(explosionPrefab, other.gameObject.transform.position, Quaternion.identity);
+            gm.addScreenShake(0.5f);
             gm.playerTakeDamage(10);
             gm.tryPowerup(transform.position);
             head.countMissle();
             Destroy(gameObject);
         } else if (other.gameObject.CompareTag("Ground")) {
+            Instantiate(explosionPrefab, other.gameObject.transform.position, Quaternion.identity);
+            gm.addScreenShake(0.5f);
             gm.tryPowerup(transform.position);
             head.countMissle();
             Destroy(gameObject);

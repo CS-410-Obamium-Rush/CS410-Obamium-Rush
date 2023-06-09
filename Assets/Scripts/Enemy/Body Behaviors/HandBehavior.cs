@@ -192,6 +192,7 @@ public class HandBehavior : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, targetPunch.position, punchLaunchSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, targetPunch.position) < 0.001f) {
                 gm.tryPowerup(transform.position);
+                gm.addScreenShake(0.2f);
                 startPunch = false;
                 retractPunch = true;
             }
@@ -257,6 +258,7 @@ public class HandBehavior : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, targetClapEnd.position, clapUseSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, targetClapEnd.position) < 0.001f) {
                 gm.tryPowerup(transform.position);
+                gm.addScreenShake(0.4f);
                 useClap = false;
                 backClap = true;
             }
@@ -295,6 +297,7 @@ public class HandBehavior : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, targetSlamEnd.position, slamUseSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, targetSlamEnd.position) < 0.001f) {
                 gm.tryPowerup(transform.position);
+                gm.addScreenShake(0.4f);
                 shockwaveUse.setActive(false);
                 useSlam = false;
                 retSlam = true;

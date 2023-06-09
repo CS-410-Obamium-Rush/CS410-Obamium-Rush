@@ -55,6 +55,7 @@ public class HeadBehavior : MonoBehaviour
     private int missleGone; // Amount of missles already used for the current attack
     private bool doOnce = false;
     public Transform playerHitBox;
+    public GameObject explosionPrefab;
 
     // For the laser attack
     private LaserBehavior laserScript;
@@ -140,6 +141,7 @@ public class HeadBehavior : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, targetPunch.position, punchLaunchSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, targetPunch.position) < 0.001f) {
                 gm.tryPowerup(transform.position);
+                gm.addScreenShake(0.3f);
                 startPunch = false;
                 retractPunch = true;
             }
@@ -248,6 +250,7 @@ public class HeadBehavior : MonoBehaviour
             missileScript.headObject = gameObject;
             missileScript.playerHitBox = playerHitBox;
             missileScript.gm = gm;
+            missileScript.explosionPrefab = explosionPrefab;
             yield return new WaitForSeconds(1.75f);
         }
         
