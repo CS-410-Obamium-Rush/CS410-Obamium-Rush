@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1421097505936770327, guid: eb19b03933560164080b89a63590d72d, type: 3}
       propertyPath: speed
-      value: 30
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 1421097505936770327, guid: eb19b03933560164080b89a63590d72d, type: 3}
       propertyPath: chanceObstacle
