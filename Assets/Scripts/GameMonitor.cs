@@ -360,7 +360,6 @@ public class GameMonitor : MonoBehaviour
         enemyTotalHealth = healthR1 + healthL1 + healthR2 + healthL2 + healthH1 + healthH2 + healthH3;
     }
 
-    
 
     
 }
