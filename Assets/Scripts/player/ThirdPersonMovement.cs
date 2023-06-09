@@ -19,6 +19,7 @@ public class ThirdPersonMovement : MonoBehaviour
     AudioSource m_AudioSource;
 
     public enum Weapon {Bullet, Shotgun, Flamethrower};
+    private float powerupEndTime = 0;
 
     private GameObject selected;
     private Rigidbody rb;
@@ -69,26 +70,20 @@ public class ThirdPersonMovement : MonoBehaviour
             case Weapon.Shotgun:
                 selected = shotgun;
                 playersfx.playSwitchShoggun();
-                StartCoroutine(powerupTimer(5f, damageShotgun));
+                enDamDet.setDamage(damageShotgun);
+                scoreKeep.addScore(1500);
+                powerupEndTime = Time.time + 5;
                 break;
             case Weapon.Flamethrower:
                 selected = flamethrower;
                 playersfx.playSwitchFlamer();
-                StartCoroutine(powerupTimer(5f, damageFlamethrower));
+                enDamDet.setDamage(damageFlamethrower);
+                scoreKeep.addScore(1500);
+                powerupEndTime = Time.time + 5;
                 break;
             default:
                 break;
         }
-    }
-
-    IEnumerator powerupTimer(float time, int damageAmt) {
-        enDamDet.setDamage(damageAmt);
-        scoreKeep.addScore(1500);
-        yield return new WaitForSeconds(time);
-        var emissionModule = selected.GetComponent<ParticleSystem>().emission;
-        enDamDet.setDamage(damageBullet);
-        emissionModule.enabled = false;
-        selected = bullet;
     }
 
     private bool isGrounded()
@@ -134,6 +129,14 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             var emissionModule = selected.GetComponent<ParticleSystem>().emission;
             emissionModule.enabled = false;
+        }
+
+        // Handle weapon powerup duration
+        if (selected != bullet && Time.time > powerupEndTime) {
+            var emissionModule = selected.GetComponent<ParticleSystem>().emission;
+            emissionModule.enabled = false;
+            enDamDet.setDamage(damageBullet);
+            selected = bullet;
         }
     }
 }

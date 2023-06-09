@@ -6,6 +6,7 @@ public class Powerup : MonoBehaviour
 {
     public GameMonitor gameMonitor;
     public ScoreKeeper scoreKeeper;
+    public AudioSource pickupAudioSource;
 
     void OnCollisionEnter(Collision other) {
         // Pick up the powerup

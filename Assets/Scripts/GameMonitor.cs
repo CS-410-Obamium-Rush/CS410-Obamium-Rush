@@ -49,6 +49,7 @@ public class GameMonitor : MonoBehaviour
     public ParticleSystem[] handParticles;
     public ParticleSystem[] phaseChangeParticles;
     public List<GameObject> powerups;
+    public List<AudioSource> powerupPickupSounds;
     public bool powerup1 = false;
 
     // To notify when the enemy has lost all of its health
@@ -242,17 +243,17 @@ public class GameMonitor : MonoBehaviour
         if (Random.value < 0.6) {
             // Instantiate a random powerup at the given position
             float randn = Random.value;
-            GameObject powerupPrefab;
+            int pIndex;
             if (randn < 0.1) {
-                powerupPrefab = powerups[3]; // Collectable
-            } else if (randn < 0.4) {
-                powerupPrefab = powerups[0]; // Flamethrower
+                pIndex = 3; // Collectable
+            } else if (randn < 0.5) {
+                pIndex = 0; // Flamethrower
             } else if (randn < 0.6) {
-                powerupPrefab = powerups[2]; // Health
+                pIndex = 2; // Health
             } else {
-                powerupPrefab = powerups[1]; // Shotgun
+                pIndex = 1; // Shotgun
             }
-            GameObject powerup = Instantiate(powerupPrefab, position, Quaternion.identity);
+            GameObject powerup = Instantiate(powerups[pIndex], position, Quaternion.identity);
             // Create a force vector
             Vector3 force = new Vector3(0, 20, 20);
             // Adjust the force vector left or right so that it lands on the floor tiles
@@ -266,6 +267,9 @@ public class GameMonitor : MonoBehaviour
             Powerup powerupScript = powerup.GetComponent<Powerup>();
             powerupScript.gameMonitor = this;
             powerupScript.scoreKeeper = scoreKeep;
+            // Supply a pick up sound if one exists
+            if (powerupPickupSounds[pIndex])
+                powerupScript.pickupAudioSource = powerupPickupSounds[pIndex];
         }
     }
 
