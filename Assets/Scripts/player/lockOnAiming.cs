@@ -30,7 +30,7 @@ public class lockOnAiming : MonoBehaviour
     public Transform target3;
 
     // ethan's audio
-    public AudioSource m_AudioSource;
+    AudioSource m_AudioSource;
 
     // Keep track of the target that is currently locked on
     public int targetInd = 0;
@@ -88,6 +88,7 @@ public class lockOnAiming : MonoBehaviour
         targetDict.Add("RH1", target1);
         targetDict.Add("LH1", target2);
         targetDict.Add("Head1", target3);
+        
         m_AudioSource = GetComponent<AudioSource>();
     }
 
@@ -97,6 +98,7 @@ public class lockOnAiming : MonoBehaviour
         // Get the right click or P button to switch targets
         Mouse mouse = Mouse.current;
         if(mouse.rightButton.wasPressedThisFrame || Input.GetButtonDown("Fire2")) {
+            m_AudioSource.Play();
             targetInd++;
             if(targetInd >= transforms.Count)
                 targetInd = 0;

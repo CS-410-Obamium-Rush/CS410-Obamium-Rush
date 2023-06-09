@@ -49,4 +49,9 @@ public class playerAudioManager : MonoBehaviour{
         godSource.clip = sfx[3];
         godSource.Play();
     }
+
+    public void playSwitchFlamer(){
+        godSource.clip = sfx[4];
+        godSource.Play();
+    }
 }

@@ -73,7 +73,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 break;
             case Weapon.Flamethrower:
                 selected = flamethrower;
-                // playersfx.playSwitchFlamethrower();
+                playersfx.playSwitchFlamer();
                 StartCoroutine(powerupTimer(5f, damageFlamethrower));
                 break;
             default:
