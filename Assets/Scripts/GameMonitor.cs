@@ -47,6 +47,7 @@ public class GameMonitor : MonoBehaviour
     private float[] enemyThresholdVal; // The value of the enemy health needs to be at or lower to drop the powerup
 
     public ParticleSystem[] handParticles;
+    public ParticleSystem smokeParticles;
     public List<GameObject> powerups;
     public bool powerup1 = false;
 
@@ -184,6 +185,7 @@ public class GameMonitor : MonoBehaviour
                 if (headHealth1 <= 0) {
                     headHealth1 = 0;
                     atkPat.disableBody(body);
+                    smokeParticles.Play();
                     loa.removeTarget("Head1");
                 }
             }
