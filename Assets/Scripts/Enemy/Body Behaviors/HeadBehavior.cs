@@ -207,6 +207,8 @@ public class HeadBehavior : MonoBehaviour
                 if (Vector3.Distance(transform.position, targetExpand.position) < 0.001f) {
                     startExpand = false;
                     retExpand = true;
+                    // For use in retExpand state
+                    doOnce = true;
                 }
             }
         }
@@ -222,6 +224,10 @@ public class HeadBehavior : MonoBehaviour
             }
             // Once the head expands back to its normal size, have it return to go back into the idle state
             else {
+                if (doOnce) {
+                    gm.tryPowerup(transform.position);
+                    doOnce = false;
+                }
                 transform.position = Vector3.MoveTowards(transform.position, initPos, nonAtkSpeed * Time.deltaTime);
                 if (Vector3.Distance(transform.position, initPos) < 0.001f) {
                     retExpand = false;
