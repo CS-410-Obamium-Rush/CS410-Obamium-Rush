@@ -464,7 +464,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Yellow Gem: Shiny collectable that grants 9,000 to the score
+  m_text: 'Yellow Gem: Shiny collectable that grants 15,000 to the score
 
 
 '
