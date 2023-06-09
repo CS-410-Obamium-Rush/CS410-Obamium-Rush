@@ -285,11 +285,15 @@ public class GameMonitor : MonoBehaviour
     // Update() manages the progress of game in terms of player and enemy health
     void Update()
     {
+        if (gameOver) {
+            return;
+        }
         // Update the overall remaining enemy health
         calcEnemyHealth();
 
         // If player loses all health, player loses and restarts level
         if (playerHealth <= 0) {
+            gameOver = true;
             scoreKeep.setStopTimer();
             music.playLoss();
             end.setLost();
