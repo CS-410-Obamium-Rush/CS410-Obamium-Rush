@@ -36,12 +36,11 @@ public class GameEnding : MonoBehaviour
     public TwoTransition twoTrans;
     public ThreeTransition threeTrans;
 
-    /* Public Functions */
+    // Game Win statements
+    private bool doOnce = true;
+    private bool fadeWin = false;
 
-    // Used for debugging phase changing scripts
-    public void callEndWin() {
-        EndGame(winCanvas);
-    }
+    /* Public Functions */
 
     // Used by the Game Monitor to start the next part of the game
     public void setPhase2() {
@@ -64,7 +63,7 @@ public class GameEnding : MonoBehaviour
     {
         // Put Victory image if all phases are defeated
         if (playerWin) 
-            EndGame(winCanvas);
+            EndGame(winCanvas, true);
         // Trigger phase 2 if enemy has lost all their health once
         else if (doPhase2) {
             twoTrans.phase2();
@@ -76,22 +75,48 @@ public class GameEnding : MonoBehaviour
         }
 
         // Put Defeat image is player loses all their health
-        else if (playerLost)
-            EndGame(loseCanvas);
+        else if (playerLost) {
+            EndGame(loseCanvas, false);
+        }   
     }
 
     // Displays the victory or game over image for a certain amount of time before either quitting the app (when player wins)
     // or restarting the level (when the player loses)
-    void EndGame (CanvasGroup imageCanvas) {
+    void EndGame (CanvasGroup imageCanvas,  bool playerWin) {
         enemyHealth.enabled = false;
         playerHealth.enabled = false;
-        m_Timer += Time.deltaTime;
-        imageCanvas.alpha = m_Timer / fadeDuration;
-        if (m_Timer >= fadeDuration) {
-            scoreKeep.gameDone();
-            mainMenuButton.SetActive(true);
-            Time.timeScale = 0f;
+        
+        if (!playerWin) {
+            m_Timer += Time.deltaTime;
+            imageCanvas.alpha = m_Timer / fadeDuration;
+            if (m_Timer >= fadeDuration) {
+                scoreKeep.gameDone();
+                mainMenuButton.SetActive(true);
+                Time.timeScale = 0f;
+            }
         }
+        else {
+            if (doOnce) {
+                StartCoroutine(delayWinScreen(imageCanvas, fadeDuration));
+                doOnce = false;
+            }
+            if (fadeWin) {
+                m_Timer += Time.deltaTime;
+                imageCanvas.alpha = m_Timer / fadeDuration;
+                if (m_Timer >= fadeDuration) {
+                    scoreKeep.gameDone();
+                    mainMenuButton.SetActive(true);
+                    Time.timeScale = 0f;
+                }
+            }
+                
+        }
+    }
+
+    IEnumerator delayWinScreen(CanvasGroup imageCanvas, float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        fadeWin = true;
     }
 
     

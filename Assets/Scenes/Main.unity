@@ -11921,7 +11921,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa0cd6d301429e48981bb1f0ee78bf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeDuration: 3
+  fadeDuration: 2.5
   winCanvas: {fileID: 1348452342}
   loseCanvas: {fileID: 1070102358}
   scoreKeep: {fileID: 859794062}
