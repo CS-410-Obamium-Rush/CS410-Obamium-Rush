@@ -2,22 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Flamethrower : MonoBehaviour
+public class Flamethrower : Powerup
 {
-    void OnCollisionEnter(Collision other) {
-        // Pick up the powerup
-        if (other.gameObject.CompareTag("Player")) {
-            // Destroy the collected powerup
-            Destroy(gameObject);
-            ThirdPersonMovement player = other.gameObject.GetComponent<ThirdPersonMovement>();
-            player.setWeapon(ThirdPersonMovement.Weapon.Flamethrower);
-        }
-    }
-
-    void OnTriggerEnter(Collider other) {
-        // Destroy this powerup on collision with a powerup destroyer
-        if (other.gameObject.CompareTag("pDestroy")) {
-            Destroy(gameObject);
-        }
+    protected override void action(GameObject player) {
+        ThirdPersonMovement playerScript = player.GetComponent<ThirdPersonMovement>();
+        playerScript.setWeapon(ThirdPersonMovement.Weapon.Flamethrower);
     }
 }

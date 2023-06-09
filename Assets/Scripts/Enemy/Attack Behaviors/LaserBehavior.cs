@@ -56,6 +56,7 @@ public class LaserBehavior : MonoBehaviour
     }
 
     public void destroyLaser() {
+        gm.tryPowerup(playerHitBox.position + new Vector3(0, 0, 2));
         Destroy(gameObject);
     }
 
@@ -73,10 +74,12 @@ public class LaserBehavior : MonoBehaviour
         
         for (int i = 1; i < children; ++i) {
             transform.GetChild(i).gameObject.SetActive(true);
-            if (i > 16)
+            if (i > 16) {
                 longEnough = true;
+            }
             yield return new WaitForSeconds(.05f);
         }
+        gm.tryPowerup(playerHitBox.position + new Vector3(0, 0, 2));
     }
 }
     

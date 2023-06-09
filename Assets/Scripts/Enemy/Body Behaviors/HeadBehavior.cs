@@ -205,7 +205,6 @@ public class HeadBehavior : MonoBehaviour
             else {
                 transform.position = Vector3.MoveTowards(transform.position, targetExpand.position, punchLaunchSpeed * Time.deltaTime);
                 if (Vector3.Distance(transform.position, targetExpand.position) < 0.001f) {
-                    gm.tryPowerup(transform.position);
                     startExpand = false;
                     retExpand = true;
                 }

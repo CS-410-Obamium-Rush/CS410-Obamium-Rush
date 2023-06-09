@@ -236,9 +236,20 @@ public class GameMonitor : MonoBehaviour
 
     public void tryPowerup(Vector3 position) {
         // Random chance to drop a powerup
-        if (Random.value < 0.3) {
+        if (Random.value < 0.6) {
             // Instantiate a random powerup at the given position
-            GameObject powerup = Instantiate(powerups[Random.Range(0, powerups.Count)], position, Quaternion.identity);
+            float randn = Random.value;
+            GameObject powerupPrefab;
+            if (randn < 0.1) {
+                powerupPrefab = powerups[3]; // Collectable
+            } else if (randn < 0.4) {
+                powerupPrefab = powerups[0]; // Flamethrower
+            } else if (randn < 0.6) {
+                powerupPrefab = powerups[2]; // Health
+            } else {
+                powerupPrefab = powerups[1]; // Shotgun
+            }
+            GameObject powerup = Instantiate(powerupPrefab, position, Quaternion.identity);
             // Create a force vector
             Vector3 force = new Vector3(0, 20, 20);
             // Adjust the force vector left or right so that it lands on the floor tiles
@@ -248,6 +259,10 @@ public class GameMonitor : MonoBehaviour
             // Get the rigidbody and apply the force vector as an Impulse
             Rigidbody powerupRigidbody = powerup.GetComponent<Rigidbody>();
             powerupRigidbody.AddForce(force, ForceMode.Impulse);
+
+            Powerup powerupScript = powerup.GetComponent<Powerup>();
+            powerupScript.gameMonitor = this;
+            powerupScript.scoreKeeper = scoreKeep;
         }
     } 
 
