@@ -47,7 +47,7 @@ public class GameMonitor : MonoBehaviour
     private float[] enemyThresholdVal; // The value of the enemy health needs to be at or lower to drop the powerup
 
     public ParticleSystem[] handParticles;
-    public ParticleSystem smokeParticles;
+    public ParticleSystem[] phaseChangeParticles;
     public List<GameObject> powerups;
     public bool powerup1 = false;
 
@@ -185,7 +185,7 @@ public class GameMonitor : MonoBehaviour
                 if (headHealth1 <= 0) {
                     headHealth1 = 0;
                     atkPat.disableBody(body);
-                    smokeParticles.Play();
+                    phaseChangeParticles[0].Play();
                     loa.removeTarget("Head1");
                 }
             }
@@ -199,6 +199,7 @@ public class GameMonitor : MonoBehaviour
                 if (headHealth2 <= 0) {
                     headHealth2 = 0;
                     atkPat.disableBody(body);
+                    phaseChangeParticles[1].Play();
                     loa.removeTarget("Head2");
                 }
             }
@@ -313,6 +314,7 @@ public class GameMonitor : MonoBehaviour
             }
         }
         if (phaseCount >= 3) {
+            phaseChangeParticles[2].Play();
             gameOver = true;
             scoreKeep.setStopTimer();
             music.playWin();
