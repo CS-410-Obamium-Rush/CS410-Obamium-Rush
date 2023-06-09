@@ -7125,16 +7125,16 @@ MonoBehaviour:
   playerBar: {fileID: 728045858}
   enemyBar: {fileID: 1775641559}
   music: {fileID: 652778477}
-  rightHandHealth1: 300
-  leftHandHealth1: 300
+  rightHandHealth1: 420
+  leftHandHealth1: 420
   rightHandHealth2: 0
   leftHandHealth2: 0
-  headHealth1: 300
+  headHealth1: 520
   headHealth2: 0
   headHealth3: 0
   atkPat: {fileID: 17457383}
   loa: {fileID: 1645732939}
-  playerHealth: 200
+  playerHealth: 250
   scoreKeep: {fileID: 859794062}
   enemyThresholdPercent:
   - 0.75

@@ -85,6 +85,7 @@ public class ThreeTransition : MonoBehaviour
             enemyNextPhaseAudioManager.instance.playDefeat();
             enDamDet.setPhaseTransition(true);
             atkPat.setPhaseTransition(true);
+            gm.playerAddHealth(80);
             stepList[0] = false;
             stepList[1] = true;
         }
@@ -258,7 +259,7 @@ public class ThreeTransition : MonoBehaviour
         // Set the name of the enemy
         enemyName.text = "Obama Phase 3: Virtual Insanity of God";
         // Establish the new health for the enemy
-        int maxHealth = gm.setNewHealth(600, 600, 600, 600, 550, 550, 550);
+        int maxHealth = gm.setNewHealth(580, 580, 580, 580, 690, 690, 690);
         gm.setThreshold(0.75f, 0.50f, 0.25f);
         // Perform a loop that allows the health bar to heal incrementally to depict a health bar restoring all of its health
         int healthRecord = 0;
