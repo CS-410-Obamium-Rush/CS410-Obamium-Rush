@@ -5,6 +5,6 @@ using UnityEngine;
 public class Collectable : Powerup
 {
     protected override void action(GameObject player) {
-        scoreKeeper.addScore(1000);
+        scoreKeeper.addScore(9000);
     }
 }
