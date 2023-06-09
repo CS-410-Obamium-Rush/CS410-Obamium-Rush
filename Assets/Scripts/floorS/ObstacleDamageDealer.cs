@@ -15,6 +15,7 @@ public class ObstacleDamageDealer : MonoBehaviour
         if (other.gameObject.CompareTag("Player") && (Time.time - lastHit) > invincibilityDuration) {
             // Apply damage
             gm.playerTakeDamage(10);
+
             // Place explosion
             Instantiate(explosionPrefab, other.gameObject.transform.position, Quaternion.identity);
             // Launch player

@@ -267,7 +267,7 @@ public class GameMonitor : MonoBehaviour
             powerupScript.gameMonitor = this;
             powerupScript.scoreKeeper = scoreKeep;
         }
-    } 
+    }
 
     // Get the max amount of health that the player and enemy can have at a time (for phase 1)
     void Start() {
@@ -286,13 +286,17 @@ public class GameMonitor : MonoBehaviour
     // Update() manages the progress of game in terms of player and enemy health
     void Update()
     {
+        if (gameOver) {
+            return;
+        }
         // Update the overall remaining enemy health
         calcEnemyHealth();
 
         // If player loses all health, player loses and restarts level
         if (playerHealth <= 0) {
+            gameOver = true;
             scoreKeep.setStopTimer();
-            //music.playLoss();
+            music.playLoss();
             end.setLost();
         }
         // If enemy loses all health, player wins and moves on to the next phase or game ends

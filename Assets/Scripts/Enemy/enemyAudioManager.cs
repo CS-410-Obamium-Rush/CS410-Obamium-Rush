@@ -38,7 +38,8 @@ public class enemyAudioManager : MonoBehaviour{
 
     public void playPunch(){
         godSource.clip = sfx[1];
-        godSource.PlayDelayed(1);
+        //godSource.PlayDelayed(1);
+        godSource.Play();
 
         /*if(this == null){
             Debug.Log("instance is now null");
