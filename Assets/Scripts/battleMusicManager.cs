@@ -45,12 +45,16 @@ public class battleMusicManager : MonoBehaviour {
     public void playWin(){  //Final Fantasy Tactics Win
         godSource.Stop();
         godSource.clip = music[3];
+        Debug.Log("STOP");
         godSource.Play();
+        Debug.Log("playing music");
     }
 
     public void playLoss(){
         godSource.Stop();
         godSource.clip = music[4];
+        Debug.Log("STOP");
         godSource.Play();
+        Debug.Log("playing music");
     }
 }
